@@ -2,13 +2,13 @@
 body{
 	font-size: 18px;
 	font-family: sans-serif;
-	background: #32363C;
-	color:#8E8891;
+	background: #f0f3e2;
+	color:#32363C;
 }
 
 a{
 	text-decoration:none;
-	color:#fff;
+	color: #32363C;
 }
 
 nav{
@@ -17,15 +17,13 @@ nav{
 }
 
 .main-header{
-	/*background:#586161;*/
-	color: #a0a39d;
 	box-sizing: border-box;
 	top: 10px;
 }
 
 .main-header h1{
-	padding:10px;
 	text-align: center;
+	padding:10px;
 }
 
 .container{
@@ -52,7 +50,6 @@ nav{
 
 #navbar a:hover{
 	color:#B72E1B;
-	font-size:18px;
 
 }
 
