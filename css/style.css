@@ -13,26 +13,27 @@ a{
 }
 
 /* navbar */
-nav{
-	background: #afc3cc;
-	padding: 5px 0;
-	text-align:right;
+.navlinks{
+	display: flex;
+	/*border: 2px solid black;*/
+	margin-left: auto;
+	padding: 0 10px;
 }
 
-nav li{
-	display: inline;
-	padding: 0 18px;
-}
-
-nav a{
-	text-decoration:none;
+.navlinks a{
 	color:#fff;
-	font-size:22px;
+	font-size:24px;
 	font-weight: 500;
 }
 
-nav a:hover{
+.navlinks a:hover{
 	color:#596073;
+}
+
+.navlinks button{
+	border:none;
+	background-color: transparent;
+	padding: 0 10px;
 }
 
 footer{
@@ -41,20 +42,26 @@ footer{
 
 /* classes */
 .main-header{
+	display: flex;
+	justify-content: space-evenly;
 	box-sizing: border-box;
-	top: 10px;
+	background: #afc3cc;
+	padding: 5px 0;
 }
 
 .main-header h1{
 	text-align: center;
-	padding:10px;
+	padding: 0 20px;
 	text-transform: uppercase;
-	letter-spacing: 3px;
+	letter-spacing: 2px;
 }
+
+
 
 .container{
 	width:80%;
 	margin:auto;
 	overflow: hidden;
 }
+
 
