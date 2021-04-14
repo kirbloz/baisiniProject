@@ -12,7 +12,7 @@
     <div class="container color-lightb">
 
         <br>
-        <h1 class="centered"><a href="index.html">EASY LAN PORTAL</a></h1>
+        <h1 class="centered"><a href="../index.html">EASY LAN PORTAL</a></h1>
         <br><br>
 
         <?php
@@ -23,6 +23,7 @@
         ?>
 
         <br><br>
+        
         
     </div>
     
