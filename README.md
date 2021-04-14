@@ -1,4 +1,4 @@
-# baisiniProject
+*/* baisiniProject */*
 
 # Progetto per l'Elaborato :: Maturità
 
