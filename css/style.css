@@ -1,9 +1,10 @@
 
 body{
 	font-size: 18px;
-	font-family: sans-serif;
-	background: #f0f3e2;
-	color:#32363C;
+	font-family: system-ui, sans-serif;
+	background: #fff;
+	color:#0C1115;
+
 }
 
 a{
@@ -11,11 +12,34 @@ a{
 	color: #32363C;
 }
 
+/* navbar */
 nav{
-	background: #8B837C;
+	background: #afc3cc;
 	padding: 5px 0;
+	text-align:right;
 }
 
+nav li{
+	display: inline;
+	padding: 0 18px;
+}
+
+nav a{
+	text-decoration:none;
+	color:#fff;
+	font-size:22px;
+	font-weight: 500;
+}
+
+nav a:hover{
+	color:#596073;
+}
+
+footer{
+	margin-top: 85%;
+}
+
+/* classes */
 .main-header{
 	box-sizing: border-box;
 	top: 10px;
@@ -24,6 +48,8 @@ nav{
 .main-header h1{
 	text-align: center;
 	padding:10px;
+	text-transform: uppercase;
+	letter-spacing: 3px;
 }
 
 .container{
@@ -31,26 +57,4 @@ nav{
 	margin:auto;
 	overflow: hidden;
 }
-
-#navbar{
-	text-align:right;
-}
-
-#navbar li{
-	display: inline;
-	padding-right: 15px;
-}
-
-#navbar a{
-	text-decoration:none;
-	color:#fff;
-	font-size:20px;
-	
-}
-
-#navbar a:hover{
-	color:#B72E1B;
-
-}
-
 
