@@ -7,11 +7,24 @@
     <title>AREA UTENTE</title>
 </head>
 <body>
-    <?php
-        if(!isset($_POST['name']) || !isset($_POST['lastname']) || !isset($_POST['pwd']) || !isset($_POST['mail_address']) || !isset($_POST['gender'])){
+    
+
+    <div class="container color-lightb">
+
+        <br>
+        <h1 class="centered"><a href="index.html">EASY LAN PORTAL</a></h1>
+        <br><br>
+
+        <?php
+        if(!isset($_POST['username']) || !isset($_POST['pwd'])){
             die("Form non compilato");
             }
-    ?>
+        echo "USERNAME: " . htmlentities($_POST['username'], ENT_HTML5, 'ISO-8859-1');
+        ?>
+
+        <br><br>
+        
+    </div>
     
 </body>
 </html>
