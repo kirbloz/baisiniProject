@@ -1,7 +1,7 @@
 		<?php
 			include('php/header.php')
 		?>
-		<div class="container">
+		<div class="wrapper">
 			<br><br>
 			<img src="images/rubik.png" alt="Culo di rubik">
 			<br><br>

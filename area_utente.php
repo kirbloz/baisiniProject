@@ -2,7 +2,7 @@
         include('php/header.php')
     ?>	
 
-    <div class="container">
+    <div class="wrapper">
 
         <br>
         <?php

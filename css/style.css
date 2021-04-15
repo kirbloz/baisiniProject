@@ -90,7 +90,7 @@ footer{
 	margin:10px;
 }
 
-.container{
+.wrapper{
 	width:80%;
 	margin:auto;
 	overflow:hidden;
@@ -110,16 +110,21 @@ footer{
 	width: 80%;
 	outline:none;
 	color:#8e98ae;
-	/*border: 3px solid red;*/
+}
+
+.redirect-login{
+	font-size:14px; 
+	padding-bottom: 10px;
 }
 
 input{
+	width: 200px;
 	font-family: monospace;
 	font-size: 14px;
 	text-align: center;
+	border:0;
 	border-radius: 10px;
 	padding:10px 0px;
-	border:0;
 	transition: 0.25s;
 	outline:none;
 }
@@ -127,10 +132,9 @@ input{
 input[type="text"], [type="password"], [type="email"]{
 	background:#fff;
 	color:#8e98ae;
-
 }
 
-input[type="text"], [type="password"], [type="email"]:focus{
+input:focus{
 	width: 220px;
 }
 
