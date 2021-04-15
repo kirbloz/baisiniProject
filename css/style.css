@@ -1,4 +1,10 @@
 
+*{
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+
 body{
 	font-size: 18px;
 	font-family: system-ui, sans-serif;
@@ -29,26 +35,46 @@ a{
 }
 
 /* navbar */
+.main-header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+}
+
+.main-header h1{
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	padding: 0 20px;
+}
+
 .navlinks{
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position:relative;
 	margin-left: auto;
-	padding: 0 15px;
+	padding: 20px 15px;
+}
+
+.navlinks li{
+	display:inline-block;
+	border:none;
+	background-color: transparent;
+	text-align: center;
+	padding: 0 10px;
 }
 
 .navlinks a{
 	color:#fff;
 	font-size:24px;
 	font-weight: 500;
+	transition: all 0.3s ease 0s;
 }
 
 .navlinks a:hover{
 	color:#596073;
-}
-
-.navlinks button{
-	border:none;
-	background-color: transparent;
-	padding: 0 10px;
 }
 
 footer{
@@ -62,21 +88,6 @@ footer{
 .bg-div{
 	position: relative;
 	margin:10px;
-}
-
-.main-header{
-	display: flex;
-	justify-content: space-evenly;
-	box-sizing: border-box;
-	padding: 10px 0;
-}
-
-.main-header h1{
-	text-align: center;
-	padding: 0 20px;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	margin-right: auto;
 }
 
 .container{

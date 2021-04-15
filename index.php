@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<html>
-<head>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EasyLAN</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-	<div class="color-white bg-div">
-		<header class="main-header color-lightb">
-			<h1><a href="index.html">Easy LAN PORTAL</a></h1>
-			<nav class="navlinks">
-				<button><a href="#">Home</a></button>
-				<button><a href="#">About</a></button>
-				<button><a id="login-button" href="loginpage.html">Login</a></button>
-			</nav>
-		</header>
-		
+		<?php
+			include('php/header.php')
+		?>
 		<div class="container">
 			<br><br>
 			<img src="images/rubik.png" alt="Culo di rubik">

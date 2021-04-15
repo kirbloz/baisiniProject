@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bentornato</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>EasyLAN</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	
     <div class="container login-box color-lightb">
         <br>
-        <h1 class="centered"><a href="../index.html">EASY LAN PORTAL</a></h1>
+        <h1 class="centered"><a href="index.php">EASY LAN PORTAL</a></h1>
         <br>
-        <form class="centered login-form" action="php/area_utente.php" method="post">
+        <form class="centered login-form" action="area_utente.php" method="post">
             <input type="text" name="username" placeholder="Nome utente" required>
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
