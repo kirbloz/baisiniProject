@@ -10,6 +10,7 @@
             die("Form non compilato");
             }
         echo "USERNAME: " . htmlentities($_POST['username'], ENT_HTML5, 'ISO-8859-1');
+        
         ?>
 
         <br><br>
