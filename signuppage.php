@@ -27,7 +27,7 @@
             <input type="text" name="id_customer" placeholder="ID Cliente" required>
             <br><br>
             <input class="button" id="reset" type="reset" value="RIPULISCI"/>
-			<input class="button" id="confirm" type="submit" value="CONFERMA"/>
+			<input class="button" id="confirm" name="submit" type="submit" value="CONFERMA"/>
         </form>
         <br><br>
         <div class="centered redirect-login"> 
@@ -82,7 +82,7 @@
                         /*echo "<div class='centered redirect-login'>";
                         echo "<a href='signuppage.php'>Non sei registrato? Clicca qui.</a>";
                         echo "</div>";*/
-                        header('Refresh: 5; URL=area_utente.php');
+                        header('Refresh: 3; URL=area_utente.php');
                     }
                 }else{
                     header('location:signuppage.php?error=emptyinput');
