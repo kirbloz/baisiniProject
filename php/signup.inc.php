@@ -12,14 +12,13 @@ if(!isset($_POST['submit'])){
     $username = $_POST['username'];
     $pwd = $_POST['pwd'];
     $email_address = $_POST['email_address'];
-    $id_customer = $_POST['id_customer'];
-
+    
     require_once 'databasehandler.inc.php';
     require_once 'function.inc.php';
 
     //controllo che il risultato sia PER FORZA false, perchè in caso non sia nè true
     //nè false potrebbe non riconoscere l'errore
-    if(emptyInputSignup($id_customer, $username, $pwd, $email_address) !== false){
+    if(emptyInputSignup($username, $pwd, $email_address) !== false){
         header('location:signuppage.php?error=emptyinput');
         die();
     }
@@ -44,11 +43,11 @@ if(!isset($_POST['submit'])){
         die();
     }*/
 
-    if(customerExists($connection, $id_customer) !== false){
-        header('location:signuppage.php?error=customeruseralreadyexists');
+    if(userExists($connection, $username, $email_address) !== false){
+        header('location:signuppage.php?error=useralreadyexists');
         die();
     }
 
-    createUser($connection, $id_customer, $username, $pwd, $email_address);
-
+    createUser($connection, $username, $pwd, $email_address);
+    die();
 }

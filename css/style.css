@@ -17,6 +17,20 @@ a{
 	color: #32363C;
 }
 
+/* classes */
+
+.bg-div{
+	position: relative;
+	width:80%;
+	margin:auto;
+}
+
+.wrapper{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+}
+
 /* applicabili */
 
 .centered{
@@ -83,22 +97,11 @@ footer{
 	margin-top: 80%;
 }
 
-/* classes */
-
-.bg-div{
-	position: relative;
-	margin:10px;
-}
-
-.wrapper{
-	width:80%;
-	margin:auto;
-	overflow:hidden;
-}
 
 /* login-sign up */
 
 .login-box{
+	max-width: 600px;
 	width:60%;
 	margin-top:10%;
 	border: 3px solid white;

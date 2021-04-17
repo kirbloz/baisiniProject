@@ -22,8 +22,6 @@
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
-            <input type="text" name="id_customer" placeholder="ID Cliente" required>
-            <br><br>
             <input class="button" id="reset" type="reset" value="RIPULISCI"/>
 			<input class="button" id="confirm" name="submit" type="submit" value="CONFERMA"/>
         </form>
