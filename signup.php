@@ -46,9 +46,9 @@
                     echo "<p class='centered error'> Qualcosa &egrave; andato storto. </p>";
                 }else if($_GET['error'] == 'none'){
                     echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> L'utente " . $_GET['username'] . " &egrave; stato registrato con successo. Verrai mandato alla tua Area utente. </p>";
+                    header('Refresh: 5; URL=../areaUtente.php');
                 }
                 echo "<br><br>";
-                header('Refresh: 5; URL=../areaUtente.php');
             }
 
         ?>
