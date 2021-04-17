@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <html>
@@ -22,14 +21,40 @@
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
+            <input type="password" name="repeat_pwd" placeholder="Ripeti password" required>
+            <br><br>
             <input class="button" id="reset" type="reset" value="RIPULISCI"/>
 			<input class="button" id="confirm" name="submit" type="submit" value="CONFERMA"/>
-        </form>
+        </form><br><br>
 
-        <br><br>
+        <?php
+            if(isset($_GET['error'])){
+                //check if there was an error
+                if($_GET['error'] == 'emptyinput'){
+                    echo "<p class='centered error'> Compila tutti i campi. </p>";
+                }else if($_GET['error'] == 'invalidemail'){
+                    echo "<p class='centered error'> Indirizzo email non valido. </p>";
+                }else if($_GET['error'] == 'invalidusername'){
+                    echo "<p class='centered error'> Username non valido. </p>";
+                }else if($_GET['error'] == 'invalidpassword'){
+                    echo "<p class='centered error'> Password non valida. </p>";
+                }else if($_GET['error'] == 'pwdsnotmatching'){
+                    echo "<p class='centered error'> Le password non corrispondono. </p>";
+                }else if($_GET['error'] == 'useralreadyexists'){
+                    echo "<p class='centered error'> Questo utente esiste gi&agrave;. </p>";
+                }else if($_GET['error'] == 'queryfailed'){
+                    echo "<p class='centered error'> Qualcosa &egrave; andato storto. </p>";
+                }else if($_GET['error'] == 'none'){
+                    echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> L'utente " . $_GET['username'] . " &egrave; stato registrato con successo. Verrai mandato alla tua Area utente. </p>";
+                }
+                echo "<br><br>";
+                header('Refresh: 5; URL=../areaUtente.php');
+            }
+
+        ?>
+        
         <div class="centered redirect-login"> 
             <a href="loginpage.php">Gi&agrave; registrato? Clicca qui.</a>
-            <!-- look at timestamp 24.29 for login page -->
         </div>
     </div>
 

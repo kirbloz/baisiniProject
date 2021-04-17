@@ -48,6 +48,12 @@ a{
 	background: #fff;
 }
 
+.error{
+	color: red;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
 /* navbar */
 .main-header{
 	display: flex;
@@ -61,9 +67,11 @@ a{
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	padding: 0 20px;
+	min-width: 235px;
 }
 
 .navlinks{
+	overflow: hidden;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -73,6 +81,7 @@ a{
 }
 
 .navlinks li{
+	overflow:hidden;
 	display:inline-block;
 	border:none;
 	background-color: transparent;

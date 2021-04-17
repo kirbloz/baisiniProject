@@ -62,7 +62,7 @@ function userExists($connection, $username, $email_address){
     try{
         $statement->execute($values);
     }catch(PDOException $e){
-        header('location:signuppage.php?error=queryfailed');
+        header('location:../signup.php?error=queryfailed');
         /*echo "<div class='error-box centered'>L'esecuzione della query non &egrave; andata a buon fine.</div>";
         var_dump($statement->fetchAll());
         var_dump($values);
@@ -91,15 +91,9 @@ function createUser($connection, $username, $pwd, $email_address){
     try{
         $statement->execute($values);
     }catch(PDOException $e){
-        //header('location:signuppage.php?error=queryfailed');
-        var_dump($statement->fetchAll());
-        var_dump($values);
-        echo $e->getMessage();
+        header('location:../signup.php?error=queryfailed');
         die();
     }
-    echo "<div class='centered redirect-login'>L'utente $username &egrave; stato registrato con successo.</div>";
-    echo "<a href='../index.php'> Home </a>";
-    /*header('Refresh: 3; URL=area_utente.php');*/
-    
+    header('location:../signup.php?error=none&username='. $username);    
 }
 
