@@ -1,11 +1,13 @@
 <?php
 
 if(!isset($_POST['submit'])){
+    
     //se l'utente è arrivato su questa pagina senza submittare il form
     //lo rispedisce indietro
     header('location:signuppage.php?error=nosubmit');
     die();
 }else{
+
     //elaborazione dati, error handling etc
     $username = $_POST['username'];
     $pwd = $_POST['pwd'];

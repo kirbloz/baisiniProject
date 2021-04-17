@@ -13,7 +13,7 @@ function emptyInputSignup($id_customer, $username, $pwd, $email_address){
 function invalidUserN($username){
 
     $result=null;
-    if(strlen($username)>20 || preg_match("[@_!#$%^&*()<>?/|}{~:;=^]", $username))
+    if(strlen($username)>20 || preg_match("[@_!#$%^&*()<>?-/|}{~:;=^]", $username))
         $result=true;
     else
         $result=false;
@@ -52,15 +52,24 @@ function pwdMatch($pwd, $pwdRepeat){
 
 function customerExists($connection, $id_customer){
 
-    $query = "SELECT * FROM user WHERE id_customer = ?;";
-    //prevenire sql injections usando degli statement che runnano senza input dall'utente
-    /*$statement = $connection->prepare($query);
-    if(!mysqli_stmt_prepare($statement, $query)){
-        header('location:signuppage.php?error=stmtfailed');
+    //preparo la query per la ricerca e l'array per i valori
+    $query = "SELECT * FROM user WHERE id_customer = :id_customer;";
+    $values[':id_customer'] = $_POST['id_customer'];
+    
+    try{
+        $statement = $connection->prepare($query);
+        if(isset($values))
+            $statement->execute($values);
+        else
+            $statement->execute();
+        
+    }catch(PDOException $e){
+        header('location:signuppage.php?error=queryfailed');
+        echo "<div class='error-box centered'>L'esecuzione della query non &egrave; andata a buon fine.</div>";
         die();
     }
-    DA FARE SOLO SE ASCENDO COME DIVINITA'
-    */
+    
+    
 }
 
 function createUser($username){
