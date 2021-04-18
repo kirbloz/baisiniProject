@@ -1,5 +1,10 @@
 <?php
-    session_start();
+
+    require_once('db/databasehandler.inc.php');
+    require_once('classes/User.php');
+
+    //avvio la sessione
+    session_start(); 
     if(!isset($_SESSION['start_time'])){
         header('Location:loginpage.php');
         die;
@@ -12,4 +17,3 @@
             die;
         }
     }
-?>

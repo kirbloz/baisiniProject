@@ -44,9 +44,9 @@
                     echo "<p class='centered error'> Questo utente esiste gi&agrave;. </p>";
                 }else if($_GET['error'] == 'queryfailed'){
                     echo "<p class='centered error'> Qualcosa &egrave; andato storto. </p>";
-                }else if($_GET['error'] == 'none'){
-                    echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> L'utente " . $_GET['username'] . " &egrave; stato registrato con successo. Verrai mandato alla tua Area utente. </p>";
-                    header('Refresh: 5; URL=../areaUtente.php');
+                }else if($_GET['error'] == 'none' && isset($_GET['username'])){
+                    echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> L'utente " . $_GET['username'] . " &egrave; stato registrato con successo. Verrai inviato alla schermata di login. </p>";
+                    header('Refresh: 5; URL=../login.php');
                 }
                 echo "<br><br>";
             }

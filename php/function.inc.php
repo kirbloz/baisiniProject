@@ -10,6 +10,16 @@ function emptyInputSignup($username, $pwd, $email_address){
     return $result;
 }
 
+function emptyInputLogin($uid, $pwd){
+    
+    $result = null;
+    if(empty($uid) || empty($pwd))
+        $result = true;
+    else
+        $result = false;
+    return $result;
+}
+
 function invalidUserN($username){
     $result=null;
     if(strlen($username)>20 || preg_match("[@_!#$%^&*()<>?-/|}{~:;=^]", $username))
@@ -63,37 +73,66 @@ function userExists($connection, $username, $email_address){
         $statement->execute($values);
     }catch(PDOException $e){
         header('location:../signup.php?error=queryfailed');
-        /*echo "<div class='error-box centered'>L'esecuzione della query non &egrave; andata a buon fine.</div>";
-        var_dump($statement->fetchAll());
-        var_dump($values);
-        echo $e->getMessage();*/
         die();
     }
 
     if($statement->rowCount() > 0){
-        //var_dump($statement->fetchAll());
-        return true;
-    }
-    return false;
+        //ritorno l'array con index i nomi delle colonne
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }else
+        return false;
 }
 
+//spostare queste funzioni nella classe User
 function createUser($connection, $username, $pwd, $email_address){
-    $values=array();
-    $pwd = crypt($pwd, 'sas');
 
     //preparo la query
     $query = "INSERT INTO user( username, password, email) VALUES(:username, :password, :email_address)";
-    $values[':username'] = $_POST['username'];
-    $values[':password'] = $pwd;
-    $values[':email_address'] = $_POST['email_address'];
+    
+    //crypto la password e preparo l'array di valori
+    $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+    $values = array(
+        ':username'=> $_POST['username'],
+        ':password' => $pwd,
+        ':email_address' => $_POST['email_address']
+    );
     
     $statement = $connection->prepare($query);
     try{
         $statement->execute($values);
     }catch(PDOException $e){
-        header('location:../signup.php?error=queryfailed');
+        //return false;
+        var_dump($statement);
+        echo $e;
         die();
     }
-    header('location:../signup.php?error=none&username='. $username);    
+    return true;  
 }
 
+function loginUser($connection, $uid, $pwd){
+
+    //controllo che l'utente cerchi di loggare un account che esiste effettivamente
+    //se l'utente esiste ne ho già salvate le credenziali nella variabile
+    $uid_result = userExists($connection, $uid, $uid);
+    if( $uid_result == false){
+        header('location:../login.php?error=nouser');
+        die();
+    }
+    
+
+    //se la password fornita è diversa da quella nel db ti rimando indietro
+    if(password_verify($pwd, $uid_result['password']) == false){
+        header('location:../login.php?error=wrongpassword');
+        die();
+    }else if(password_verify($pwd, $uid_result['password']) == false){
+        //1.44.36
+        //fare le sessioni
+        echo "<h1>WOHOO FUNZIONA</h1>";
+        echo "<a href='../index.php'> Home </a>";
+        die();
+    }
+
+    echo "u cazz";
+    die();
+    
+}

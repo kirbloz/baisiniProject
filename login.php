@@ -12,8 +12,8 @@
         <br>
         <h1 class="centered"><a href="index.php">EASY LAN PORTAL</a></h1>
         <br>
-        <form class="centered login-form" action="area_utente.php" method="post">
-            <input type="text" name="email" placeholder="Nome utente" required>
+        <form class="centered login-form" action="php/login.inc.php" method="post">
+            <input type="text" name="uid" placeholder="Nome utente/Indirizzo mail..." required>
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
