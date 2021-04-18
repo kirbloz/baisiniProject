@@ -10,11 +10,11 @@ function emptyInputSignup($username, $pwd, $email_address){
     return $result;
 }
 
-function emptyInputLogin($uid, $pwd){
+function emptyInputLogin($username, $pwd){
     
     $result = null;
-    if(empty($uid) || empty($pwd))
-        $result = true;
+    if(empty($username) || empty($pwd))
+        $result =true;
     else
         $result = false;
     return $result;
@@ -64,8 +64,8 @@ function userExists($connection, $username, $email_address){
 
     //preparo la query per la ricerca e l'array per i valori
     $query = "SELECT * FROM user WHERE username = :username OR email = :email_address;";
-    $values[':username'] = $_POST['username'];
-    $values[':email_address'] = $_POST['email_address'];
+    $values[':username'] = $username;
+    $values[':email_address'] = $email_address;
     $statement = $connection->prepare($query);
 
     //se query multiple prepara prima e poi fai nel for con i rispetti values
@@ -118,21 +118,18 @@ function loginUser($connection, $uid, $pwd){
         header('location:../login.php?error=nouser');
         die();
     }
-    
 
     //se la password fornita è diversa da quella nel db ti rimando indietro
-    if(password_verify($pwd, $uid_result['password']) == false){
+    if(password_verify($pwd, $uid_result['password']) === false){
         header('location:../login.php?error=wrongpassword');
         die();
-    }else if(password_verify($pwd, $uid_result['password']) == false){
+    }else if(password_verify($pwd, $uid_result['password']) === true){
         //1.44.36
         //fare le sessioni
-        echo "<h1>WOHOO FUNZIONA</h1>";
-        echo "<a href='../index.php'> Home </a>";
-        die();
-    }
+        return true;
 
-    echo "u cazz";
-    die();
+    }
     
+    echo "no";
+    die();
 }

@@ -17,18 +17,15 @@ class User {
     public function __destruct(){
     }
 
-    public function getId(): ?int 
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getUsername(): ?string 
-    {
+    public function getUsername(): ?string {
         return $this->username;
     }
 
-    public function getEmail(): ?string
-    {
+    public function getEmail(): ?string{
       return $this->email;   
     }
 
@@ -85,9 +82,10 @@ class User {
         die();
     }
 
-    public function login_user(){
+    public function login_user($username, $pwd){ 
+
         //includo per la connessione
-        require_once('db/databasehandler.inc.php');
+        require_once('../db/databasehandler.inc.php');
 
         //controllo che il risultato sia PER FORZA false, perchè in caso non sia nè true
         //nè false potrebbe non riconoscere l'errore
@@ -96,11 +94,13 @@ class User {
             die();
         }
 
-        if(loginUser($connection, $username, $pwd, $email_address) !== true){
-            header('location:../signup.php?error=queryfailed');
+        if(loginUser($connection, $username, $pwd) !== true){
+            header('location:../login.php?error=queryfailed');
             die();
         }
 
-
+        //rimando l'utente alla login con il codice corretto
+        header('location:../login.php?error=none&username='. $username);
+        die();
     }
 }
