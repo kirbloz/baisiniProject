@@ -16,7 +16,7 @@
 			<ul class="navlinks">
 				<li><a href="index.php">Home</a></li>
 				<li><a href="#">About</a></li>
-				<li><a id="login-button" href="loginpage.php">Login</a></li>
+				<li><a id="login-button" href="login.php">Login</a></li>
 				<li><a href="signup.php">Registrati</a></li>
 			</ul>
 		</div>

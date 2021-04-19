@@ -35,7 +35,7 @@
                     echo "<p class='centered error'> Qualcosa &egrave; andato storto. </p>";
                 }else if($_GET['error'] == 'none' && isset($_GET['username'])){
                     echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> Benvenuto " . $_GET['username'] . ". Verrai inviato alla tua area personale. </p>";
-                    header('Refresh: 5; URL=../areaUtente.php');
+                    header('Refresh: 5; URL=areaUtente.php');
                 }
                 echo "<br><br>";
             }
