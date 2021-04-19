@@ -54,7 +54,7 @@
         ?>
         
         <div class="centered redirect-login"> 
-            <a href="loginpage.php">Gi&agrave; registrato? Clicca qui.</a>
+            <a href="login.php">Gi&agrave; registrato? Clicca qui.</a>
         </div>
     </div>
 
