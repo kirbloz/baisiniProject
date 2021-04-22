@@ -12,10 +12,12 @@ if(!isset($_POST['submit'])){
     //salvo i dati POST nelle variabili
     $uid = $_POST['username'];
     $pwd = $_POST['pwd'];
-
+    
+    
     //passo i valori alla funzione della classe user
     $utente = new User();
     $utente->login_user($uid, $pwd);
+    unset($_POST);
     die();
     
     //

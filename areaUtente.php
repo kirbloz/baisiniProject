@@ -1,5 +1,7 @@
     <?php
-        include('php/header.php')
+        include('php/header.php');
+        //include('classes/Session.php');
+        Session::check($true);
     ?>	
 
     <div class="wrapper">

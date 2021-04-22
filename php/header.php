@@ -14,9 +14,14 @@
 		<div class="main-header color-lightb">
 			<h1><a href="index.php">Easy LAN PORTAL</a></h1>
 			<ul class="navlinks">
-				<li><a href="index.php">Home</a></li>
+				<li><a href="areaUtente.php">Area Utente</a></li>
 				<li><a href="#">About</a></li>
 				<li><a id="login-button" href="login.php">Login</a></li>
 				<li><a href="signup.php">Registrati</a></li>
 			</ul>
+		</div>
+		<div>
+			<?php
+			echo " \$_SESSION > " . var_dump($_SESSION);
+			?>
 		</div>

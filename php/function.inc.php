@@ -1,5 +1,7 @@
 <?php
 
+//include_once('db/databasehandler.inc.php');
+
 function emptyInputSignup($username, $pwd, $email_address){
     
     $result = null;
@@ -72,15 +74,19 @@ function userExists($connection, $username, $email_address){
     try{
         $statement->execute($values);
     }catch(PDOException $e){
+        $connection = null;
         header('location:../signup.php?error=queryfailed');
         die();
     }
 
     if($statement->rowCount() > 0){
         //ritorno l'array con index i nomi delle colonne
+        $connection = null;
         return $statement->fetch(PDO::FETCH_ASSOC);
-    }else
+    }else{
+        $connection = null;
         return false;
+    }
 }
 
 //spostare queste funzioni nella classe User
@@ -104,9 +110,11 @@ function createUser($connection, $username, $pwd, $email_address){
         //return false;
         var_dump($statement);
         echo $e;
+        $connection = null;
         die();
     }
-    return true;  
+    $connection = null;
+    return true;
 }
 
 function loginUser($connection, $uid, $pwd){
@@ -125,11 +133,40 @@ function loginUser($connection, $uid, $pwd){
         die();
     }else if(password_verify($pwd, $uid_result['password']) === true){
         //1.44.36
-        //fare le sessioni
+        //fare le sessioni SI POTREBBE SALVARE UN VALORE ISLOGGEDIN IN $SESSION PER DIRE ALLA CLASSE SESSION CHE PUO INSERIRE LA TUPLA SENZA PROBLEMI
+        createSession($connection, $uid_result['id_user']);
+        $connection = null;
         return true;
 
     }
     
     echo "no";
     die();
+}
+
+function createSession($connection, $iduser){
+
+    //preparo la query
+    $query = "INSERT INTO session(start_time, id_user) VALUES(:start_time, :id_user)";
+    //
+    //  DECIDERE QUANDO ISTANZIARE LA CLASSE RISPETTO A QUANDO CREO LA TUPLA, FARE UNA COSA FATTA BENE
+    //
+    // $values = array(
+    //     ':start_time'=> ,
+    //     ':id_user' => $iduser
+    // );
+    
+    $statement = $connection->prepare($query);
+    try{
+        $statement->execute();
+    }catch(PDOException $e){
+        //return false;
+        var_dump($statement);
+        echo $e;
+        $connection = null;
+        die();
+    }
+
+    $connection = null;
+
 }

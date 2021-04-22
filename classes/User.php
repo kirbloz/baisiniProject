@@ -1,12 +1,12 @@
 <?php
 
-require_once('../php/function.inc.php');
+require_once('php/function.inc.php');
 
 class User {
 
-    private $id;                //id_user
-    private $username;          //username      
-    private $email;             //email
+    private $id,                //id_user
+            $username,          //username      
+            $email;             //email
 
     public function __construct(){
         $this->id = NULL;

@@ -18,5 +18,6 @@ if(!isset($_POST['submit'])){
     //passo i valori alla funzione della classe user
     $utente = new User();
     $utente->add_user($username, $pwd, $repeat_pwd, $email_address);
+    unset($_POST);
     die();
 }
