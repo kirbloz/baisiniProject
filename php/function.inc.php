@@ -1,6 +1,6 @@
 <?php
 
-//include_once('db/databasehandler.inc.php');
+//require_once('../db/databasehandler.inc.php');
 
 function emptyInputSignup($username, $pwd, $email_address){
     
@@ -74,17 +74,19 @@ function userExists($connection, $username, $email_address){
     try{
         $statement->execute($values);
     }catch(PDOException $e){
-        $connection = null;
         header('location:../signup.php?error=queryfailed');
         die();
     }
 
     if($statement->rowCount() > 0){
         //ritorno l'array con index i nomi delle colonne
-        $connection = null;
-        return $statement->fetch(PDO::FETCH_ASSOC);
+        
+        return $statement->fetch(PDO::FETCH_ASSOC); 
+        //questa query restituisce l'array con la tupla dell'utente, utile
+        //var_dump($statement->fetch(PDO::FETCH_ASSOC));
+        //die();
     }else{
-        $connection = null;
+        
         return false;
     }
 }
@@ -110,22 +112,29 @@ function createUser($connection, $username, $pwd, $email_address){
         //return false;
         var_dump($statement);
         echo $e;
-        $connection = null;
+        
         die();
     }
-    $connection = null;
+    
     return true;
 }
 
-function loginUser($connection, $uid, $pwd){
+//questa funzione va usata SOLO se sono già sicuro che l'utente esiste,
+//perchè userExists ritorna lo statamentFETCH solo quando rowCount > 0
+function getUserTuple($connection, $uid){
 
-    //controllo che l'utente cerchi di loggare un account che esiste effettivamente
-    //se l'utente esiste ne ho già salvate le credenziali nella variabile
-    $uid_result = userExists($connection, $uid, $uid);
-    if( $uid_result == false){
+    $result = userExists($connection, $uid, $uid);
+    if($result === false){
         header('location:../login.php?error=nouser');
         die();
-    }
+    }else
+        return $result;
+}
+
+function loginUser($connection, $uid, $pwd){
+    //controllo che l'utente cerchi di loggare un account che esiste effettivamente
+    //se l'utente esiste ne ho già salvate le credenziali nella variabile
+    $uid_result = getUserTuple($connection, $uid);
 
     //se la password fornita è diversa da quella nel db ti rimando indietro
     if(password_verify($pwd, $uid_result['password']) === false){
@@ -134,39 +143,8 @@ function loginUser($connection, $uid, $pwd){
     }else if(password_verify($pwd, $uid_result['password']) === true){
         //1.44.36
         //fare le sessioni SI POTREBBE SALVARE UN VALORE ISLOGGEDIN IN $SESSION PER DIRE ALLA CLASSE SESSION CHE PUO INSERIRE LA TUPLA SENZA PROBLEMI
-        createSession($connection, $uid_result['id_user']);
-        $connection = null;
         return true;
-
     }
-    
     echo "no";
     die();
-}
-
-function createSession($connection, $iduser){
-
-    //preparo la query
-    $query = "INSERT INTO session(start_time, id_user) VALUES(:start_time, :id_user)";
-    //
-    //  DECIDERE QUANDO ISTANZIARE LA CLASSE RISPETTO A QUANDO CREO LA TUPLA, FARE UNA COSA FATTA BENE
-    //
-    // $values = array(
-    //     ':start_time'=> ,
-    //     ':id_user' => $iduser
-    // );
-    
-    $statement = $connection->prepare($query);
-    try{
-        $statement->execute();
-    }catch(PDOException $e){
-        //return false;
-        var_dump($statement);
-        echo $e;
-        $connection = null;
-        die();
-    }
-
-    $connection = null;
-
 }

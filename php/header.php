@@ -21,7 +21,5 @@
 			</ul>
 		</div>
 		<div>
-			<?php
-			echo " \$_SESSION > " . var_dump($_SESSION);
-			?>
+			
 		</div>

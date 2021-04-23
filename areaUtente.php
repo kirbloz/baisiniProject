@@ -1,7 +1,10 @@
     <?php
-        include('php/header.php');
-        //include('classes/Session.php');
-        Session::check($true);
+        require_once('php/header.php');
+        echo 1;
+        require_once('php/session.inc.php');  
+        echo 2;   
+        check(true); //session
+        echo 3;
     ?>	
 
     <div class="wrapper">

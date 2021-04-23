@@ -1,5 +1,6 @@
 <?php
 
+
 if(!isset($_POST['submit'])){
     //se l'utente è arrivato su questa pagina senza submittare il form
     //lo rispedisce indietro
@@ -18,6 +19,6 @@ if(!isset($_POST['submit'])){
     //passo i valori alla funzione della classe user
     $utente = new User();
     $utente->add_user($username, $pwd, $repeat_pwd, $email_address);
-    unset($_POST);
+    //unset($_POST);
     die();
 }

@@ -18,9 +18,8 @@
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
             <input class="button" id="reset" type="reset" value="RIPULISCI"/>
-			<input class="button" id="confirm" type="submit" value="CONFERMA"/>
-        </form>
-        <br><br>
+			<input class="button" id="confirm" name="submit" type="submit"  value="CONFERMA"/>
+        </form><br><br>
 
         <?php
             if(isset($_GET['error'])){
@@ -37,7 +36,7 @@
                     echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> Benvenuto " . $_GET['username'] . ". Verrai inviato alla tua area personale. </p>";
                     header('Refresh: 5; URL=areaUtente.php');
                 }
-                echo "<br><br>";
+                    echo "<br><br>";
             }
 
         ?>

@@ -1,6 +1,7 @@
 <?php
 
-require_once('php/function.inc.php');
+require_once('../php/function.inc.php');
+require_once('../php/session.inc.php');
 
 class User {
 
@@ -96,6 +97,11 @@ class User {
 
         if(loginUser($connection, $username, $pwd) !== true){
             header('location:../login.php?error=queryfailed');
+            die();
+        }
+
+        if(createSession($connection, $username) !== true){
+            header('location:../login.php?error=sessionfailed');
             die();
         }
 
