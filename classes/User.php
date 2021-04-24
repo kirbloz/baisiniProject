@@ -9,6 +9,9 @@ class User {
             $username,          //username      
             $email;             //email
 
+    //attributi da customer
+    //wip
+    
     public function __construct(){
         $this->id = NULL;
         $this->username = NULL;
@@ -16,6 +19,19 @@ class User {
     }
 
     public function __destruct(){
+    }
+
+    //setters and getters
+    public function setId($value) {
+        $this->id = $value;
+    }
+
+    public function setUsername(string $value) {
+        $this->username = $value;
+    }
+
+    public function setEmail(string $value) {
+        $this->email = $value;
     }
 
     public function getId(): ?int {
@@ -100,13 +116,12 @@ class User {
             die();
         }
 
-        if(createSession($connection, $username) !== true){
+        if(($uid_result = createSession($connection, $username)) == false){
             header('location:../login.php?error=sessionfailed');
             die();
         }
-
-        //rimando l'utente alla login con il codice corretto
-        header('location:../login.php?error=none&username='. $username);
-        die();
+        
+        return $uid_result;
+        //fine script e si ritorna a login.inc.php
     }
 }

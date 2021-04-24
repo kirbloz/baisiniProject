@@ -1,6 +1,7 @@
 <?php
 
 require_once('function.inc.php');
+//require_once('../classes/User.php');
 
 //controllo che esista una sessione, se non esiste invio a login.php
 //se esiste ma è scaduta invio all'index e distruggo la sessione
@@ -11,7 +12,7 @@ function check($redirect){
     session_start();
     //var_dump($_SESSION);
     //die();
-    if(!isset($_SESSION['start_time'])){
+    if(!isset($_SESSION['isStarted'])){
         //se start time non c'è faccio redirect oppure ritorno false
         if($redirect){
             header('Location:login.php');
@@ -63,11 +64,27 @@ function createSession($connection, $username){
         $connection = null;
         die();
     }
-    /*var_dump($statement);
-    die();*/
-    echo "yay";
-    die();
+    return $uid_result;
+    // lo script ritorna in user->login_user
     //
     //           AGGIUNGERE CONTROLLO SESSIONI GIA' PRESENTI
     //              PRIMA DEL LOGIN E IN CONCOMITANZA
-}                   //FARE IL LOGOUT
+    //                          FARE IL LOGOUT
+}                   
+
+function startSession(User $utente, array $uid_result){
+
+    //aggiungere funzione per salvare anche i dati customer
+    session_start();
+    session_unset();
+    session_destroy();
+    //creo
+    session_start();
+    $_SESSION['isStarted'] = true;
+    $_SESSION['userOBJ'] = $utente;
+
+    $utente->setId($uid_result['id_user']);
+    $utente->setEmail($uid_result['email']);
+    $utente->setUsername($uid_result['username']);
+
+}

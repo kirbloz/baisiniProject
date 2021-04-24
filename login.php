@@ -31,7 +31,9 @@
                 }else if($_GET['error'] == 'wrongpassword'){
                     echo "<p class='centered error'> La password che hai inserito &egrave; errata. </p>";
                 }else if($_GET['error'] == 'queryfailed'){
-                    echo "<p class='centered error'> Qualcosa &egrave; andato storto. </p>";
+                    echo "<p class='centered error'> Qualcosa &egrave; andato storto [QUERY]. </p>";
+                }else if($_GET['error'] == 'sessionfailed'){
+                    echo "<p class='centered error'> Qualcosa &egrave; andato storto [SESSION]. </p>";
                 }else if($_GET['error'] == 'none' && isset($_GET['username'])){
                     echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> Benvenuto " . $_GET['username'] . ". Verrai inviato alla tua area personale. </p>";
                     header('Refresh: 5; URL=areaUtente.php');

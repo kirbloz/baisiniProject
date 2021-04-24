@@ -16,12 +16,21 @@ if(!isset($_POST['submit'])){
     
     //passo i valori alla funzione della classe user
     $utente = new User();
-    $utente->login_user($uid, $pwd);
-    //unset($_POST);
-    die();
+    $uid_result = $utente->login_user($uid, $pwd);
+
+    //il login mi ha ritornato l'array della tupla, lo salvo
+    try{
+        startSession($utente, $uid_result);
+    }catch(Exception $e){
+        //echo $e;
+        header('location:../login.php?error=sessionfailed');
+        die();
+    }
     
-    //
-    //  aggiungere controllo che non sia già loggato
-    //  uhh si
-    //
+
+    //rimando l'utente alla login con il codice corretto
+    header('location:../login.php?error=none&username='. $username);
+    unset($_POST);
+    die();
+    //aggiungi controllo already logged in
 }
