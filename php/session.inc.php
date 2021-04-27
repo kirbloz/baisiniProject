@@ -10,8 +10,7 @@ function check($redirect){
     //AVERE $REDIRECT=FALSE E' PERICOLOSO PERCHE' NON RIMANDA INDIETRO L'UTENTE, 
     //FARE CONTROLLO OGNI VOLTA CHE SI RICHIAMA CHECK SENZA REDIRECT
     session_start();
-    //var_dump($_SESSION);
-    //die();
+
     if(!isset($_SESSION['isStarted'])){
         //se start time non c'è faccio redirect oppure ritorno false
         if($redirect){
@@ -26,9 +25,10 @@ function check($redirect){
         //se serve redirect lo faccio solo in caso di logout
         $now = time();
         $duration = $now - $_SESSION['start_time'];
-        if($duration > 30){ //se è da più di un ora, logout
+
+        if($duration > 600){ //se è da più di un ora, logout
                 if($redirect){
-                    header('Location:logout.php');
+                    header('Location:php/logout.inc.php');
                     die;
                     //lascio fare tutto il log out alla sua pagina, in caso di sessione scaduta
                     //l'unica opzione è SEMPRE log out, lì dovrò distruggere la sessione
@@ -48,6 +48,15 @@ function check($redirect){
 function createSession($connection, $username){
     
     $uid_result = getUserTuple($connection, $username);
+
+    //cancello query contenenti altre sessioni
+    if(check(false))
+        deleteSessionTuple($connection, $uid_result['username']);
+    
+    /*var_dump($statement);
+    echo "ok";
+    die();*/
+
     //preparo la query
     $query = "INSERT INTO session(start_time, id_user) VALUES(:start_time, :id_user)";
     $values = array(
@@ -72,6 +81,21 @@ function createSession($connection, $username){
     //                          FARE IL LOGOUT
 }                   
 
+function deleteSessionTuple($connection, string $username){
+    $query = "DELETE FROM session WHERE id_user = :id_user";
+    $values = $username;
+    $statement = $connection->prepare($query);
+    try{
+        $statement->execute($values);
+    }catch(PDOException $e){
+        //return false;
+        var_dump($statement);
+        echo $e;
+        die();
+    }
+
+}
+
 function startSession(User $utente, array $uid_result){
 
     //aggiungere funzione per salvare anche i dati customer
@@ -86,5 +110,9 @@ function startSession(User $utente, array $uid_result){
     $utente->setId($uid_result['id_user']);
     $utente->setEmail($uid_result['email']);
     $utente->setUsername($uid_result['username']);
+
+}
+
+function stopSession(){
 
 }

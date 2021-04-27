@@ -16,9 +16,9 @@ if(!isset($_POST['submit'])){
     
     //passo i valori alla funzione della classe user
     $utente = new User();
-    $uid_result = $utente->login_user($uid, $pwd);
+    $uid_result = $utente->login_user($uid, $pwd); //qua dentro c'è la createSession
 
-    //il login mi ha ritornato l'array della tupla, lo salvo
+    //il login mi ha ritornato l'array della tupla, lo salvo nella tab sessioni
     try{
         startSession($utente, $uid_result);
     }catch(Exception $e){

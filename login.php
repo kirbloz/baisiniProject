@@ -22,6 +22,7 @@
         </form><br><br>
 
         <?php
+
             if(isset($_GET['error'])){
                 //check if there was an error
                 if($_GET['error'] == 'emptyinput'){

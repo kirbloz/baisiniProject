@@ -124,4 +124,9 @@ class User {
         return $uid_result;
         //fine script e si ritorna a login.inc.php
     }
+
+    public function logout_user(){
+        $this->__destruct();
+        stopSession();
+    }
 }
