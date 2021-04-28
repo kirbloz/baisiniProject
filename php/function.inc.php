@@ -121,9 +121,14 @@ function createUser($connection, $username, $pwd, $email_address){
 
 //questa funzione va usata SOLO se sono già sicuro che l'utente esiste,
 //perchè userExists ritorna lo statamentFETCH solo quando rowCount > 0
-function getUserTuple($connection, $uid){
+//se nel paramentro session metto true allora lui considererà $uid come l'id della sessione, e recupera il nome da lì
+function getUserTuple($connection, string $uid, bool $session){
+    if($session){
+        $session = getSessionTuple($_SESSION['idSession']);
+        $result = userExists($connection, $session['username'], $session['username']);
+    }else
+        $result = userExists($connection, $uid, $uid);
 
-    $result = userExists($connection, $uid, $uid);
     if($result === false){
         header('location:../login.php?error=nouser');
         die();
@@ -134,7 +139,7 @@ function getUserTuple($connection, $uid){
 function loginUser($connection, $uid, $pwd){
     //controllo che l'utente cerchi di loggare un account che esiste effettivamente
     //se l'utente esiste ne ho già salvate le credenziali nella variabile
-    $uid_result = getUserTuple($connection, $uid);
+    $uid_result = getUserTuple($connection, $uid, false);
 
     //se la password fornita è diversa da quella nel db ti rimando indietro
     if(password_verify($pwd, $uid_result['password']) === false){

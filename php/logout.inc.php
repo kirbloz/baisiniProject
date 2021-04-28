@@ -4,24 +4,16 @@
     require_once('../php/session.inc.php');
 
     echo "sei in logout.inc.php<br>";
-    //session_start();
     //controlla se effettivamente c'è una sessione
-    if(!check(false)){
-        $user = $_SESSION['userOBJ'];
-        var_dump($user);
-        deleteSessionTuple($connection, $user->getUsername);
+    if(checkActive(false)){
+        $tuple = getUserTuple($connection, $_SESSION['idSession'], true);
+        stopSession($tuple['id_user']);
     }else{
         header("location:../logout.php?error=nosession");
     }
 
     //ok ora funziona però $_SESSION sbabbio perchè la classe user non ha un autoloader????
     //boh guarderò
-
-
-
-
-
-
 
 
     echo "<a href='../index.php'>clicca per home</a>";

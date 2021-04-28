@@ -127,6 +127,6 @@ class User {
 
     public function logout_user(){
         $this->__destruct();
-        stopSession();
+        stopSession($this->username);
     }
 }

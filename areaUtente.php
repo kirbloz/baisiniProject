@@ -3,7 +3,7 @@
         echo 1;
         require_once('php/session.inc.php');  
         echo 2;   
-        check(true); //session
+        checkActive(true); //session
         echo 3;
     ?>	
 

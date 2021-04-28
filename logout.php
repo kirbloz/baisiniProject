@@ -1,3 +1,7 @@
+<?php
+    if(isset($_SESSION['idSession']))
+        header("location:php/logout.inc.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <html>

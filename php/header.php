@@ -14,25 +14,26 @@
 		<div class="main-header color-lightb">
 			<h1><a href="index.php">Easy LAN PORTAL</a></h1>
 			<ul class="navlinks">
-				<li><a href="#">About</a></li>
+				<li><a href="#">Info</a></li>
 				
 					<?php
 					session_start();
-					if(!isset($_SESSION['isStarted'])){
+					if(!isset($_SESSION['idSession'])){
 						echo '<li><a id="login-button" href="login.php">Login</a></li>';
 						echo '<li><a href="signup.php">Registrati</a></li>';
-					}else
+					}else{
 						echo '<li><a href="areaUtente.php">Area Utente</a></li>';
+						echo '<li><a href="php/logout.inc.php">Logout</a></li>';
+					}
 					?>
 				
 			</ul>
 		</div>
-		<!--<div style="border: black 2px solid;">
+		<div style="border: black 2px solid;">
 			<?php
-			/*session_start();
-			var_dump($_SESSION);*/
+				var_dump($_SESSION);
 			?>
-		</div>-->
+		</div>
 		<div>
 			
 		</div>
