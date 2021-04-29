@@ -5,10 +5,13 @@
 
     echo "sei in logout.inc.php<br>";
     //controlla se effettivamente c'è una sessione
-    if(checkActive(false)){
-        $tuple = getUserTuple($connection, $_SESSION['idSession'], true);
-        stopSession($tuple['id_user']);
+    if(checkActive()){
+        //$tuple = getUserTuple($_SESSION['idSession'], true);
+        deleteSessionTuple(session_id());
     }else{
+        session_start();
+        session_unset();
+        session_destroy();
         header("location:../logout.php?error=nosession");
     }
 

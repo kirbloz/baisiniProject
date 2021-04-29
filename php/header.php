@@ -1,3 +1,10 @@
+<?php
+@include_once('session.inc.php');
+@include_once('php/session.inc.php');
+@include_once('../php/session.inc.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <html>
@@ -17,8 +24,8 @@
 				<li><a href="#">Info</a></li>
 				
 					<?php
-					session_start();
-					if(!isset($_SESSION['idSession'])){
+					echo "dio" . session_status();
+					if(checkActive()){
 						echo '<li><a id="login-button" href="login.php">Login</a></li>';
 						echo '<li><a href="signup.php">Registrati</a></li>';
 					}else{
@@ -28,12 +35,4 @@
 					?>
 				
 			</ul>
-		</div>
-		<div style="border: black 2px solid;">
-			<?php
-				var_dump($_SESSION);
-			?>
-		</div>
-		<div>
-			
 		</div>

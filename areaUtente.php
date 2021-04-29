@@ -1,10 +1,7 @@
     <?php
-        require_once('php/header.php');
-        echo 1;
-        require_once('php/session.inc.php');  
-        echo 2;   
-        checkActive(true); //session
-        echo 3;
+        @include('php/header.php');
+        @include('php/session.inc.php');  
+        checkActive(); //session
     ?>	
 
     <div class="wrapper">
@@ -13,9 +10,6 @@
         <br>
 
         <div class="user-data wrapper centered color-lightb">
-            <?php
-                var_dump($_SESSION);
-            ?>
         </div>
         
     </div>

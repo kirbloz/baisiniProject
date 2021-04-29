@@ -1,6 +1,6 @@
 <?php
 
-//require_once('../db/databasehandler.inc.php');
+require_once('../db/databasehandler.inc.php');
 
 function emptyInputSignup($username, $pwd, $email_address){
     
@@ -61,13 +61,15 @@ function pwdMatch($pwd, $pwdRepeat){
     return $result;
 }
 
-function userExists($connection, $username, $email_address){
+function userExists($username, $email_address){
     $values=array();
 
     //preparo la query per la ricerca e l'array per i valori
     $query = "SELECT * FROM user WHERE username = :username OR email = :email_address;";
     $values[':username'] = $username;
     $values[':email_address'] = $email_address;
+
+    global $connection;
     $statement = $connection->prepare($query);
 
     //se query multiple prepara prima e poi fai nel for con i rispetti values
@@ -92,64 +94,6 @@ function userExists($connection, $username, $email_address){
 }
 
 //spostare queste funzioni nella classe User
-function createUser($connection, $username, $pwd, $email_address){
 
-    //preparo la query
-    $query = "INSERT INTO user( username, password, email) VALUES(:username, :password, :email_address)";
-    
-    //crypto la password e preparo l'array di valori
-    $pwd = password_hash($pwd, PASSWORD_DEFAULT);
-    $values = array(
-        ':username'=> $_POST['username'],
-        ':password' => $pwd,
-        ':email_address' => $_POST['email_address']
-    );
-    
-    $statement = $connection->prepare($query);
-    try{
-        $statement->execute($values);
-    }catch(PDOException $e){
-        //return false;
-        var_dump($statement);
-        echo $e;
-        
-        die();
-    }
-    
-    return true;
-}
 
-//questa funzione va usata SOLO se sono già sicuro che l'utente esiste,
-//perchè userExists ritorna lo statamentFETCH solo quando rowCount > 0
-//se nel paramentro session metto true allora lui considererà $uid come l'id della sessione, e recupera il nome da lì
-function getUserTuple($connection, string $uid, bool $session){
-    if($session){
-        $session = getSessionTuple($_SESSION['idSession']);
-        $result = userExists($connection, $session['username'], $session['username']);
-    }else
-        $result = userExists($connection, $uid, $uid);
 
-    if($result === false){
-        header('location:../login.php?error=nouser');
-        die();
-    }else
-        return $result;
-}
-
-function loginUser($connection, $uid, $pwd){
-    //controllo che l'utente cerchi di loggare un account che esiste effettivamente
-    //se l'utente esiste ne ho già salvate le credenziali nella variabile
-    $uid_result = getUserTuple($connection, $uid, false);
-
-    //se la password fornita è diversa da quella nel db ti rimando indietro
-    if(password_verify($pwd, $uid_result['password']) === false){
-        header('location:../login.php?error=wrongpassword');
-        die();
-    }else if(password_verify($pwd, $uid_result['password']) === true){
-        //1.44.36
-        //fare le sessioni SI POTREBBE SALVARE UN VALORE ISLOGGEDIN IN $SESSION PER DIRE ALLA CLASSE SESSION CHE PUO INSERIRE LA TUPLA SENZA PROBLEMI
-        return true;
-    }
-    echo "no";
-    die();
-}

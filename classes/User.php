@@ -1,7 +1,10 @@
 <?php
 
-require_once('../php/function.inc.php');
-require_once('../php/session.inc.php');
+include('../php/function.inc.php');
+include('php/session.inc.php');
+include('session.inc.php');
+include('../db/databasehandler.inc.php');
+include('db/databasehandler.inc.php');
 
 class User {
 
@@ -81,12 +84,12 @@ class User {
         }
         
         //uso la conenssione al db, controllo se esiste già epoi procedo con il caricamento dei dati
-        if(userExists($connection, $username, $email_address) !== false){
+        if(userExists($username, $email_address) !== false){
             header('location:../signup.php?error=useralreadyexists');
             die();
         }
 
-        if(createUser($connection, $username, $pwd, $email_address) !== true){
+        if($this->createDB($username, $pwd, $email_address) !== true){
             header('location:../signup.php?error=queryfailed');
             die();
         }
@@ -111,22 +114,92 @@ class User {
             die();
         }
 
-        if(loginUser($connection, $username, $pwd) !== true){
+        if($this->loginDB($username, $pwd) !== true){
             header('location:../login.php?error=queryfailed');
             die();
         }
 
-        if(($uid_result = createSession($connection, $username)) == false){
-            header('location:../login.php?error=sessionfailed');
-            die();
-        }
-        
-        return $uid_result;
+        //a questo punto ho effettuato il login e posso popolare l'oggetto user
+        $this->setEverything($username);
+        return $this->id;
         //fine script e si ritorna a login.inc.php
     }
 
+    public function getUserTuple(string $uid, bool $session){
+
+        global $connection;
+        if($session){
+            $session = getSessionTuple(session_id());
+            $result = userExists($session['username'], $session['username']);
+        }else
+            $result = userExists($uid, $uid);
+
+        if($result === false){
+            header('location:../login.php?error=nouser');
+            die();
+        }else
+            return $result;
+    }
+
+    private function setEverything($uid){
+        $values = $this->getUserTuple($uid, false);
+        if(!is_array($values)){
+            header('location:../login.php?error=queryfailed');
+            die();
+        }
+        $this->id = $values['id_user'];
+        $this->username = $values['username'];
+        $this->email = $values['email'];
+    }
+
+    private function loginDB($uid, $pwd){
+        
+        //controllo che l'utente cerchi di loggare un account che esiste effettivamente
+        //se l'utente esiste ne ho già salvate le credenziali nella variabile
+        $uid_result = $this->getUserTuple($uid, false);
+    
+        //se la password fornita è diversa da quella nel db ti rimando indietro
+        if(password_verify($pwd, $uid_result['password']) === false){
+            header('location:../login.php?error=wrongpassword');
+            die();
+        }else if(password_verify($pwd, $uid_result['password']) === true){
+            //1.44.36
+            //fare le sessioni SI POTREBBE SALVARE UN VALORE ISLOGGEDIN IN $SESSION PER DIRE ALLA CLASSE SESSION CHE PUO INSERIRE LA TUPLA SENZA PROBLEMI
+            return true;
+        }
+        echo "no";
+        die();
+    }
+
+    private function createDB($username, $pwd, $email_address){
+
+        //preparo la query
+        $query = "INSERT INTO user( username, password, email) VALUES(:username, :password, :email_address)";
+        
+        //crypto la password e preparo l'array di valori
+        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+        $values = array(
+            ':username'=> $_POST['username'],
+            ':password' => $pwd,
+            ':email_address' => $_POST['email_address']
+        );
+        global $connection;
+        $statement = $connection->prepare($query);
+        try{
+            $statement->execute($values);
+        }catch(PDOException $e){
+            //return false;
+            var_dump($statement);
+            echo $e;
+            
+            die();
+        }
+        
+        return true;
+    }
+
     public function logout_user(){
-        $this->__destruct();
         stopSession($this->username);
+        $this->__destruct();
     }
 }

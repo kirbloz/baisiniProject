@@ -16,10 +16,15 @@ if(!isset($_POST['submit'])){
     
     //passo i valori alla funzione della classe user
     $utente = new User();
-    $uid_result = $utente->login_user($uid, $pwd); //qua dentro c'è la createSession    
+    $id = $utente->login_user($uid, $pwd);  
+    
+    if(!createSession($id)){
+        header('location:../login.php?error=sessionfailed');
+        die();
+    }
 
     //rimando l'utente alla login con il codice corretto
-    header('location:../login.php?error=none&username='. $username);
+    header('location:../login.php?error=none&username='. $utente->getUsername());
     unset($_POST);
     die();
     //aggiungi controllo already logged in
