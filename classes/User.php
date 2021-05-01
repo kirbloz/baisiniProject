@@ -1,10 +1,10 @@
 <?php
 
-include('../php/function.inc.php');
-include('php/session.inc.php');
-include('session.inc.php');
-include('../db/databasehandler.inc.php');
-include('db/databasehandler.inc.php');
+@include('../php/function.inc.php');
+@include('php/session.inc.php');
+@include('session.inc.php');
+@include('../db/databasehandler.inc.php');
+@include('db/databasehandler.inc.php');
 
 class User {
 

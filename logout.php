@@ -1,6 +1,13 @@
 <?php
-    if(isset($_SESSION['idSession']))
-        header("location:php/logout.inc.php");
+    @include('php/session.inc.php');
+    if(!isset($_GET['error'])){
+        if(checkActive()){
+            header("location:php/logout.inc.php");
+        }else{
+            header("location:login.php");
+        }
+    }else
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,10 +25,13 @@
         <br>
         <?php
             //check if there was an error
-            if(isset($_GET['error']))
+            
                 if($_GET['error'] == 'nosession'){
                     echo '<div class="centered" style="padding:0px 20px;">';
                     echo "<h3>Nessuna sessione valida attiva in questo momento.</h3>";
+                }else if($_GET['error'] == 'noerror'){
+                    echo '<div class="centered" style="padding:0px 20px;">';
+                    echo "<h3>Sessione conclusa.</h3>";
                 }else{
         ?>
             <div class="centered" style="padding:0px 20px;">
