@@ -199,7 +199,7 @@ class User {
     }
 
     public function logout_user(){
-        stopSession($this->username);
+        deleteSessionTuple($this->username);
         $this->__destruct();
     }
 }
