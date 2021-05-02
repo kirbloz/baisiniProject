@@ -134,14 +134,16 @@ class User {
         }
 
         //a questo punto ho effettuato il login e posso popolare l'oggetto user
-        $this->setEverything($username);
+        $this->setEverything($username, false);
         return $this->id;
         //fine script e si ritorna a login.inc.php
     }
 
-    public function getUserTuple(string $uid, bool $session){
+
+    public function getUserTuple($uid, bool $session){
 
         global $connection;
+        //se $session è true, allora uid viene interpretato come la PK della sessione
         if($session){
             $session = getSessionTuple(session_id());
             $result = userExists($session['username'], $session['username']);
@@ -155,8 +157,8 @@ class User {
             return $result;
     }
 
-    private function setEverything($uid){
-        $values = $this->getUserTuple($uid, false);
+    public function setEverything($uid, bool $session){
+        $values = $this->getUserTuple($uid, $session);
         if(!is_array($values)){
             header('location:../login.php?error=queryfailed');
             die();

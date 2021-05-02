@@ -94,14 +94,13 @@ function userExists($username, $email_address){
     }
 }
 
-function generateUserOBJ(string $sessionid){
+function generateUserOBJ(string $sid){
     @include_once('../classes/User.php');
     @include_once('classes/User.php');
 
     $temp = new User();
-    
-    //fare un meccanismo che riempie temp con le cose dal db
-
+    $temp->setEverything($sid, true);
+    //var_dump($temp);
     return $temp;
 }
 

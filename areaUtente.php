@@ -22,7 +22,7 @@
 
         <div class="user-data">
             <?php
-                echo "Benvenuto" . $utente->getUsername() . ".\r\nQuesta &egrave; la tua area utente.\r\nUsa i collegamenti a lato per accedere ai vari servizi"
+                echo "Benvenuto " . $utente->getUsername() . ".\r\nQuesta &egrave; la tua area utente.\r\nUsa i collegamenti a lato per accedere ai vari servizi"
             ?>
         </div>
         
