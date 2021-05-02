@@ -100,7 +100,6 @@ function generateUserOBJ(string $sid){
 
     $temp = new User();
     $temp->setEverything($sid, true);
-    //var_dump($temp);
     return $temp;
 }
 

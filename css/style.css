@@ -129,7 +129,7 @@ footer{
 	padding: 10px;
 }
 
-.user-data{
+.user-div{
 	position: relative;
 	margin-top:10px;
 }
@@ -141,7 +141,12 @@ footer{
 	height:100%;
 }
 
-
+.user-info{
+	text-align:left;
+	width:95%;
+	border: double black 4px;
+	padding:20px;
+}
 
 
 

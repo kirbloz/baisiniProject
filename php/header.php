@@ -28,7 +28,7 @@
 						echo '<li><a id="login-button" href="login.php">Login</a></li>';
 						echo '<li><a href="signup.php">Registrati</a></li>';
 					}else{
-						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaUtente.php')
+						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaUtente.php' && $_SERVER['REQUEST_URI'] != '/baisiniProject/userShowcase.php')
 							echo '<li><a href="areaUtente.php">Area Utente</a></li>';
 						echo '<li><a href="php/logout.inc.php">Logout</a></li>';
 					}

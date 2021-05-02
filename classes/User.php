@@ -63,7 +63,33 @@ class User {
       return $this->email;   
     }
 
+    public function getFirstname(): ?string {
+        return $this->firstname;
+    }
 
+    public function getLastname(): ?string {
+        return $this->lastname;
+    }
+
+    public function getGender(): ?string {
+        return $this->gender;
+    }
+
+    public function getAddress(): ?string {
+        return $this->address;
+    }
+
+    public function getCity(): ?string {
+        return $this->city;
+    } 
+
+    public function getPostalCode(): ?string {
+        return $this->postal_code;
+    }
+
+    public function getBirth(){
+        return $this->birth_date;
+    }
     /* registrazione dell'utente nel Database */
 
     public function add_user($username, $pwd, $repeat_pwd, $email_address){
@@ -168,14 +194,14 @@ class User {
         $this->email = $values['email'];
     }
 
-    private function setCustomer(){
+    public function setCustomer(){
         global $connection;
         //preparo la query
         $query = "SELECT * FROM customer WHERE id_user = :id_user";
         if(!isset($this->id))
             header('location:logout.inc.php');
         $values = array(':id_user'=> $this->id);
-
+        
         global $connection;
         $statement = $connection->prepare($query);
         try{
@@ -187,14 +213,19 @@ class User {
 
         //controllo se effettivamente ho una query e proseguo
         if($statement->rowCount() > 0){
-            $statement = $statement->fetch(PDO::FETCH_ASSOC); 
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
+            $this->firstname = $statement['firstname'];
+            $this->lastname = $statement['lastname'];
+            $this->gender = $statement['gender'];
+            $this->address = $statement['address'];
+            $this->city = $statement['city'];
+            $this->postal_code = $statement['postal_code'];
+            $this->birth_date = $statement['birth_date'];
+            return true;
         }else{
             //no tupla
             return false;
         }
-
-        var_dump($statement);
-        die();
     }
 
     private function loginDB($uid, $pwd){
