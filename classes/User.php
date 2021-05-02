@@ -1,16 +1,24 @@
 <?php
 
-@include('../php/function.inc.php');
-@include('php/session.inc.php');
-@include('session.inc.php');
-@include('../db/databasehandler.inc.php');
-@include('db/databasehandler.inc.php');
+@include_once('../php/function.inc.php');
+@include_once('php/session.inc.php');
+@include_once('session.inc.php');
+@include_once('../db/databasehandler.inc.php');
+@include_once('db/databasehandler.inc.php');
 
 class User {
 
     private $id,                //id_user
             $username,          //username      
             $email;             //email
+
+    private $firstname,
+            $lastname,
+            $gender,
+            $address,
+            $city,
+            $postal_code,
+            $birth_date;
 
     //attributi da customer
     //wip
@@ -19,6 +27,12 @@ class User {
         $this->id = NULL;
         $this->username = NULL;
         $this->email = NULL;
+        $this->firstname = NULL;
+        $this->lastname = NULL;
+        $this->gender = NULL;
+        $this->address = NULL;
+        $this->postal_code = NULL;
+        $this->birth_date = NULL;
     }
 
     public function __destruct(){
@@ -150,6 +164,35 @@ class User {
         $this->id = $values['id_user'];
         $this->username = $values['username'];
         $this->email = $values['email'];
+    }
+
+    private function setCustomer(){
+        global $connection;
+        //preparo la query
+        $query = "SELECT * FROM customer WHERE id_user = :id_user";
+        if(!isset($this->id))
+            header('location:logout.inc.php');
+        $values = array(':id_user'=> $this->id);
+
+        global $connection;
+        $statement = $connection->prepare($query);
+        try{
+            $statement->execute($values);
+        }catch(PDOException $e){
+            //errore
+            return false;
+        }
+
+        //controllo se effettivamente ho una query e proseguo
+        if($statement->rowCount() > 0){
+            $statement = $statement->fetch(PDO::FETCH_ASSOC); 
+        }else{
+            //no tupla
+            return false;
+        }
+
+        var_dump($statement);
+        die();
     }
 
     private function loginDB($uid, $pwd){

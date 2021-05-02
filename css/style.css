@@ -22,6 +22,7 @@ a{
 .bg-div{
 	position: relative;
 	width:80%;
+	min-height: 600px;
 	margin:auto;
 }
 
@@ -63,6 +64,7 @@ a{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-wrap: wrap;
 	padding: 10px 0;
 }
 
@@ -75,6 +77,7 @@ a{
 }
 
 .navlinks{
+	flex-basis: 100%;
 	overflow: hidden;
 	display: flex;
 	justify-content: space-between;
@@ -109,6 +112,38 @@ footer{
 	width: 80%;
 	margin-top: 80%;
 }
+
+
+
+
+/* navbar nell'area utente */
+
+.user-area{
+	width:95%;
+	position: relative;
+	display:table;
+	clear:both;
+}
+
+.user-nav li{
+	position: relative;
+	padding: 10px;
+}
+
+.user-data{
+	position: relative;
+	margin-top:10px;
+}
+
+.user-area div{
+	float:left;
+	padding: 0 10px;
+	width:50%;
+	height:100%;
+}
+
+
+
 
 
 /* login-sign up */

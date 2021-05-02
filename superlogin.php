@@ -12,8 +12,8 @@
         <br>
         <h1 class="centered"><a href="index.php">EASY LAN PORTAL</a></h1>
         <br>
-        <form class="centered login-form" action="php/login.inc.php" method="post">
-            <input type="text" name="username" placeholder="Nome utente/Email..." required>
+        <form class="centered login-form" action="php/superlogin.inc.php" method="post">
+            <input type="text" name="username" placeholder="Matricola" required>
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
@@ -41,14 +41,14 @@
                     echo "<p style='font-weight:bold; color:#208F82; width:60%;' class='centered'> Benvenuto " . $_GET['username'] . ". Verrai inviato alla tua area personale. </p>";
                     header('Refresh: 5; URL=areaUtente.php');
                 }
-                    echo "<br><br>";
+                    echo "<br>";
             }
 
         ?>
 
         <div class="centered redirect-login"> 
-            <a href="signup.php">Non sei registrato? Clicca qui.</a><br>
-            <a href="superlogin.php">Sei un dipendente della nostra azienda? Clicca qui.</a>
+            <a href="supersignup.php">Non sei registrato? Clicca qui.</a><br>
+            <a href="superlogin.php">Non sei parte del nostro personale? Clicca qui.</a>
         </div>
     </div>
 </body>

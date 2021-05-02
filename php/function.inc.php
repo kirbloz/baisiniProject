@@ -1,6 +1,7 @@
 <?php
 
-require_once('../db/databasehandler.inc.php');
+@include_once('../db/databasehandler.inc.php');
+@include_once('db/databasehandler.inc.php');
 
 function emptyInputSignup($username, $pwd, $email_address){
     
@@ -91,6 +92,17 @@ function userExists($username, $email_address){
         
         return false;
     }
+}
+
+function generateUserOBJ(string $sessionid){
+    @include_once('../classes/User.php');
+    @include_once('classes/User.php');
+
+    $temp = new User();
+    
+    //fare un meccanismo che riempie temp con le cose dal db
+
+    return $temp;
 }
 
 //spostare queste funzioni nella classe User
