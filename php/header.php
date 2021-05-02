@@ -1,9 +1,7 @@
 <?php
 @include_once('session.inc.php');
-if(!function_exists(checkActive()))
-	@include_once('php/session.inc.php');
-if(!function_exists(checkActive()))
-	@include_once('../php/session.inc.php');
+@include_once('php/session.inc.php');
+@include_once('../php/session.inc.php');
 @session_start();
 ?>
 

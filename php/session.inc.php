@@ -7,61 +7,74 @@
 //controlla che ci sua una sessione solo in caso io abbia
 function checkActive(){
     @session_start();
-    if(session_status() == PHP_SESSION_ACTIVE){
-        //controllo che effettivamente ci sia una sessione nel db
-        $query = "SELECT * FROM session WHERE id_session = :id_session";
-        $values = array(':id_session' => session_id());
 
-        global $connection;
-        //preparo query
-        $statement = $connection->prepare($query);
-        try {
-            //eseguo query
-            $statement->execute($values);
-        } catch (PDOException $e) {
-            header('location:../login.php?=queryfailed');
-            die();
-        }
+    //controllo che effettivamente ci sia una sessione nel db
+    $query = "SELECT * FROM session WHERE id_session = :id_session";
+    $values = array(':id_session' => session_id());
 
+    global $connection;
+    //preparo query
+    $statement = $connection->prepare($query);
+    try {
+        //eseguo query
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        header('location:../login.php?=queryfailed');
+        die();
+    }
+
+    //se il risultato non è un errore, guardo la sessione e controllo che sia valida
+    if($statement == false)
+        return false;
+
+    if($statement->rowCount() > 0){
         //fetch 
         $statement = $statement->fetch(PDO::FETCH_ASSOC);
         if(is_array($statement))
-            return true;
-    }else{
-        //anche se non c'è niente di attivo, controllo di non avere tuple residue
-        $query = "SELECT * FROM session WHERE id_session = :id_session";
-        $values = array(':id_session' => session_id());
-
-        global $connection;
-        //preparo query
-        $statement = $connection->prepare($query);
-        try {
-            //eseguo query
-            $statement->execute($values);
-        } catch (PDOException $e) {
-            header('location:../login.php?=queryfailed');
-            die();
-        }
-
-        //fetch 
-        $statement = $statement->fetch(PDO::FETCH_ASSOC);
-        if($statement->rowCount() > 1){
-            deleteSessionTuple($statement['id']);
-            return false;
-        }
+            if(time() - $statement['start_time'] < 3600){
+                return true;
+            }else{
+                return false;
+            }
+                
     }
+
     return false;
 }
 
-function createSession(int $id){
+//questo id è quello dell'user
+function createSession($id){
     //cancello query contenenti altre sessioni
-    if(checkActive()){
-        deleteSessionTuple($id);
+    //controllo di non avere tuple residue
+    @session_start();
+    $query = "DELETE FROM session WHERE id_user = :id_user";
+
+    $values = array(':id_user'=> $id);
+
+
+    global $connection;
+    //preparo query
+    $statement = $connection->prepare($query);
+    try {
+        //eseguo query
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        header('location:../login.php?error=queryfailed');
+        die();
     }
-    session_start();
+
+    //fetch 
+    $statement = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if($statement !== false)
+        if($statement->rowCount() > 1)
+            deleteSessionTuple($statement['id_session']);
+
+    $statement = NULL;
+
     if(session_id() == NULL || session_id() == "" || session_id() == false)
         if(!session_regenerate_id())
-        return false;
+            return false;
             
 
     //preparo la query
@@ -71,7 +84,6 @@ function createSession(int $id){
         ':id_user'=> $id,
         ':start_time' => time()
     );
-    global $connection;
     //preparo query
     $statement = $connection->prepare($query);
     try{

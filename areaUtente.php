@@ -1,7 +1,7 @@
     <?php
         @include('php/header.php');
         if(!checkActive())
-            header('location:login.php') //session
+            header('location:login.php?error=nosession') //session
     ?>	
 
     <div class="wrapper">
