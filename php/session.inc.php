@@ -42,12 +42,52 @@ function checkActive(){
     return false;
 }
 
+function checkActiveSuper(){
+    @session_start();
+
+    //controllo che effettivamente ci sia una sessione nel db
+    $query = "SELECT * FROM supersession WHERE id_supersession = :id_session";
+    $values = array(':id_session' => session_id());
+
+    global $connection;
+    //preparo query
+    $statement = $connection->prepare($query);
+    try {
+        //eseguo query
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        header('location:../superlogin.php?=queryfailed');
+        die();
+    }
+
+    //se il risultato non è un errore, guardo la sessione e controllo che sia valida
+    if($statement == false)
+        return false;
+
+    if($statement->rowCount() > 0){
+        //fetch 
+        $statement = $statement->fetch(PDO::FETCH_ASSOC);
+        if(is_array($statement))
+            if(time() - $statement['start_time'] < 3600){
+                return true;
+            }else{
+                return false;
+            }
+                
+    }
+
+    return false;
+}
+
 //questo id è quello dell'user
-function createSession($id){
+function createSession($id, $table){
     //cancello query contenenti altre sessioni
     //controllo di non avere tuple residue
     @session_start();
-    $query = "DELETE FROM session WHERE id_user = :id_user";
+    if($table == "user")
+        $query = "DELETE FROM session WHERE id_user = :id_user";
+    else
+        $query = "DELETE FROM supersession WHERE id_superuser = :id_user";
 
     $values = array(':id_user'=> $id);
 
@@ -68,7 +108,7 @@ function createSession($id){
 
     if($statement !== false)
         if($statement->rowCount() > 1)
-            deleteSessionTuple($statement['id_session']);
+            deleteSessionTuple($statement['id_session'], $table);
 
     $statement = NULL;
 
@@ -78,8 +118,12 @@ function createSession($id){
             
 
     //preparo la query
-    $query = "INSERT INTO session(id_session, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
-    $values = array(
+    if($table == "user")
+        $query = "INSERT INTO session(id_session, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
+    else
+        $query = "INSERT INTO supersession(id_supersession, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
+    
+        $values = array(
         ':id_session' => session_id(),
         ':id_user'=> $id,
         ':start_time' => time()
@@ -98,10 +142,14 @@ function createSession($id){
     return true; //tutto ok
 }
 
-function deleteSessionTuple($id){
+function deleteSessionTuple($id, $table){
 
-    $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
-    if(!is_int($id))
+    if($table = "user")
+        $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
+    else
+        $query = "DELETE FROM supersession WHERE id_superuser = :id_user OR id_supersession = :id_session";
+      
+        if(!is_int($id))
         $num = 0;
     else   
         $num = $id;
@@ -134,9 +182,13 @@ function deleteSessionTuple($id){
     }
 }
 
-function getSessionTuple($id){
-    $query = "SELECT id_user, id_session, start_time, username, email FROM session INNER JOIN user USING(id_user) WHERE id_session = :id OR id_user = :id";
-    $values = array( ':id'=> $id);
+function getSessionTuple($id, $table){
+    if($table == "user")
+        $query = "SELECT id_user, id_session, start_time, username, email FROM session INNER JOIN user USING(id_user) WHERE id_session = :id OR id_user = :id";
+    else
+        $query = "SELECT id_superuser, id_supersession, start_time, email FROM supersession INNER JOIN superuser USING(id_superuser) WHERE id_supersession = :id OR id_superuser = :id";
+    
+        $values = array( ':id'=> $id);
     
     global $connection;
     $statement = $connection->prepare($query);
@@ -155,7 +207,7 @@ function getSessionTuple($id){
         return $statement->fetch(PDO::FETCH_ASSOC);
     }else{
         //var_dump($statement);
-        header('location:../logout.inc.php');
+        header('location:../php/logout.inc.php');
         die();
     }
 }

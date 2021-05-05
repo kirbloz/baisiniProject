@@ -1,30 +1,31 @@
 <?php
 
+//da adattare
 if(!isset($_POST['submit'])){
     //se l'utente è arrivato su questa pagina senza submittare il form
     //lo rispedisce indietro
-    header('location:../login.php?error=nosubmit');
+    header('location:../superlogin.php?error=nosubmit');
     die();
 }else{
     //includo la classe User
-    require('../classes/User.php');
+    require('../classes/Superuser.php');
 
     //salvo i dati POST nelle variabili
-    $uid = $_POST['username'];
+    $uid = $_POST['matricola'];
     $pwd = $_POST['pwd'];
     
     
     //passo i valori alla funzione della classe user
-    $utente = new User();
-    $id = $utente->login_user($uid, $pwd);  
+    $superutente = new Superuser();
+    $id = $superutente->login_superuser($uid, $pwd);  
     
     if(!createSession($id, "supersession")){
-        header('location:../login.php?error=sessionfailed');
+        header('location:../superlogin.php?error=sessionfailed');
         die();
     }
 
     //rimando l'utente alla login con il codice corretto
-    header('location:../login.php?error=none&username='. $utente->getUsername());
+    header('location:../superlogin.php?error=none&username='. $superutente->getFirstname());
     unset($_POST);
     die();
     //aggiungi controllo already logged in

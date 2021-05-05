@@ -13,7 +13,7 @@
         <h1 class="centered"><a href="index.php">EASY LAN PORTAL</a></h1>
         <br>
         <form class="centered login-form" action="php/superlogin.inc.php" method="post">
-            <input type="text" name="username" placeholder="Matricola" required>
+            <input type="text" name="matricola" placeholder="Matricola" required>
             <br><br>
             <input type="password" name="pwd" placeholder="Password" required>
             <br><br>
