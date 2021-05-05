@@ -88,14 +88,17 @@ class Superuser extends User{
             header('location:../superlogin.php?error=emptyinput');
             die();
         }
-
+        
         if($this->loginDB($matricola, $pwd) !== true){
             header('location:../superlogin.php?error=queryfailed');
             die();
         }
 
+
         //a questo punto ho effettuato il login e posso popolare l'oggetto superuser
         $this->setEverything($matricola, false);
+        echo "siii";
+        die();
         return $this->id;
         //fine script e si ritorna a login.inc.php
     }
@@ -130,18 +133,36 @@ class Superuser extends User{
             $result = userExists($uid, $uid, "superuser");
 
         if($result === false){
-            header('location:../login.php?error=nouser');
+            header('location:../superlogin.php?error=nouser');
+            die();
+        }else
+            return $result;
+    }
+
+    private function getTechTuple($uid, bool $session){
+        global $connection;
+        //se $session è true, allora uid viene interpretato come la PK della sessione
+        if($session){
+            $session = getSessionTuple(session_id(), "superuser");
+            $result = userExists($session['username'], $session['username'], "superuser");
+        }else
+            $result = userExists($uid, $uid, "superuser");
+
+        if($result === false){
+            header('location:../superlogin.php?error=nouser');
             die();
         }else
             return $result;
     }
 
     public function setEverything($uid, bool $session){
-        $values = $this->getUserTuple($uid, $session);
+
+        $values = $this->getTechTuple($uid, $session);
         if(!is_array($values)){
             header('location:../superlogin.php?error=queryfailed');
             die();
         }
+        var_dump($values);
         $this->id = $values['id_superuser'];
         $this->firstname = $values['firstname'];
         $this->lastname = $values['lastname'];

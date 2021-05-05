@@ -88,9 +88,44 @@ function userExists($username, $email_address, $table){
         die();
     }
 
-    echo $table;
+    /*echo $table;
     var_dump($statement);
-    die();
+    die();*/
+    if($statement->rowCount() > 0){
+        //ritorno l'array con index i nomi delle colonne
+        
+        return $statement->fetch(PDO::FETCH_ASSOC); 
+        //questa query restituisce l'array con la tupla dell'utente, utile
+        //var_dump($statement->fetch(PDO::FETCH_ASSOC));
+        //die();
+    }else{
+        
+        return false;
+    }
+}
+
+function techExists($id){
+    $values=array();
+
+    //preparo la query per la ricerca e l'array per i valori
+    $query = "SELECT * FROM technician WHERE id_technician = :matricola";
+    $values[':matricola'] = $id;
+
+
+    global $connection;
+    $statement = $connection->prepare($query);
+
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try{
+        $statement->execute($values);
+    }catch(PDOException $e){
+        header('location:../signup.php?error=queryfailed');
+        die();
+    }
+
+    /*echo $table;
+    var_dump($statement);
+    die();*/
     if($statement->rowCount() > 0){
         //ritorno l'array con index i nomi delle colonne
         
