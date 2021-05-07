@@ -3,7 +3,8 @@
         if(!checkActive())
             header('location:login.php?error=nosession'); //session
         @include('php/function.inc.php');
-        $utente = generateUserOBJ(session_id());  
+        $utente = generateUserOBJ(session_id());
+        //var_dump($utente);
         
 ?>	
 
@@ -25,7 +26,6 @@
         </div>
 
     </div>
-    <br><br>
 
     <div class="wrapper user-info">
         <?php
@@ -33,7 +33,7 @@
                 echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
                 echo "<br>";
                 echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";
-                echo "<br>";
+                echo "<br><br>";
                 echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
 
             }else{
@@ -56,9 +56,9 @@
                 echo "<h4>Città</h4> <p> " . $utente->getCity(). "</p>";
                 echo "<br>";
                 echo "<h4>CAP</h4> <p> " . $utente->getPostalCode(). "</p>";
-
             }
         ?>
     </div>
+    <br>
 
 </body>

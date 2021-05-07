@@ -215,6 +215,68 @@ class User {
         $this->email = $values['email'];
     }
 
+    public function add_Customer(array $oldvalues){
+        //controllo che non esista il customer, anche se avviene già in un altra pagina, ma tengo il controllo lato server in ogni caso
+        if(!($this->setCustomer() === false)) //false solo se non c'è una tupla
+            header('location:../signupCustomer.php?error=customeralreadexists');
+
+        //preparo la query
+        $query = "INSERT INTO customer(id_user, firstname, lastname, gender, address, city, postal_code, birth_date) VALUES(:id_user, :firstname, :lastname, :gender, :address, :city, :postal_code, :birth_date)";
+        
+        //faccio il controllo sull'input
+
+        if(invalidUserN($oldvalues['firstname']) !== false){
+            header('location:../signupCustomer.php?error=invalidname');
+            die();
+        }
+
+        if(invalidUserN($oldvalues['lastname']) !== false){
+            header('location:../signupCustomer.php?error=invalidname');
+            die();
+        }
+
+        if($oldvalues['gender'] == "")
+            $oldvalues['gender'] = NULL;
+        if($oldvalues['address'] == "")
+            $oldvalues['address'] = NULL;
+        if($oldvalues['city'] == "")
+            $oldvalues['city'] = NULL;
+        if($oldvalues['postal_code'] == "")
+            $oldvalues['postal_code'] = NULL;
+        if($oldvalues['birth_date'] == "")
+            $oldvalues['birth_date'] = NULL;
+
+        //e preparo l'array di valori
+        $values = array(
+            ':id_user' => $this->id,
+            ':firstname' => $oldvalues['firstname'],
+            ':lastname' => $oldvalues['lastname'],
+            ':gender' => $oldvalues['gender'],
+            ':address' => $oldvalues['address'],
+            ':city' => $oldvalues['city'],
+            ':postal_code' => $oldvalues['postal_code'],
+            ':birth_date' => $oldvalues['birth_date']
+        );
+        global $connection;
+        $statement = $connection->prepare($query);
+        try{
+            $statement->execute($values);
+            /*var_dump($statement);
+            var_dump($values);
+            die();*/
+        }catch(PDOException $e){
+            //return false;
+            var_dump($statement);
+            echo $e;
+            
+            die();
+        }
+
+        //rimando l'utente alla pagina di signupCustomer con il codice corretto
+        header('location:../signupCustomer.php?error=none&firstname='. $oldvalues['firstname'] . '&lastname='. $oldvalues['lastname']);
+        die();
+    }
+
     public function setCustomer(){
         global $connection;
         //preparo la query
@@ -232,15 +294,23 @@ class User {
             return false;
         }
 
+        
         //controllo se effettivamente ho una query e proseguo
         if($statement->rowCount() > 0){
-            $statement = $statement->fetch(PDO::FETCH_ASSOC); 
+            $statement = $statement->fetch(PDO::FETCH_ASSOC);
         }else{
             //no tupla, non esiste il customer di questo utente
             return false;
         }
 
-        //si tupla, esiste il customer
+        //si tupla, esiste il customer, assegno e poi ritorno true
+        $this->firstname = $statement['firstname'];
+        $this->lastname = $statement['lastname'];
+        $this->gender = $statement['gender'];
+        $this->birth_date = $statement['birth_date'];
+        $this->address = $statement['address'];
+        $this->city = $statement['city'];
+        $this->postal_code = $statement['postal_code'];
         return true;
     }
 
