@@ -14,18 +14,19 @@
 
         <div class='color-lightb user-nav'>
             <ul>
-                <li><a href="userShowcase.php">Visualizza le tue informazioni</a></li>
+                <li><a href="areaUtenteData.php">Visualizza le tue informazioni</a></li>
                 <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
                 <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
             </ul>
         </div>
 
-        <div class="user-div">
+        <div class="user-data">
             <?php
                 echo "Benvenuto " . $utente->getUsername() . ".\r\nQuesta &egrave; la tua area utente.\r\nUsa i collegamenti a lato per accedere ai vari servizi"
             ?>
         </div>
         
     </div>
+    
 </body>
 </html>

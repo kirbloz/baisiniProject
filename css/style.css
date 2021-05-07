@@ -17,12 +17,15 @@ a{
 	color: #32363C;
 }
 
+hr{
+	margin: 20px;
+}
 /* classes */
 
 .bg-div{
 	position: relative;
 	width:70%;
-	min-height: 600px;
+	padding-bottom: 20px;
 	margin:auto;
 }
 
@@ -30,6 +33,7 @@ a{
 	width:80%;
 	margin:auto;
 	overflow:hidden;
+
 }
 
 /* .user-data{
@@ -129,9 +133,18 @@ footer{
 	padding: 10px;
 }
 
+<<<<<<< HEAD
+.user-nav{
+	max-width: 400px;
+}
+
 .user-div{
+=======
+.user-data{
+>>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
 	position: relative;
-	margin-top:10px;
+	margin-top:20px;
+	max-width: 400px;
 }
 
 .user-area div{
@@ -141,18 +154,30 @@ footer{
 	height:100%;
 }
 
+<<<<<<< HEAD
 .user-info{
-	text-align:left;
-	width:95%;
-	border: double black 4px;
+	margin-top: 50px;
+	text-align:center;
+	width:80%;
 	padding:20px;
 }
+=======
 
+>>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
 
+.user-info p{
+	background-color: rgb(201, 198, 198);
+	border-radius: 15px;
+	min-width: 200px;
+}
+
+.user-info h4{
+	text-transform: uppercase;
+}
 
 /* login-sign up */
 
-.login-box{
+.box, .login-box{
 	max-width: 600px;
 	width:60%;
 	margin-top:10%;

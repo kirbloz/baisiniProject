@@ -15,10 +15,11 @@ class User {
     private $firstname,
             $lastname,
             $gender,
-            $address,
-            $city,
-            $postal_code,
             $birth_date;
+
+    protected   $address,
+                $city,
+                $postal_code;
 
     //attributi da customer
     //wip
@@ -51,45 +52,71 @@ class User {
         $this->email = $value;
     }
 
-    public function getId(): ?int {
-        return $this->id;
+    public function getId(){
+            return $this->id;
     }
 
-    public function getUsername(): ?string {
+    public function getUsername(){
         return $this->username;
     }
 
-    public function getEmail(): ?string{
+    public function getEmail(){
       return $this->email;   
     }
 
-    public function getFirstname(): ?string {
-        return $this->firstname;
+<<<<<<< HEAD
+    public function getFirstname(){
+        if(isset($this->firstname))
+            return $this->firstname;
+        else 
+            return "Unknown";
     }
 
-    public function getLastname(): ?string {
-        return $this->lastname;
+    public function getLastname(){
+        if(isset($this->lastname))
+            return $this->lastname;
+        else 
+            return "Unknown";
     }
 
-    public function getGender(): ?string {
-        return $this->gender;
+    public function getGender(){
+        if(isset($this->gender))
+            return $this->gender;
+        else 
+            return "Unknown";
     }
 
-    public function getAddress(): ?string {
-        return $this->address;
+    public function getAddress(){
+        if(isset($this->address))
+            return $this->address;
+        else 
+            return "Unknown";
     }
 
-    public function getCity(): ?string {
-        return $this->city;
+    public function getCity(){
+        if(isset($this->city))
+            return $this->city;
+        else 
+            return "Unknown";
     } 
 
-    public function getPostalCode(): ?string {
-        return $this->postal_code;
+    public function getPostalCode(){
+        if(isset($this->postal_code))
+            return $this->postal_code;
+        else 
+            return "Unknown";
     }
 
     public function getBirth(){
-        return $this->birth_date;
+        if(isset($this->birth_date))
+            return $this->birth_date;
+        else 
+            return "Unknown";
     }
+
+=======
+
+>>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
     /* registrazione dell'utente nel Database */
 
     public function add_user($username, $pwd, $repeat_pwd, $email_address){
@@ -124,7 +151,7 @@ class User {
         }
         
         //uso la conenssione al db, controllo se esiste già epoi procedo con il caricamento dei dati
-        if(userExists($username, $email_address) !== false){
+        if(userExists($username, $email_address, "user") !== false){
             header('location:../signup.php?error=useralreadyexists');
             die();
         }
@@ -171,10 +198,10 @@ class User {
         global $connection;
         //se $session è true, allora uid viene interpretato come la PK della sessione
         if($session){
-            $session = getSessionTuple(session_id());
-            $result = userExists($session['username'], $session['username']);
+            $session = getSessionTuple(session_id(), "user");
+            $result = userExists($session['username'], $session['username'], "user");
         }else
-            $result = userExists($uid, $uid);
+            $result = userExists($uid, $uid, "user");
 
         if($result === false){
             header('location:../login.php?error=nouser');
@@ -194,14 +221,14 @@ class User {
         $this->email = $values['email'];
     }
 
-    public function setCustomer(){
+    private function setCustomer(){
         global $connection;
         //preparo la query
         $query = "SELECT * FROM customer WHERE id_user = :id_user";
         if(!isset($this->id))
             header('location:logout.inc.php');
         $values = array(':id_user'=> $this->id);
-        
+
         global $connection;
         $statement = $connection->prepare($query);
         try{
@@ -213,19 +240,14 @@ class User {
 
         //controllo se effettivamente ho una query e proseguo
         if($statement->rowCount() > 0){
-            $statement = $statement->fetch(PDO::FETCH_ASSOC);
-            $this->firstname = $statement['firstname'];
-            $this->lastname = $statement['lastname'];
-            $this->gender = $statement['gender'];
-            $this->address = $statement['address'];
-            $this->city = $statement['city'];
-            $this->postal_code = $statement['postal_code'];
-            $this->birth_date = $statement['birth_date'];
-            return true;
+            $statement = $statement->fetch(PDO::FETCH_ASSOC); 
         }else{
             //no tupla
             return false;
         }
+
+        var_dump($statement);
+        die();
     }
 
     private function loginDB($uid, $pwd){
@@ -239,8 +261,6 @@ class User {
             header('location:../login.php?error=wrongpassword');
             die();
         }else if(password_verify($pwd, $uid_result['password']) === true){
-            //1.44.36
-            //fare le sessioni SI POTREBBE SALVARE UN VALORE ISLOGGEDIN IN $SESSION PER DIRE ALLA CLASSE SESSION CHE PUO INSERIRE LA TUPLA SENZA PROBLEMI
             return true;
         }
         echo "no";
@@ -275,7 +295,7 @@ class User {
     }
 
     public function logout_user(){
-        deleteSessionTuple($this->username);
+        deleteSessionTuple($this->username, "user");
         $this->__destruct();
     }
 }

@@ -62,13 +62,20 @@ function pwdMatch($pwd, $pwdRepeat){
     return $result;
 }
 
-function userExists($username, $email_address){
+function userExists($username, $email_address, $table){
     $values=array();
 
     //preparo la query per la ricerca e l'array per i valori
+    if($table === "user"){
     $query = "SELECT * FROM user WHERE username = :username OR email = :email_address;";
     $values[':username'] = $username;
     $values[':email_address'] = $email_address;
+    }else{
+        $query = "SELECT * FROM superuser WHERE id_technician = :username OR email = :email_address;";
+        $values[':username'] = $username; //matricola
+        $values[':email_address'] = $email_address;
+    }
+
 
     global $connection;
     $statement = $connection->prepare($query);
@@ -81,6 +88,44 @@ function userExists($username, $email_address){
         die();
     }
 
+    /*echo $table;
+    var_dump($statement);
+    die();*/
+    if($statement->rowCount() > 0){
+        //ritorno l'array con index i nomi delle colonne
+        
+        return $statement->fetch(PDO::FETCH_ASSOC); 
+        //questa query restituisce l'array con la tupla dell'utente, utile
+        //var_dump($statement->fetch(PDO::FETCH_ASSOC));
+        //die();
+    }else{
+        
+        return false;
+    }
+}
+
+function techExists($id){
+    $values=array();
+
+    //preparo la query per la ricerca e l'array per i valori
+    $query = "SELECT * FROM technician WHERE id_technician = :matricola";
+    $values[':matricola'] = $id;
+
+
+    global $connection;
+    $statement = $connection->prepare($query);
+
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try{
+        $statement->execute($values);
+    }catch(PDOException $e){
+        header('location:../signup.php?error=queryfailed');
+        die();
+    }
+
+    /*echo $table;
+    var_dump($statement);
+    die();*/
     if($statement->rowCount() > 0){
         //ritorno l'array con index i nomi delle colonne
         
@@ -100,6 +145,7 @@ function generateUserOBJ(string $sid){
 
     $temp = new User();
     $temp->setEverything($sid, true);
+    //var_dump($temp);
     return $temp;
 }
 

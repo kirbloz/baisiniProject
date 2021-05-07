@@ -23,25 +23,42 @@
                 echo "Benvenuto " . $utente->getUsername() . ".\r\nQueste sono le tue informazioni.\r\nUsa i collegamenti a lato per accedere ai vari servizi."
             ?>
         </div>
-        <br><br>
-        <div class="wrapper user-info">
+        
+    </div>
+    <br><br>
+
+    <div class="wrapper user-info">
         <?php
             if($utente->setCustomer() == false){
-                echo "Username: " . $utente->getUsername();
+                echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
                 echo "<br>";
-                echo "Email: " . $utente->getEmail();
+                echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";
                 echo "<br>";
-                echo "</div>";
                 echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
                 
             }else{
-                echo "Nome: " . $utente->getFirstname();
+                echo "<h4>Nome</h4> <p> " . $utente->getFirstname(). "</p>";
                 echo "<br>";
-                echo "Cognome: " . $utente->getLastname();
+                echo "<h4>Cognome</h4> <p> " . $utente->getLastname(). "</p>";
                 echo "<br>";
-                echo "Data di nascita: " . $utente->getBirth(); 
-                echo "</div>";
+                echo "<h4>Data di nascita</h4> <p> " . $utente->getBirth(). "</p>";
+                echo "<br>";
+                if($utente->getGender() == "M")
+                    $temp = "Uomo";
+                else if ($utente->getGender() == "F")
+                    $temp = "Donna";
+                else
+                    $temp = "Non specificato";
+                echo "<h4>Genere</h4> <p> " . $temp . "</p>";
+                echo "<br>";
+                echo "<h4>Indirizzo</h4> <p> " . $utente->getAddress(). "</p>";
+                echo "<br>";
+                echo "<h4>Città</h4> <p> " . $utente->getCity(). "</p>";
+                echo "<br>";
+                echo "<h4>CAP</h4> <p> " . $utente->getPostalCode(). "</p>";
+
             }
         ?>
     </div>
+    
 </body>
