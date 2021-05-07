@@ -1,0 +1,235 @@
+
+*{
+	box-sizing: border-box;
+	margin:0;
+	padding:0;
+}
+
+body{
+	font-size: 18px;
+	font-family: system-ui, sans-serif;
+	color:#0C1115;
+	background:#32363c;
+}
+
+a{
+	text-decoration:none;
+	color: #32363C;
+}
+
+hr{
+	margin: 20px;
+}
+/* classes */
+
+.bg-div{
+	position: relative;
+	width:70%;
+	padding-bottom: 20px;
+	margin:auto;
+}
+
+.wrapper{
+	width:80%;
+	margin:auto;
+	overflow:hidden;
+
+}
+
+/* .user-data{
+	text-al
+
+} */
+
+/* applicabili */
+
+.centered{
+	text-align: center;
+	/*margin-left:auto;
+	margin-right: auto;*/
+	margin:auto;
+}
+
+.color-lightb{
+	background: #afc3cc;
+}
+
+.color-white{
+	background: #fff;
+}
+
+.error{
+	color: red;
+	font-weight: bold;
+}
+
+/* navbar */
+.main-header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+}
+
+.main-header h1{
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	padding: 0 20px;
+	min-width: 235px;
+}
+
+.navlinks{
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position:relative;
+	margin-left: auto;
+	padding: 20px 15px;
+}
+
+.navlinks li{
+	overflow:hidden;
+	display:inline-block;
+	border:none;
+	background-color: transparent;
+	text-align: center;
+	padding: 0 10px;
+}
+
+.navlinks a{
+	color:#fff;
+	font-size:24px;
+	font-weight: 500;
+	transition: all 0.3s ease 0s;
+}
+
+.navlinks a:hover{
+	color:#596073;
+}
+
+footer{
+	padding: 5px 15px;
+	width: 80%;
+	margin-top: 80%;
+}
+
+
+
+
+/* navbar nell'area utente */
+
+.user-area{
+	width:95%;
+	margin-top: 10%;
+	position: relative;
+	display:table;
+	clear:both;
+}
+
+.user-nav li{
+	position: relative;
+	padding: 10px;
+}
+
+<<<<<<< HEAD
+.user-nav{
+	max-width: 400px;
+}
+
+.user-div{
+=======
+.user-data{
+>>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
+	position: relative;
+	margin-top:20px;
+	max-width: 400px;
+}
+
+.user-area div{
+	float:left;
+	padding: 0 10px;
+	width:50%;
+	height:100%;
+}
+
+<<<<<<< HEAD
+.user-info{
+	margin-top: 50px;
+	text-align:center;
+	width:80%;
+	padding:20px;
+}
+=======
+
+>>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
+
+.user-info p{
+	background-color: rgb(201, 198, 198);
+	border-radius: 15px;
+	min-width: 200px;
+}
+
+.user-info h4{
+	text-transform: uppercase;
+}
+
+/* login-sign up */
+
+.box, .login-box{
+	max-width: 600px;
+	width:60%;
+	margin-top:10%;
+	border: 3px solid white;
+}
+
+.login-form{
+	font-size: 16px;	
+	padding: 10px;
+	width: 80%;
+	outline:none;
+	color:#8e98ae;
+}
+
+.redirect-login{
+	font-size:14px; 
+	padding-bottom: 10px;
+}
+
+input{
+	width: 200px;
+	font-family: monospace;
+	font-size: 14px;
+	text-align: center;
+	border:0;
+	border-radius: 10px;
+	padding:10px 0px;
+	transition: 0.25s;
+	outline:none;
+}
+
+input[type="text"], [type="password"], [type="email"]{
+	background:#fff;
+	color:#8e98ae;
+}
+
+input:focus{
+	width: 220px;
+}
+
+input.button{
+	padding:5px;
+	background-color:#1f1f2e;
+	color:#e0e0eb;
+	width:100px;
+}
+
+#reset:hover{
+	background-color:#e49037
+}
+
+#confirm:hover{
+	background-color:#18AB8E;
+}
+
