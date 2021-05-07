@@ -18,7 +18,7 @@ if(!isset($_POST['submit'])){
     $utente = new User();
     $id = $utente->login_user($uid, $pwd);  
     
-    if(!createSession($id, "supersession")){
+    if(!createSession($id)){
         header('location:../login.php?error=sessionfailed');
         die();
     }

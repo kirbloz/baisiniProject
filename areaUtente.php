@@ -14,7 +14,7 @@
 
         <div class='color-lightb user-nav'>
             <ul>
-                <li><a href="areaUtenteData.php">Visualizza le tue informazioni</a></li>
+                <li><a href="userShowcase.php">Visualizza le tue informazioni</a></li>
                 <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
                 <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
             </ul>

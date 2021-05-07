@@ -7,23 +7,23 @@
         
 ?>	
 
-    <div class="wrapper user-area">
-        <br>
+<div class="wrapper user-area">
+    <br>
 
-        <div class='color-lightb user-nav'>
-            <ul>
-                <li><a href="areaUtente.php">Torna indietro</a></li>
-                <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
-                <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
-            </ul>
-        </div>
+    <div class='color-lightb user-nav'>
+        <ul>
+            <li><a href="areaUtente.php">Torna indietro</a></li>
+            <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
+            <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
+        </ul>
+    </div>
 
-        <div class="user-div">
-            <?php
-                echo "Benvenuto " . $utente->getUsername() . ".\r\nQueste sono le tue informazioni.\r\nUsa i collegamenti a lato per accedere ai vari servizi."
+    <div class="user-div">
+        <?php
+            echo "Benvenuto " . $utente->getUsername() . ".\r\nQueste sono le tue informazioni.\r\nUsa i collegamenti a lato per accedere ai vari servizi."
             ?>
         </div>
-        
+
     </div>
     <br><br>
 
@@ -35,7 +35,7 @@
                 echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";
                 echo "<br>";
                 echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
-                
+
             }else{
                 echo "<h4>Nome</h4> <p> " . $utente->getFirstname(). "</p>";
                 echo "<br>";
@@ -60,5 +60,5 @@
             }
         ?>
     </div>
-    
+
 </body>

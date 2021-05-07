@@ -80,17 +80,13 @@ function checkActiveSuper(){
 }
 
 //questo id è quello dell'user
-function createSession($id, $table){
+function createSession($id){
     //cancello query contenenti altre sessioni
     //controllo di non avere tuple residue
     @session_start();
-    if($table == "user")
-        $query = "DELETE FROM session WHERE id_user = :id_user";
-    else
-        $query = "DELETE FROM supersession WHERE id_superuser = :id_user";
+    $query = "DELETE FROM session WHERE id_user = :id_user";
 
     $values = array(':id_user'=> $id);
-
 
     global $connection;
     //preparo query
@@ -102,61 +98,50 @@ function createSession($id, $table){
         header('location:../login.php?error=queryfailed');
         die();
     }
-
     //fetch 
     $statement = $statement->fetch(PDO::FETCH_ASSOC);
 
     if($statement !== false)
         if($statement->rowCount() > 1)
-            deleteSessionTuple($statement['id_session'], $table);
+            deleteSessionTuple($statement['id_session']);
 
     $statement = NULL;
 
     if(session_id() == NULL || session_id() == "" || session_id() == false)
         if(!session_regenerate_id())
             return false;
-            
+
 
     //preparo la query
-    if($table == "user")
-        $query = "INSERT INTO session(id_session, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
-    else
-        $query = "INSERT INTO supersession(id_supersession, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
-    
-        $values = array(
+    $query = "INSERT INTO session(id_session, start_time, id_user) VALUES(:id_session, :start_time, :id_user)";
+    $values = array(
         ':id_session' => session_id(),
         ':id_user'=> $id,
         ':start_time' => time()
     );
-    //preparo query
-    $statement = $connection->prepare($query);
-    try{
-        $statement->execute($values);
-    }catch(PDOException $e){
-        //return false;
-        var_dump($statement);
-        echo $e;
-        $connection = null;
-        die();
-    }
+        //preparo query
+        $statement = $connection->prepare($query);
+        try{
+            $statement->execute($values);
+        }catch(PDOException $e){
+            //return false;
+            var_dump($statement);
+            echo $e;
+            $connection = null;
+            die();
+        }
     return true; //tutto ok
 }
 
-function deleteSessionTuple($id, $table){
+function deleteSessionTuple($id){
 
-    if($table = "user")
-        $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
-    else
-        $query = "DELETE FROM supersession WHERE id_superuser = :id_user OR id_supersession = :id_session";
-      
-        if(!is_int($id))
+    $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
+    if(!is_int($id))
         $num = 0;
     else   
         $num = $id;
-
     $values = array(':id_user'=> $num,
                     ':id_session'=> $id);
-
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
@@ -171,7 +156,6 @@ function deleteSessionTuple($id, $table){
         
         die();
     }
-
     try{
         @session_start();
         session_unset();
@@ -182,17 +166,13 @@ function deleteSessionTuple($id, $table){
     }
 }
 
-function getSessionTuple($id, $table){
-    if($table == "user")
-        $query = "SELECT id_user, id_session, start_time, username, email FROM session INNER JOIN user USING(id_user) WHERE id_session = :id OR id_user = :id";
-    else
-        $query = "SELECT id_superuser, id_supersession, start_time, email FROM supersession INNER JOIN superuser USING(id_superuser) WHERE id_supersession = :id OR id_superuser = :id";
-    
-        $values = array( ':id'=> $id);
-    
+function getSessionTuple($id){
+    $query = "SELECT id_user, id_session, start_time, username, email FROM session INNER JOIN user USING(id_user) WHERE id_session = :id OR id_user = :id";
+    $values = array( ':id'=> $id);
+
     global $connection;
     $statement = $connection->prepare($query);
-    try{
+	try{
         $statement->execute($values);
     }catch(PDOException $e){
         //return false;
@@ -201,13 +181,12 @@ function getSessionTuple($id, $table){
         
         die();
     }
-
     //se trovo una sessione allora restituisco la tupla
     if($statement->rowCount() > 0 && $statement->rowCount() < 2){
         return $statement->fetch(PDO::FETCH_ASSOC);
     }else{
         //var_dump($statement);
-        header('location:../php/logout.inc.php');
+        header('location:../logout.inc.php');
         die();
     }
 }

@@ -15,11 +15,10 @@ class User {
     private $firstname,
             $lastname,
             $gender,
-            $birth_date;
-
-    protected   $address,
-                $city,
-                $postal_code;
+            $birth_date,
+            $address,
+            $city,
+            $postal_code;
 
     //attributi da customer
     //wip
@@ -53,7 +52,7 @@ class User {
     }
 
     public function getId(){
-            return $this->id;
+        return $this->id;
     }
 
     public function getUsername(){
@@ -61,10 +60,9 @@ class User {
     }
 
     public function getEmail(){
-      return $this->email;   
+    return $this->email;   
     }
 
-<<<<<<< HEAD
     public function getFirstname(){
         if(isset($this->firstname))
             return $this->firstname;
@@ -114,9 +112,6 @@ class User {
             return "Unknown";
     }
 
-=======
-
->>>>>>> parent of bfa4462... areaUtente is working well, i've started to add customer details and stuff
     /* registrazione dell'utente nel Database */
 
     public function add_user($username, $pwd, $repeat_pwd, $email_address){
@@ -151,7 +146,7 @@ class User {
         }
         
         //uso la conenssione al db, controllo se esiste già epoi procedo con il caricamento dei dati
-        if(userExists($username, $email_address, "user") !== false){
+        if(userExists($username, $email_address) !== false){
             header('location:../signup.php?error=useralreadyexists');
             die();
         }
@@ -194,14 +189,13 @@ class User {
 
 
     public function getUserTuple($uid, bool $session){
-
         global $connection;
         //se $session è true, allora uid viene interpretato come la PK della sessione
         if($session){
-            $session = getSessionTuple(session_id(), "user");
-            $result = userExists($session['username'], $session['username'], "user");
+            $session = getSessionTuple(session_id());
+            $result = userExists($session['username'], $session['username']);
         }else
-            $result = userExists($uid, $uid, "user");
+            $result = userExists($uid, $uid);
 
         if($result === false){
             header('location:../login.php?error=nouser');
@@ -221,7 +215,7 @@ class User {
         $this->email = $values['email'];
     }
 
-    private function setCustomer(){
+    public function setCustomer(){
         global $connection;
         //preparo la query
         $query = "SELECT * FROM customer WHERE id_user = :id_user";
@@ -295,7 +289,7 @@ class User {
     }
 
     public function logout_user(){
-        deleteSessionTuple($this->username, "user");
+        deleteSessionTuple($this->username);
         $this->__destruct();
     }
 }
