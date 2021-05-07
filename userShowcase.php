@@ -29,7 +29,7 @@
 
     <div class="wrapper user-info">
         <?php
-            if($utente->setCustomer() == false){
+            if($utente->setCustomer() === false){
                 echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
                 echo "<br>";
                 echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";

@@ -236,12 +236,12 @@ class User {
         if($statement->rowCount() > 0){
             $statement = $statement->fetch(PDO::FETCH_ASSOC); 
         }else{
-            //no tupla
+            //no tupla, non esiste il customer di questo utente
             return false;
         }
 
-        var_dump($statement);
-        die();
+        //si tupla, esiste il customer
+        return true;
     }
 
     private function loginDB($uid, $pwd){
