@@ -314,6 +314,58 @@ class User {
         return true;
     }
 
+    public function changePWD(string $pwd, string $repeat_pwd){
+        //includo per la connessione
+        require_once('../db/databasehandler.inc.php');
+
+        //controllo non necessario perchè lo faccio già in logout.inc
+        /*if(emptyInputLogin($repeat_pwd, $pwd) !== false){
+            header('location:userShowcase.php?redirect=changepwd&error=invalidinput');
+        }*/
+
+        //controllo che la pwd non sia uguale
+        $uid_result = $this->getUserTuple($this->username, false);
+    
+        //se la password fornita è diversa da quella nel db ti rimando indietro
+        if(password_verify($pwd, $uid_result['password']) === true){
+            header('location:userShowcase.php?redirect=changepwd&error=samepwd');
+        }
+        
+        //controllo che la pwd sia valida e matchi
+         if(invalidPwd($pwd) !== false){
+            header('location:userShowcase.php?redirect=changepwd&error=invalidinput');
+            die();
+        }
+    
+        if(pwdMatch($pwd, $repeat_pwd) !== false){
+            header('location:userShowcase.php?redirect=changepwd&error=nomatch');
+            die();
+        }
+
+        //inserisco la nuova pwd nel db
+        //preparo la query
+        $query = "UPDATE user SET password = :pwd_hash WHERE id_user = :id_user;";
+        
+        //crypto la password e preparo l'array di valori
+        $pwd = password_hash($pwd, PASSWORD_DEFAULT);
+        $values = array(
+            ':id_user'=> $this->id,
+            ':pwd_hash' => $pwd
+        );
+
+        global $connection;
+        $statement = $connection->prepare($query);
+        try{
+            $statement->execute($values);
+        }catch(PDOException $e){
+            //return false;
+            var_dump($statement);
+            echo $e;
+            die();
+        }
+        //tutto a posto, lo script ritorna in logout.inc.php e andrà in logout.php
+    }
+
     private function loginDB($uid, $pwd){
         
         //controllo che l'utente cerchi di loggare un account che esiste effettivamente

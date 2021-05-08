@@ -37,6 +37,7 @@ hr{
 
 }
 
+/* radio */
 .radio {
 	display: inline-flex;
 	align-items: center;
@@ -156,8 +157,10 @@ footer{
 
 .user-area{
 	width:95%;
-	margin-top: 10%;
+	margin-top: 100px;
 	position: relative;
+	margin-left: 10%;
+	margin-right: 10%;
 	display:table;
 	clear:both;
 }

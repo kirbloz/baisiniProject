@@ -34,16 +34,26 @@
         <?php
             if(isset($_GET) && isset($_GET['redirect'])){
                 if($_GET['redirect'] == 'deleteaccount'){
-                    echo "<div class='centered'>";
+                    echo "<div class='centered' style='margin-top:10px;'>";
                     echo "Sei sicuro di voler eliminare il tuo profilo?";
                     echo "<form action='php/logout.inc.php' method='post'>";
-                    echo "<input class=\"button\" id=\"confirm\" name=\"submit\" type=\"submit\"  value=\"DELETE\"/></form>";
+                    echo "<input class='button' id='confirm' name='submit' type='submit'  value='DELETE'/></form>";
                     echo "</div>";
                 }else if($_GET['redirect'] == 'changepwd'){
-                    echo "<div class='wrapper login-box centered'>";
-                    echo "Inserisci la nuova password";
-                    echo "";
+                    echo "<div class='wrapper login-box centered' style='margin-top:10px; transform: scale(1.15);'>";
+                    echo "<form action='php/logout.inc.php' method='post'>";
+                    echo "<input style='border:2px solid black; margin: 10px;' type='password' name='pwd' placeholder='Nuova password' required><br>";
+                    echo "<input style='border:2px solid black; margin: 10px;' type='password' name='repeat_pwd' placeholder='Ripeti password' required><br>";
+                    echo "<input class='button' id='confirm' name='submit' type='submit' value='CHANGE'/></form>";
                     echo "</div>";
+
+                    if(isset($_GET['error']) && $_GET['error'] == 'invalidinput'){
+                        echo "<p class='centered error'> Inserisci valori validi. </p>";
+                    }else if(isset($_GET['error']) && $_GET['error'] == 'samepwd'){
+                        echo "<p class='centered error'> Inserisci una password diversa da quella attuale. </p>";
+                    }else if(isset($_GET['error']) && $_GET['error'] == 'nomatch'){
+                        echo "<p class='centered error'> Le password non corrispondono. </p>";
+                    }
                 }
             }else if($utente->setCustomer() === false){
                 echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
@@ -76,7 +86,7 @@
         ?>
     </div>
     <div class="wrapper centered redirect-login">
-            culo
+            foot
     </div>
     <!--
                 birth date cannot be null in database

@@ -186,7 +186,7 @@ function getSessionTuple($id){
         return $statement->fetch(PDO::FETCH_ASSOC);
     }else{
         //var_dump($statement);
-        header('location:../logout.inc.php');
+        header('location:../php/logout.inc.php?error=nosession');
         die();
     }
 }
