@@ -28,6 +28,11 @@ if(!isset($_POST['submit'])){
         'birth_date' => $_POST['birth_date']
     );
 
+    //
+    //      aggiungere controllo che mi permette di aggiornare le informazioni
+    //      è più fast se cancello la tupla e la reinserisco altrimenti devo ricontrollare tutti i campi
+    //
+
     //var_dump($customer_values);
     //die();
     //passo i valori alla funzione della classe user

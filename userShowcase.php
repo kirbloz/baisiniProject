@@ -16,6 +16,9 @@
             <li><a href="areaUtente.php">Torna indietro</a></li>
             <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
             <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
+            <li><a href="userShowcase.php?redirect=changepwd">Cambia password</a></li>
+            <li><a href="signupCustomer.php">Aggiorna le tue informazioni</a></li>
+            <li><a href="userShowcase.php?redirect=deleteaccount">Elimina il tuo account</a></li>
         </ul>
     </div>
 
@@ -29,7 +32,20 @@
 
     <div class="wrapper user-info">
         <?php
-            if($utente->setCustomer() === false){
+            if(isset($_GET) && isset($_GET['redirect'])){
+                if($_GET['redirect'] == 'deleteaccount'){
+                    echo "<div class='centered'>";
+                    echo "Sei sicuro di voler eliminare il tuo profilo?";
+                    echo "<form action='php/logout.inc.php' method='post'>";
+                    echo "<input class=\"button\" id=\"confirm\" name=\"submit\" type=\"submit\"  value=\"DELETE\"/></form>";
+                    echo "</div>";
+                }else if($_GET['redirect'] == 'changepwd'){
+                    echo "<div class='wrapper login-box centered'>";
+                    echo "Inserisci la nuova password";
+                    echo "";
+                    echo "</div>";
+                }
+            }else if($utente->setCustomer() === false){
                 echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
                 echo "<br>";
                 echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";
@@ -59,6 +75,13 @@
             }
         ?>
     </div>
+    <div class="wrapper centered redirect-login">
+            culo
+    </div>
+    <!--
+                birth date cannot be null in database
+                mettere un valore di default = NULL e cambiare database
+    -->
     <br>
 
 </body>

@@ -32,6 +32,9 @@
                 }else if($_GET['error'] == 'noerror'){
                     echo '<div class="centered" style="padding:0px 20px;">';
                     echo "<h3>Sessione conclusa.</h3>";
+                }else if($_GET['error'] == 'deletedaccount'){
+                    echo '<div class="centered" style="padding:0px 20px;">';
+                    echo "<h3>Account eliminato.</h3>";
                 }else{
         ?>
             <div class="centered" style="padding:0px 20px;">

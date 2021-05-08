@@ -94,6 +94,11 @@ function userExists($username, $email_address){
     }
 }
 
+function deleteUserTuple(){
+
+    echo "ok devo ancora scrivere la query";
+}
+
 function generateUserOBJ(string $sid){
     @include_once('../classes/User.php');
     @include_once('classes/User.php');
