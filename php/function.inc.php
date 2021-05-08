@@ -95,8 +95,26 @@ function userExists($username, $email_address){
 }
 
 function deleteUserTuple(){
+    @session_start();
+    //preparo la query per la ricerca e l'array per i valori
+    $utente = generateUserOBJ(session_id());
 
-    echo "ok devo ancora scrivere la query";
+    $query = "DELETE FROM user WHERE id_user = :id_user";
+    $values[':id_user'] = $utente->getId();
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try{
+        $statement->execute($values);
+    }catch(PDOException $e){
+        var_dump($statement);
+        echo $e;
+        return false;
+    }
+
+    //fine script, ritorna in logout.inc.php
+    return true;
 }
 
 function generateUserOBJ(string $sid){

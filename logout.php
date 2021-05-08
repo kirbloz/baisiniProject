@@ -35,6 +35,9 @@
                 }else if($_GET['error'] == 'deletedaccount'){
                     echo '<div class="centered" style="padding:0px 20px;">';
                     echo "<h3>Account eliminato.</h3>";
+                }else if($_GET['error'] == 'nodeletedaccount'){
+                    echo '<div class="centered" style="padding:0px 20px;">';
+                    echo "<h3>Non &egrave; stato possibile eliminare l'account.</h3>";
                 }else if($_GET['error'] == 'changedpwd'){
                     echo '<div class="centered" style="padding:0px 20px;">';
                     echo "<h3>Password cambiata e sessione conclusa. Rieffettua il login.</h3>";

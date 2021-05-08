@@ -6,8 +6,10 @@
   
     
     if(isset($_POST['submit']) && $_POST['submit'] == "DELETE"){
-        deleteUserTuple();
-        header("location:../logout.php?error=deletedaccount");
+        if(deleteUserTuple())
+            header("location:../logout.php?error=deletedaccount");
+        else
+            header("location:../logout.php?error=deletedaccount");
     }else if(isset($_POST['submit']) && $_POST['submit'] == "CHANGE"){
         @session_start();
         @include('php/function.inc.php');
