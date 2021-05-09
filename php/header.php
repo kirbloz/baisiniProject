@@ -24,13 +24,17 @@
 				<li><a href="#">Info</a></li>
 				
 					<?php
-					if(!checkActive()){
-						echo '<li><a id="login-button" href="login.php">Login</a></li>';
-						echo '<li><a href="signup.php">Registrati</a></li>';
-					}else{
+					if(checkActive()){
 						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaUtente.php')
 							echo '<li><a href="areaUtente.php">Area Utente</a></li>';
-						echo '<li><a href="php/logout.inc.php">Logout</a></li>';
+							echo '<li><a href="php/logout.inc.php?isUser=true">Logout</a></li>';
+					}else if(checkActiveSuper()){
+						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaSuperutente.php')
+							echo '<li><a href="areaSuperutente.php">Area Utente</a></li>';
+							echo '<li><a href="php/logout.inc.php?isUser=false">Logout</a></li>';
+					}else{
+						echo '<li><a id="login-button" href="login.php">Login</a></li>';
+						echo '<li><a href="signup.php">Registrati</a></li>';
 					}
 					?>
 				

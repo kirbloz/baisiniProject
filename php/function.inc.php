@@ -94,6 +94,35 @@ function userExists($username, $email_address){
     }
 }
 
+function superuserExists($matricola){
+    $values=array();
+
+    //preparo la query per la ricerca e l'array per i valori
+    $query = "SELECT id_superuser, superuser.id_technician, password, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office FROM superuser INNER JOIN technician USING(id_technician) WHERE superuser.id_technician = :matricola;";
+    $values[':matricola'] = $matricola;
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    
+    try{
+        $statement->execute($values);
+        
+    }catch(PDOException $e){
+        header('location:../superlogin.php?error=queryfailed');
+        die();
+    }
+
+
+    if($statement->rowCount() > 0){
+        return $statement->fetch(PDO::FETCH_ASSOC); 
+        //questa query restituisce l'array con la tupla dell'utente, utile
+        //var_dump($statement->fetch(PDO::FETCH_ASSOC));
+        //die();
+    }else{
+        return false;
+    }
+}
+
 function deleteUserTuple(){
     @session_start();
     //preparo la query per la ricerca e l'array per i valori
@@ -125,6 +154,18 @@ function generateUserOBJ(string $sid){
     $temp->setEverything($sid, true);
     //var_dump($temp);
     return $temp;
+}
+
+function generateSuperuserOBJ(string $sid){
+    @include_once('../classes/SUperser.php');
+    @include_once('classes/Superuser.php');
+
+    $temp = new Superuser();
+    $temp->setEverything($sid, true);
+    //var_dump($temp);
+    return $temp;
+    echo "generatesuperuser";
+    die();
 }
 
 //spostare queste funzioni nella classe User

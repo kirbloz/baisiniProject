@@ -60,7 +60,7 @@ class User {
     }
 
     public function getEmail(){
-    return $this->email;   
+        return $this->email;   
     }
 
     public function getFirstname(){

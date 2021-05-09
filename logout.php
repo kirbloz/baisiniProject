@@ -2,7 +2,9 @@
     @include('php/session.inc.php');
     if(!isset($_GET['error'])){
         if(checkActive()){
-            header("location:php/logout.inc.php");
+            header("location:php/logout.inc.php?isUser=true");
+        }else if(checkActiveSuper()){
+            header("location:php/logout.inc.php?isUser=false");
         }else{
             header("location:login.php");
         }
@@ -51,7 +53,14 @@
             </div>
         <br>
         <div class="centered redirect-login" style="font-size:18px"> 
-            <a href="login.php">Clicca qui.</a>
+            <?php
+            if(isset($_GET['isUser']) && $_GET['isUser'])
+                echo "<a href='login.php'>Clicca qui.</a>";
+            else if(isset($_GET['isUser']) && !$_GET['isUser'])
+                echo "<a href='superlogin.php'>Clicca qui.</a>";
+            else
+                echo "<a href='index.php'>Clicca qui.</a>";
+            ?>
         </div>
     </div>
 </body>

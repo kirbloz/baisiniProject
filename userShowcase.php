@@ -41,7 +41,7 @@
                     echo "</div>";
                 }else if($_GET['redirect'] == 'changepwd'){
                     echo "<div class='wrapper login-box centered' style='margin-top:10px; transform: scale(1.15);'>";
-                    echo "<form action='php/logout.inc.php' method='post'>";
+                    echo "<form action='php/logout.inc.php?isUser=true' method='post'>";
                     echo "<input style='border:2px solid black; margin: 10px;' type='password' name='pwd' placeholder='Nuova password' required><br>";
                     echo "<input style='border:2px solid black; margin: 10px;' type='password' name='repeat_pwd' placeholder='Ripeti password' required><br>";
                     echo "<input class='button' id='confirm' name='submit' type='submit' value='CHANGE'/></form>";

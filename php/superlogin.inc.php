@@ -14,19 +14,17 @@ if(!isset($_POST['submit'])){
     $uid = $_POST['matricola'];
     $pwd = $_POST['pwd'];
     
-    
     //passo i valori alla funzione della classe user
     $superutente = new Superuser();
-    $id = $superutente->login_superuser($uid, $pwd);  
-    
-    if(!createSession($id, "supersession")){
+    $id = $superutente->login_user($uid, $pwd);  
+
+    if(!createSupersession($id)){
         header('location:../superlogin.php?error=sessionfailed');
         die();
     }
 
     //rimando l'utente alla login con il codice corretto
-    header('location:../superlogin.php?error=none&username='. $superutente->getFirstname());
     unset($_POST);
-    die();
+    header('location:../superlogin.php?error=none&username='. $superutente->getFirstname());
     //aggiungi controllo already logged in
 }
