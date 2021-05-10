@@ -18,7 +18,8 @@ class Superuser
                 $gender,
                 $birth_date,
                 $id_supervisor,
-                $id_office;
+                $id_office,
+                $power;
 
         public function __construct()
         {
@@ -31,6 +32,7 @@ class Superuser
                 $this->gender = NULL;
                 $this->id_supervisor = NULL;
                 $this->id_office = NULL;
+                $this->power = NULL;
         }
 
         public function __destruct(){
@@ -38,26 +40,53 @@ class Superuser
 
         public function getEmail(){
                 return $this->email;   
-            }
+        }
         
         public function getFirstname(){
-        if(isset($this->firstname))
                 return $this->firstname;
-        else 
-                return "Unknown";
         }
 
         public function getLastname(){
-        if(isset($this->lastname))
                 return $this->lastname;
+        }
+
+        public function getGender(){
+        if(isset($this->gender))
+                return $this->gender;
         else 
                 return "Unknown";
         } 
 
+        public function getBirth(){
+                return $this->birth_date;
+        } 
+
+        public function getIdSupervisor(){
+                return $this->id_supervisor;
+        }
+
+        public function getOffice(){
+                return $this->id_office;
+        }
+
+        public function getPower(){
+                return $this->power;
+        }
+        public function getSupervisorTuple(){
+                @include_once('../db/databasehandler.inc.php');
+                @include_once('db/databasehandler.inc.php');
+
+                $result = superuserExists($this->id_supervisor);
+                if ($result === false) {
+                        return "Unknown";
+                } else
+                        return $result;
+        }
+
         public function login_user($matricola, $pwd)
         {
                 //includo per la connessione
-                require_once('../db/databasehandler.inc.php');
+                @require_once('../db/databasehandler.inc.php');
 
                 //controllo che il risultato sia PER FORZA false, perchè in caso non sia nè true
                 //nè false potrebbe non riconoscere l'errore
@@ -85,7 +114,7 @@ class Superuser
                         $sessionArray = getSupersessionTuple(session_id());
                         $result = superuserExists($sessionArray['id_technician']);
                 } else
-                        $result = superuserExists($uid, $uid);
+                        $result = superuserExists($uid);
 
                 if ($result === false) {
                         header('location:../superlogin.php?error=nouser');
@@ -112,6 +141,7 @@ class Superuser
                 $this->birth_date = $values['birth_date'];
                 $this->id_supervisor = $values['id_supervisor'];
                 $this->id_office = $values['id_office'];
+                $this->power = $values['power'];
                 
         }
 

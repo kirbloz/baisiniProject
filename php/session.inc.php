@@ -260,7 +260,7 @@ function deleteSupersessionTuple($id){
 
 //$id può essere l'id del superutente oppure sid ((super)session id)
 function getSupersessionTuple($id){
-    $query = "SELECT id_superuser, id_supersession, start_time, id_technician, email FROM session INNER JOIN user USING(id_superuser) WHERE id_supersession = :id OR id_superuser = :id";
+    $query = "SELECT id_superuser, id_supersession, start_time, id_technician, email FROM supersession INNER JOIN superuser USING(id_superuser) WHERE id_supersession = :id OR id_superuser = :id";
     $values = array(':id'=> $id);
 
     global $connection;

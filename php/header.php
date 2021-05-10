@@ -21,7 +21,7 @@
 		<div class="main-header color-lightb">
 			<h1><a href="index.php">Easy LAN PORTAL</a></h1>
 			<ul class="navlinks">
-				<li><a href="#">Info</a></li>
+				<!--<li><a href="#">Info</a></li>-->
 				
 					<?php
 					if(checkActive()){

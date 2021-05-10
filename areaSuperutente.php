@@ -7,16 +7,16 @@
             //posso richiedere le informazioni dell'utente senza problemi
         @include('php/function.inc.php');
         $utente = generateSuperuserOBJ(session_id());
-    ?>	
+?>	
 
     <div class="wrapper user-area">
         <br>
 
         <div class='color-lightb user-nav'>
             <ul>
-                <li><a href="userShowcase.php">Visualizza le tue informazioni</a></li>
-                <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
-                <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
+                <li><a href="superuserShowcase.php">Visualizza le tue informazioni</a></li>
+                <li><a href="superuserfetch.php?select=users">Gestione utenti</a></li>
+                <li><a href="superuserfetch.php?select=techs">Gestione dipendenti</a></li>
             </ul>
         </div>
 

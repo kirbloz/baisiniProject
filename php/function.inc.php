@@ -98,7 +98,7 @@ function superuserExists($matricola){
     $values=array();
 
     //preparo la query per la ricerca e l'array per i valori
-    $query = "SELECT id_superuser, superuser.id_technician, password, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office FROM superuser INNER JOIN technician USING(id_technician) WHERE superuser.id_technician = :matricola;";
+    $query = "SELECT id_superuser, superuser.id_technician, password, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office, power FROM superuser INNER JOIN technician USING(id_technician) WHERE superuser.id_technician = :matricola;";
     $values[':matricola'] = $matricola;
 
     global $connection;
