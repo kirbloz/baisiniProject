@@ -100,7 +100,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,1,'Matt','Rossi','M','via Manifatture 13','Darfo Boario Terme',25047,'1987-05-06'),(2,6,'Fabrizio','Bianchi','M','piazza della Veranda 4','Roma',118,'1995-03-01'),(3,18,'test','test','NB','010101, 42','Ginevra',NULL,'1961-01-01'),(7,21,'test2','turing','NB',NULL,NULL,NULL,'1912-06-23'),(8,22,'wade','baisini','M','cacca','pupu',66666,'2002-09-05');
+INSERT INTO `customer` VALUES (1,1,'Matt','Rossi','M','via Manifatture 13','Darfo Boario Terme',25047,'1987-05-06'),(2,6,'Fabrizio','Bianchi','M','piazza della Veranda 4','Roma',118,'1995-03-01'),(3,18,'test','test','NB','010101, 42','Ginevra',NULL,'1961-01-01'),(8,22,'wade','baisini','M','cacca','pupu',66666,'2002-09-05');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +173,9 @@ CREATE TABLE `office` (
   `address` varchar(45) NOT NULL,
   `postal_code` varchar(5) NOT NULL,
   `id_manager` int unsigned NOT NULL,
-  PRIMARY KEY (`id_office`)
+  PRIMARY KEY (`id_office`),
+  KEY `id_manager_idx` (`id_manager`),
+  CONSTRAINT `id_manager` FOREIGN KEY (`id_manager`) REFERENCES `technician` (`id_technician`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -183,7 +185,7 @@ CREATE TABLE `office` (
 
 LOCK TABLES `office` WRITE;
 /*!40000 ALTER TABLE `office` DISABLE KEYS */;
-INSERT INTO `office` VALUES (1,'Roma','via Gabbiani 2','00118',1),(2,'Darfo Boario Terme','via del Merlo 7','25047',2),(3,'Roma','via Grosseto 42','00118',1);
+INSERT INTO `office` VALUES (1,'Roma','via Gabbiani 2','00118',1),(2,'Darfo Boario Terme','via del Merlo 7','25047',5),(3,'Roma','via Grosseto 42','00118',1);
 /*!40000 ALTER TABLE `office` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,12 +357,12 @@ DROP TABLE IF EXISTS `supersession`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supersession` (
-  `id_supersession` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_user` int unsigned NOT NULL,
-  `start_time` time DEFAULT NULL,
+  `id_supersession` varchar(100) NOT NULL,
+  `id_superuser` int unsigned NOT NULL,
+  `start_time` int unsigned NOT NULL,
   PRIMARY KEY (`id_supersession`),
-  KEY `id_superuserSESSION_idx` (`id_user`),
-  CONSTRAINT `id_superuserSESSION` FOREIGN KEY (`id_user`) REFERENCES `superuser` (`id_superuser`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `id_superuserSESSION_idx` (`id_superuser`),
+  CONSTRAINT `id_superuserSESSION` FOREIGN KEY (`id_superuser`) REFERENCES `superuser` (`id_superuser`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -385,10 +387,11 @@ CREATE TABLE `superuser` (
   `id_technician` int unsigned NOT NULL,
   `password` text NOT NULL,
   `email` varchar(45) NOT NULL,
+  `power` int DEFAULT '0',
   PRIMARY KEY (`id_superuser`),
   KEY `id_technicianSUPERUSER_idx` (`id_technician`),
   CONSTRAINT `id_technicianSUPERUSER` FOREIGN KEY (`id_technician`) REFERENCES `technician` (`id_technician`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='il nome utente è la matricola';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='il nome utente è la matricola\nil power va da 0 a 2\n0 il dipendente normale\n1 il supervisore\n2 il manager';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,7 +400,7 @@ CREATE TABLE `superuser` (
 
 LOCK TABLES `superuser` WRITE;
 /*!40000 ALTER TABLE `superuser` DISABLE KEYS */;
-INSERT INTO `superuser` VALUES (1,5,'$2y$10$4kPIKRnVDgAItp8c0Cv2tufKSUIYNfk/h/bi.anNW0A54B1TXd2By','test@gmail.com');
+INSERT INTO `superuser` VALUES (1,5,'$2y$10$4kPIKRnVDgAItp8c0Cv2tufKSUIYNfk/h/bi.anNW0A54B1TXd2By','test@gmail.com',2),(2,1,'$2y$10$2cDqO6E2R/NG4GdLavSr6OqRZQQ0T6NtdVFBXP2I8U6acUZaCImYy','joes@gmail.com',2),(3,2,'$2y$10$ezSmzHo2Wfkpu6RgJXRKSew6VC6ZqzSJD1lSAVOrb9Jwj43rajtzu','robertor@gmail.com',0),(4,3,'$2y$10$Vnr.H6UWEVnzmNCz5YS4S.yER9.B0hP/d0uMJk4rW2utDihp.zsQO','francescab@gmail.com',0),(5,4,'$2y$10$PLv8Iwk4.Ni0R7mHfXvSlOaAGZYKTwmztQI3CbWMXzyecEb5u73Rq','giovannij@gmail.com',1);
 /*!40000 ALTER TABLE `superuser` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,7 +417,7 @@ CREATE TABLE `technician` (
   `lastname` varchar(45) NOT NULL,
   `gender` varchar(2) DEFAULT NULL,
   `birth_date` date NOT NULL,
-  `id_supervisor` int unsigned DEFAULT NULL,
+  `id_supervisor` int unsigned NOT NULL,
   `labor_hourly` float unsigned DEFAULT NULL,
   `id_office` int unsigned NOT NULL,
   PRIMARY KEY (`id_technician`),
@@ -477,7 +480,7 @@ CREATE TABLE `user` (
   `password` text NOT NULL,
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,7 +489,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'fabrizioBianchi','sa1p0EnieQKyM','fabriziobianchi@gmail.com'),(6,'matthew87','saHwuCfzh3vuU','mattrossi87@gmail.com'),(7,'marioz','saow4hQ3GJPTk','masterzaland@gmail.com'),(9,'giovivi99','sazgPmlh97YT6','giovi@gmail.com'),(13,'ecila29','saLQILoWlTfBE','alice@gmail.com'),(16,'AmyLess','saVXUd4rN5Gp2','amyamy@gmail.com'),(17,'tizzy67','saNYLYV6RteqQ','tizzy67@gmail.com'),(18,'test','$2y$10$TGbC4E7EYXzDluIL4293cedDu663dLcqcVBnhRN/5wKyGaBEeTJ8C','test@gmail.com'),(19,'gabbay1','$2y$10$OcO/WbZdbQV12xCsOtLTMOKXLzMIc1JTHGSiBJDm.Qa4E8Sk7bkZ2','gabbay@gmail.com'),(20,'robert','$2y$10$d8rwL7BzdRmZEhOgpVCGY.89dtUFHJqaUb2B2OGmtH35Np/qvS9cm','robert@gmail.com'),(21,'test2','$2y$10$7H.DITR18bCFVrBLhXt5t.j5XZRh0jCWNVImyPn/CP3W6TptfZoDy','test2@gmail.com'),(22,'newuser','$2y$10$ZDI6WTlroPvhLjXLigeo.OXt1S.f5HHiqOHoM.4nBinhJ2bc9yHuy','newuser@gmail.com');
+INSERT INTO `user` VALUES (1,'fabrizioBianchi','$2y$10$zz2YYYZI5T3tAECkDsJ03u8Pw7eURMQYKcAok92e3jsW0Jb7h01Zi','fabriziobianchi@gmail.com'),(6,'matthew87','$2y$10$PEIjXXPbVKiYuACoiYGmgOcyqvxe28SbDuz5cWIdirWu.MjpvReny','mattrossi87@gmail.com'),(7,'marioz','$2y$10$wUwdXjyDgCPWEWkYBgF90O6wwiOKbOy01GoZZErrt.0kJQRI/OV9e','masterzaland@gmail.com'),(9,'giovivi99','$2y$10$lliwaTRaqXxY5Hx47/kG3up5/bXlignoW3.3HnG67v3uptSzBMoRO','giovi@gmail.com'),(13,'ecila29','$2y$10$CY0tv9O.wxb0JtCBtgdNg.H4AWFx51ZyTmtpwXxVuLEA0y8cX7XDe','alice@gmail.com'),(16,'AmyLess','$2y$10$W7LDh5Mm38RaOJxgGjzCMOU4NwKkG7uvYuHS15yoCz3N4/8wWmvTe','amyamy@gmail.com'),(17,'tizzy67','$2y$10$7jK4npLXhTzGDii3b3bnk.SYab/iZ1S776GsNiURdcjdVzPeGUQQq','tizzy67@gmail.com'),(18,'test','$2y$10$TGbC4E7EYXzDluIL4293cedDu663dLcqcVBnhRN/5wKyGaBEeTJ8C','test@gmail.com'),(19,'gabbay1','$2y$10$OcO/WbZdbQV12xCsOtLTMOKXLzMIc1JTHGSiBJDm.Qa4E8Sk7bkZ2','gabbay@gmail.com'),(20,'robert','$2y$10$d8rwL7BzdRmZEhOgpVCGY.89dtUFHJqaUb2B2OGmtH35Np/qvS9cm','robert@gmail.com'),(22,'newuser','$2y$10$ZDI6WTlroPvhLjXLigeo.OXt1S.f5HHiqOHoM.4nBinhJ2bc9yHuy','newuser@gmail.com'),(23,'test2','$2y$10$OFq0ZskCAfKPaOppRydkQOrlcu7tbvqdzUrITBK4iPlS3Ocj9ySwa','test2@gmail.com');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,4 +533,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-08  7:30:11
+-- Dump completed on 2021-05-12 22:56:46
