@@ -109,6 +109,7 @@ class Superuser
 
         public function getUserTuple($uid, bool $session){
                 global $connection;
+                @include_once('../php/session.inc.php');
                 //se $session è true, allora uid viene interpretato come la PK della sessione
                 if ($session) {
                         $sessionArray = getSupersessionTuple(session_id());

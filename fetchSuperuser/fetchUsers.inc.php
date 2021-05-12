@@ -7,14 +7,7 @@
     else
         $authorized = true;
 ?>
-    <div class="wrapper user-area">
-
-        <div class='color-lightb user-nav'>
-            <ul>
-                <li><a href="areaSuperutente.php">Torna indietro</a></li>
-            </ul>
-        </div>
-        <br><br>
+    
    
 <?php
     if(!$authorized){
@@ -101,7 +94,7 @@
         foreach ($arrayTech as $row) {
             echo "<tr>";
                 echo "<td><input type='checkbox' name='id_users[]' value='" .  $row['id_user'] . "'></td>";
-                echo "<td class='gray'><a href='showUser.inc.php?idUser=" . $row['id_user'] . "'>" . $row['username'] . "</a></td>";
+                echo "<td class='gray'><a href='fetchSuperuser/showUser.inc.php?idUser=" . $row['id_user'] . "'>" . $row['username'] . "</a></td>";
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td class='gray'>" . $row['firstname'] . "</td>";
                 echo "<td>" . $row['lastname'] . "</td>";

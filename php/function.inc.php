@@ -157,7 +157,7 @@ function generateUserOBJ(string $sid){
 }
 
 function generateSuperuserOBJ(string $sid){
-    @include_once('../classes/SUperser.php');
+    @include_once('../classes/Superuser.php');
     @include_once('classes/Superuser.php');
 
     $temp = new Superuser();

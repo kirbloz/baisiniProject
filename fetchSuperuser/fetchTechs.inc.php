@@ -1,21 +1,14 @@
 <?php
     @session_start();
-    @include('php/function.inc.php');
+    @include_once('php/function.inc.php');
+    @include_once('../php/function.inc.php');
     $utente = generateSuperuserOBJ(session_id());
     if($utente->getPower()<2)
         $authorized = false;
     else
         $authorized = true;
 ?>
-    <div class="wrapper user-area">
-
-        <div class='color-lightb user-nav'>
-            <ul>
-                <li><a href="areaSuperutente.php">Torna indietro</a></li>
-            </ul>
-        </div>
-        <br><br>
-   
+    
 <?php
     if(!$authorized){
         echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";   
@@ -50,7 +43,7 @@
 
         echo "</div><div class='wrapper'>";
         /**/
-        @require_once('db/databasehandler.inc.php');
+        @include_once('../db/databasehandler.inc.php');
     
         //cerco direttamente appoggiandomi all'entità superuser perchè ha un rapporto 1-1 con technician
         $query = "SELECT id_superuser, superuser.id_technician, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office, power 
@@ -98,8 +91,8 @@
         foreach ($arrayTech as $row) {
             echo "<tr>";
                 echo "<td><input type='checkbox' name='id_techs[]' value='" .  $row['id_technician'] . "'></td>";
-                echo "<td class='gray'>" . $row['firstname'] . "</td>";
-                echo "<td>" . $row['lastname'] . "</td>";
+                echo "<td class='gray'><a href='fetchSuperuser/showUser.inc.php?matricola=" . $row['id_technician'] . "'>" . $row['firstname'] . "</a></td>";
+                echo "<td><a href='fetchSuperuser/showUser.inc.php?matricola=" . $row['id_technician'] . "'>" . $row['lastname'] . "</a></td>";
                 echo "<td class='gray'>" . $row['gender'] . "</td>";
                 echo "<td>" . $row['birth_date'] . "</td>";
                 echo "<td class='gray'>" . $row['email'] . "</td>";
@@ -114,7 +107,20 @@
                 else 
                     echo "<td class='gray'>" . $capo['firstname'] . " " . $capo['lastname'] . "</td>";
             
-                echo "<td>" . $row['power'] . "</td>";
+                switch($row['power']){
+                    case 0:
+                        echo "<td>Dipendente</td>";
+                        break;
+                    case 1:
+                        echo "<td>Supervisore</td>";
+                        break;
+                    case 2:
+                        echo "<td>Capo Ufficio</td>";
+                        break;
+                    default:
+                        echo "<td>Unknown</td>";
+                }
+                    
             echo "</tr>";
         }
         echo "</table>";
