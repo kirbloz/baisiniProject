@@ -9,7 +9,7 @@
         if(deleteUserTuple())
             header("location:../logout.php?error=deletedaccount");
         else
-            header("location:../logout.php?error=deletedaccount");
+            header("location:../logout.php?error=nodeletedaccount");
     }else if(isset($_POST['submit']) && $_POST['submit'] == "CHANGE"){
         @session_start();
         @include('php/function.inc.php');

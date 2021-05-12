@@ -14,11 +14,40 @@
                 <li><a href="areaSuperutente.php">Torna indietro</a></li>
             </ul>
         </div>
+        <br><br>
    
 <?php
     if(!$authorized){
         echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";   
     }else{
+        //controlla se c'è il submit
+        //controlla il post
+        //elimina gli utenti
+        if(isset($_POST['submit'])){
+           //var_dump($_POST);
+            echo "<br>tot selected: " . sizeof($_POST['id_users']) . "<br>";
+            $deleted = sizeof($_POST['id_users']) ;
+
+            //preparo la connessione e la query
+            $query = "DELETE FROM user WHERE id_user = :id_user";
+            global $connection;
+            $statement = $connection->prepare($query);
+
+            //eseguola query per ogni id
+            foreach($_POST['id_users'] as $userid){
+                $values[':id_user'] = $userid;
+                try{
+                    $statement->execute($values);
+                }catch(PDOException $e){
+                    echo $e;
+                    $deleted--;
+                }
+            }
+            echo "<br>tot deleted: " . sizeof($_POST['id_users']) . "<br>";
+            unset($_POST);
+        }
+            
+
         echo "</div><div class='wrapper'>";
         /**/
         @require_once('db/databasehandler.inc.php');
@@ -51,11 +80,11 @@
             echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
 
         /**/
-        echo "<form method='post' action='fetchSuperuser/deleteUsers.inc.php'>";
+        echo "<form method='post' action=''>";
         echo "<table>";
         echo "<thead><tr>";
         //valutare di inserire dei tasti per eliminare certi utenti
-        echo "
+        echo "  <th> </th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Nome</th>
@@ -71,7 +100,8 @@
         
         foreach ($arrayTech as $row) {
             echo "<tr>";
-                echo "<td class='gray'>" . $row['username'] . "</td>";
+                echo "<td><input type='checkbox' name='id_users[]' value='" .  $row['id_user'] . "'></td>";
+                echo "<td class='gray'><a href='showUser.inc.php?idUser=" . $row['id_user'] . "'>" . $row['username'] . "</a></td>";
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td class='gray'>" . $row['firstname'] . "</td>";
                 echo "<td>" . $row['lastname'] . "</td>";
@@ -84,6 +114,7 @@
             echo "</tr>";
         }
         echo "</table>";
+        echo "<input type='submit' value='cancella selezionati' name='submit'>";
         echo "</form>";
     }
    

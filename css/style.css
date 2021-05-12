@@ -35,7 +35,15 @@ th{
 }
 
 th, td{
-	padding: 5px 10px;
+	padding: 7px 10px;
+}
+
+table a:hover{
+	color:red;
+}
+
+table input{
+	max-width: 50px;
 }
 /* classes */
 
