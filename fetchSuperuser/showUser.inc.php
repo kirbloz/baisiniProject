@@ -90,10 +90,9 @@ forse
             echo "error";
         var_dump($statement);
         /*
-            aggiungere query per visualizzare i lavori del tecnico
-            i suoi sottoposti
-            il suo superiore
-            la sua paga
+            aggiungere query per visualizzare i lavori relativi alla persona
+            i suoi ticket
+            i suoi preventivi
             varie ed eventuali
         */
     }
