@@ -47,8 +47,7 @@
         ?>
 
         <div class="centered redirect-login"> 
-            <a href="supersignup.php">Non sei registrato? Clicca qui.</a><br>
-            <a href="superlogin.php">Non sei parte del nostro personale? Clicca qui.</a>
+            <a href="login.php">Non sei parte del nostro personale? Clicca qui.</a>
         </div>
     </div>
 </body>
