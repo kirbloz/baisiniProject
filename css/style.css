@@ -21,7 +21,7 @@ hr{
 	margin: 20px;
 }
 
-table{
+table.multi{
 	margin:auto;
 	background-color: #fff;
 	border-collapse: collapse;
@@ -29,20 +29,35 @@ table{
 	text-align: center;
 }
 
-th{
-	background-color: #afc3cc;
-	border: 2px solid #1a1a1a;
+table.single{
+	margin:auto;
+	border-collapse: collapse;
+    border: 2px solid gray;
 }
 
-th, td{
+table.single > td{
+	padding:10px;
+}
+
+table.multi th{
+	padding:7px 0;
+	background-color: #afc3cc;
+	border-top: 2px solid #1a1a1a;
+	border-bottom: 2px solid #1a1a1a;
+}
+
+table.multi td{
 	padding: 7px 10px;
+	overflow: hidden; 
+    text-overflow: ellipsis; 
+    word-wrap: break-word;
 }
 
 table a:hover{
 	color:red;
 }
 
-table input{
+table.multi input{
 	max-width: 50px;
 }
 /* classes */
