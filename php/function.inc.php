@@ -106,9 +106,9 @@ function superuserExists($matricola){
     
     try{
         $statement->execute($values);
-        
     }catch(PDOException $e){
         header('location:../superlogin.php?error=queryfailed');
+        //echo "superuserexist";
         die();
     }
 

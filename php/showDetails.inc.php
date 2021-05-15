@@ -11,6 +11,7 @@
     echo "<br><br>";
     if(!isset($_GET))
     header('location:../areaSuperutente.php');
+    
     if(isset($_GET['matricola'])){
         $query = "SELECT id_superuser, superuser.id_technician, password, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office, power FROM superuser INNER JOIN technician USING(id_technician) WHERE superuser.id_technician = :matricola;";
         $values[':matricola'] = $_GET['matricola'];
@@ -78,6 +79,7 @@
             varie ed eventuali
         */
     }else if(isset($_GET['idUser'])){
+
         //preparo la query per la ricerca e l'array per i valori
         $query = "SELECT * FROM user LEFT JOIN customer USING(id_user) WHERE id_user = :idUser;";
         $values[':idUser'] = $_GET['idUser'];

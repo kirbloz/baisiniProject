@@ -18,6 +18,7 @@ if(!isset($_POST['submit'])){
     $superutente = new Superuser();
     $id = $superutente->login_user($uid, $pwd);  
 
+    @session_start();
     if(!createSupersession($id)){
         header('location:../superlogin.php?error=sessionfailed');
         die();

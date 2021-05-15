@@ -3,6 +3,11 @@
     if(!checkActiveSuper())
         header('location:superlogin.php?error=nosession'); //session
 
+    //salvo il power level
+    @include('php/function.inc.php');
+    $utente = generateSuperuserOBJ(session_id());
+
+
     //in base alla var specificata in get vado a eseguire script diversi
     //prima controllo se è necessario il redirect
     //se idUser o matricola sono != empty allora entro nelle condizioni
@@ -34,17 +39,18 @@
                     </ul>
                 </div>
         <?php
+
         //includo la pagina showdetails che si occupa di gestire le tabelle singole
-            if(isset($_GET['matricola']))
-                @require('php/showDetails.inc.php');
-            else
-                @require('php/showDetails.inc.php');
+        if( isset($_GET['matricola']) && $utente->getPower() > 1)
+            @require('php/showDetails.inc.php');
+        else if( isset($_GET['idUser']) && $utente->getPower() > 0)
+            @require('php/showDetails.inc.php');
+        else
+            echo "<br><br><p class='centered error' style='margin: 10px 0px;'> Non hai i privilegi per accedere a quest'area. </p>";  
+
+
         }else{
             //mi preparo a visualizzare le tabelle multiple
-            //salvo il power level
-            @include('php/function.inc.php');
-            $utente = generateSuperuserOBJ(session_id());
-
             //header se entro in select, quindi se faccio tabelle multiple
             echo '<div class="wrapper user-area">
                         <div class="color-lightb user-nav">
@@ -61,7 +67,7 @@
                                     TABELLA UTENTI
                 */
                 if($utente->getPower()<1){
-                    echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";   
+                    echo "<p class='centered error' style='margin: 10px 0px;'> Non hai i privilegi per accedere a quest'area. </p>";   
                 }else{
                     //controlla se c'è il submit
                     //controlla il post
@@ -285,8 +291,75 @@
                 
                 echo "fect techs";
                 
+            }else if($_GET['select'] == 'components'){
+                if($utente->getPower()<2){
+                    echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";   
+                }else{
+            
+                    echo "</div><div class='wrapper'>";
+                    //@require_once('db/databasehandler.inc.php');
+                
+                    //cerco direttamente appoggiandomi all'entità superuser perchè ha un rapporto 1-1 con technician
+                    $query = "SELECT component.name as name, price_ToSell, price_ToBuy, description, manifacturer.businness_name as businness_name, component.quantity_available as quantity
+                        FROM component 
+                        INNER JOIN category USING(id_category)
+                        INNER JOIN manifacturer USING(id_manifacturer)
+                        ORDER BY id_component ASC;";
+                
+                    //tento la connessione e preparo
+                    $statement = $connection->prepare($query);
+                    //invio query con values
+                    try {
+                        $statement->execute();
+                        //var_dump($statement);
+                    } catch (PDOException $e) {
+                        //var_dump($statement);
+                        //echo $e;
+                        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+                    }
+                
+                    if ($statement->rowCount() < 0) {
+                        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+                    }
+                    echo "<br><br>Nel database sono presenti " . $statement->rowCount() . " tipologie di componenti.<br><br>";
+                    $arrayComp = ($statement->fetchAll(PDO::FETCH_ASSOC));
+                    //var_dump($arrayComp);
+                    if ($arrayComp == false)
+                        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+                    else{
+                        $tot = 0;
+                        //inizio la stampa della tabella
+                        echo "<table class='multi'>";
+                        echo "<thead><tr>";
+                        echo "<th>Nome</th>
+                                <th>Prezzo d'Acquisto</th>
+                                <th>Prezzo di Vendita</th>
+                                <th>Categoria</th>
+                                <th>Fornitore</th>
+                                <th>Quantit&agrave;</th>";
+                        echo "</tr></thead>";
+                
+                        foreach ($arrayComp as $row) {
+                            $tot+=$row['quantity'];
+                            echo "<tr>";
+                                echo "<td class='gray'>" . $row['name'] . "</td>";
+                                echo "<td>" . $row['price_ToBuy'] . "</td>";
+                                echo "<td class='gray'>" . $row['price_ToSell'] . "</td>";
+                                echo "<td>" . $row['description'] . "</td>";
+                                echo "<td class='gray'>" . $row['businness_name'] . "</td>";
+                                echo "<td>" . $row['quantity'] . "</td>";
+                
+                                }
+                                    
+                            echo "</tr>";
+                        }
+                        echo "</table>";
+                        echo "<br><br>Nel database sono presenti " . $tot . " prodotti.<br><br>";
+                    }
+                    
+            
             }else
-                echo "parametri errati";
+                echo "<p class='centered error'>Parametri errati</p>";
         }
     }
 ?>	

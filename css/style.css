@@ -40,7 +40,7 @@ table.single > td{
 }
 
 table.multi th{
-	padding:7px 0;
+	padding:7px 10px;
 	background-color: #afc3cc;
 	border-top: 2px solid #1a1a1a;
 	border-bottom: 2px solid #1a1a1a;
@@ -48,6 +48,7 @@ table.multi th{
 
 table.multi td{
 	padding: 7px 10px;
+	margin: 0px 2px;
 	overflow: hidden; 
     text-overflow: ellipsis; 
     word-wrap: break-word;

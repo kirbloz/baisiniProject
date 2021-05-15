@@ -328,17 +328,17 @@ class User {
     
         //se la password fornita è diversa da quella nel db ti rimando indietro
         if(password_verify($pwd, $uid_result['password']) === true){
-            header('location:userShowcase.php?redirect=changepwd&error=samepwd');
+            header('location:../userShowcase.php?redirect=changepwd&error=samepwd');
         }
         
         //controllo che la pwd sia valida e matchi
          if(invalidPwd($pwd) !== false){
-            header('location:userShowcase.php?redirect=changepwd&error=invalidinput');
+            header('location:../userShowcase.php?redirect=changepwd&error=invalidinput');
             die();
         }
     
         if(pwdMatch($pwd, $repeat_pwd) !== false){
-            header('location:userShowcase.php?redirect=changepwd&error=nomatch');
+            header('location:../userShowcase.php?redirect=changepwd&error=nomatch');
             die();
         }
 

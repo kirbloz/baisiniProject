@@ -38,6 +38,10 @@ class Superuser
         public function __destruct(){
         }
 
+        public function getMatricola(){
+                return $this->matricola;
+        }
+
         public function getEmail(){
                 return $this->email;   
         }
@@ -130,6 +134,7 @@ class Superuser
                 
                 if (!is_array($values)) {
                         header('location:../superlogin.php?error=queryfailed');
+                        //echo "setEverything";
                         die();
                 }
 
@@ -144,6 +149,8 @@ class Superuser
                 $this->id_office = $values['id_office'];
                 $this->power = $values['power'];
                 
+                //var_dump($this);
+                //die();
         }
 
         public function changePWD(string $pwd, string $repeat_pwd)
@@ -161,28 +168,28 @@ class Superuser
 
                 //se la password fornita è diversa da quella nel db ti rimando indietro
                 if (password_verify($pwd, $uid_result['password']) === true) {
-                        header('location:userShowcase.php?redirect=changepwd&error=samepwd');
+                        header('location:../superuserShowcase.php?redirect=changepwd&error=samepwd');
                 }
 
                 //controllo che la pwd sia valida e matchi
                 if (invalidPwd($pwd) !== false) {
-                        header('location:userShowcase.php?redirect=changepwd&error=invalidinput');
+                        header('location:../superuserShowcase.php?redirect=changepwd&error=invalidinput');
                         die();
                 }
 
                 if (pwdMatch($pwd, $repeat_pwd) !== false) {
-                        header('location:userShowcase.php?redirect=changepwd&error=nomatch');
+                        header('location:../superuserShowcase.php?redirect=changepwd&error=nomatch');
                         die();
                 }
 
                 //inserisco la nuova pwd nel db
                 //preparo la query
-                $query = "UPDATE user SET password = :pwd_hash WHERE id_user = :id_user;";
+                $query = "UPDATE superuser SET password = :pwd_hash WHERE id_superuser = :id_superuser;";
 
                 //crypto la password e preparo l'array di valori
                 $pwd = password_hash($pwd, PASSWORD_DEFAULT);
                 $values = array(
-                        ':id_user' => $this->id,
+                        ':id_superuser' => $this->id,
                         ':pwd_hash' => $pwd
                 );
 
@@ -216,9 +223,9 @@ class Superuser
                 die();
         }
 
-        public function logout_superuser()
+        public function logout_user()
         {
-                deleteSessionTuple($this->username);
+                deleteSuperSessionTuple($this->matricola);
                 $this->__destruct();
         }
         //da adattare alla classe

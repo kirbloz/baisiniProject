@@ -17,13 +17,18 @@
         //creo l'utente, controllo l'input e mando la funzione di cambio
         if(isset($_GET['isUser']) && $_GET['isUser'])
             $utente = generateUserOBJ(session_id());
-        else
+        else if(isset($_GET['isUser']) && !$_GET['isUser'])
             $utente = generateSuperUserOBJ(session_id());
+        else 
+            header("location:../index.php");
         if(!isset($_POST['pwd']) || !isset($_POST['repeat_pwd']))
             header("location:../userShowcase.php?redirect=changepwd&error=invalidinput");
 
         $utente->changePWD($_POST['pwd'], $_POST['repeat_pwd']);
         //tutto ok, faccio fare il logout
+        var_dump($utente);
+        die();
+        $utente->logout_user();
         header("location:../logout.php?error=changedpwd");
         echo "yea";
         die();

@@ -46,7 +46,6 @@ function checkActive(){
 
 function checkActiveSuper(){
     @session_start();
-
     //controllo che effettivamente ci sia una sessione nel db
     $query = "SELECT * FROM supersession WHERE id_supersession = :id_session";
     $values = array(':id_session' => session_id());
@@ -86,6 +85,10 @@ function createSession($id){
     //cancello query contenenti altre sessioni
     //controllo di non avere tuple residue
     @session_start();
+
+    if(checkActive()) 
+        deleteSessionTuple($id);
+
     $query = "DELETE FROM session WHERE id_user = :id_user";
 
     $values = array(':id_user'=> $id);
@@ -109,6 +112,7 @@ function createSession($id){
 
     $statement = NULL;
 
+    @session_start();
     if(session_id() == NULL || session_id() == "" || session_id() == false)
         if(!session_regenerate_id())
             return false;
@@ -139,9 +143,11 @@ function createSupersession($id){
     //cancello query contenenti altre sessioni
     //controllo di non avere tuple residue
     @session_start();
-    $query = "DELETE FROM supersession WHERE id_superuser = :id_superuser";
 
-    $values = array(':id_superuser'=> $id);
+    //controllo che effettivamente ci sia una sessione nel db
+    $query = "SELECT * FROM supersession WHERE id_supersession = :id_session AND id_superuser = :id";
+    $values = array(':id_session' => session_id(),
+                    ':id' => $id);
 
     global $connection;
     //preparo query
@@ -150,23 +156,49 @@ function createSupersession($id){
         //eseguo query
         $statement->execute($values);
     } catch (PDOException $e) {
-        header('location:../superlogin.php?error=queryfailed');
+        header('location:../superlogin.php?=queryfailed');
+        die();
+    }
+    
+    if($statement != false)
+        if($statement->rowCount() > 0){
+            deleteSupersessionTuple($id);
+        }
+
+    
+    /*$query = "SELECT * FROM supersession WHERE id_supersession = :id_supersession";
+
+    //$id può essere sia id superuser che supersession
+    $values = array(':id_supersession'=> $id);
+
+    global $connection;
+    //preparo query
+    $statement = $connection->prepare($query);
+    try {
+        //eseguo query
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo $e;
+        //header('location:../superlogin.php?error=queryfailed');
         die();
     }
     //fetch 
     $statement = $statement->fetch(PDO::FETCH_ASSOC);
 
+    var_dump($statement);
+    die();
     if($statement !== false)
-        if($statement->rowCount() > 1)
+        if($statement->rowCount() > 0)
             deleteSupersessionTuple($statement['id_supersession']);
 
-    $statement = NULL;
+    $statement = NULL;*/
 
+    @session_start();
     if(session_id() == NULL || session_id() == "" || session_id() == false)
         if(!session_regenerate_id())
             return false;
 
-
+    global $connection;
     //preparo la query
     $query = "INSERT INTO supersession(id_supersession, start_time, id_superuser) VALUES(:id_supersession, :start_time, :id_superuser)";
     $values = array(
@@ -224,18 +256,17 @@ function deleteSessionTuple($id){
 //$id può essere l'id del superutente oppure sid ((super)session id)
 function deleteSupersessionTuple($id){
 
-    
-
     $query = "DELETE FROM supersession WHERE id_superuser = :id_superuser OR id_supersession = :id_session";
     if(!is_int($id))
         $num = 0;
     else   
         $num = $id;
-    $values = array(':id_superuser'=> $num,
-                    ':id_session'=> $id);
+    $values = array(':id_superuser'=> $id,
+                    ':id_session'=> $num);
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
+    var_dump($values);
     try{
         $statement->execute($values);
     }catch(PDOException $e){
@@ -244,9 +275,9 @@ function deleteSupersessionTuple($id){
         echo nl2br("\r\n");
         var_dump($statement);
         echo nl2br("\r\n");
-        
         die();
     }
+
     try{
         @session_start();
         session_unset();

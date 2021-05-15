@@ -14,9 +14,10 @@
 
         <div class='color-lightb user-nav'>
             <ul>
-                <li><a href="superuserShowcase.php">Visualizza le tue informazioni</a></li>
+                <li><a href="superuserShowcase.php?matricola=self">Visualizza le tue informazioni</a></li>
                 <li><a href="superuserfetch.php?select=users">Gestione utenti</a></li>
                 <li><a href="superuserfetch.php?select=techs">Gestione dipendenti</a></li>
+                <li><a href="superuserfetch.php?select=components">Gestione componenti</a></li>
             </ul>
         </div>
 
