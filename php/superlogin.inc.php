@@ -18,12 +18,14 @@ if(!isset($_POST['submit'])){
     $superutente = new Superuser();
     $id = $superutente->login_user($uid, $pwd);  
 
+    //var_dump($superutente);
     @session_start();
     if(!createSupersession($id)){
         header('location:../superlogin.php?error=sessionfailed');
         die();
     }
 
+    
     //rimando l'utente alla login con il codice corretto
     unset($_POST);
     header('location:../superlogin.php?error=none&username='. $superutente->getFirstname());

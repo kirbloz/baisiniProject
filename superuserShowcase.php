@@ -87,6 +87,7 @@
             }
         }else if(isset($_GET['matricola']) && $_GET['matricola'] == 'self'){
             $_GET['matricola'] = $utente->getMatricola();
+            $_GET['self'] = true;
             @require('php/showDetails.inc.php');
         }
         

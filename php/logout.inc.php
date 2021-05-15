@@ -37,6 +37,8 @@
     //eseguo questo pezzo dopo tutto per permettere il funzionamento di generateUserOBJ
     //controlla se effettivamente c'è una sessione e la cancello
     //nei primi due if tutto è ok, faccio redirect
+
+    
     if(checkActive()){
         deleteSessionTuple(session_id());
         header("location:../logout.php?error=noerror&isUser=true");

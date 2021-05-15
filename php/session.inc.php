@@ -148,7 +148,8 @@ function createSupersession($id){
     $query = "SELECT * FROM supersession WHERE id_supersession = :id_session AND id_superuser = :id";
     $values = array(':id_session' => session_id(),
                     ':id' => $id);
-
+    //var_dump($id);
+    //die();
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
@@ -161,9 +162,8 @@ function createSupersession($id){
     }
     
     if($statement != false)
-        if($statement->rowCount() > 0){
             deleteSupersessionTuple($id);
-        }
+        
 
     
     /*$query = "SELECT * FROM supersession WHERE id_supersession = :id_supersession";
@@ -206,6 +206,7 @@ function createSupersession($id){
         ':id_superuser'=> $id,
         ':start_time' => time()
     );
+    
         //preparo query
         $statement = $connection->prepare($query);
         try{
@@ -257,16 +258,18 @@ function deleteSessionTuple($id){
 function deleteSupersessionTuple($id){
 
     $query = "DELETE FROM supersession WHERE id_superuser = :id_superuser OR id_supersession = :id_session";
-    if(!is_int($id))
+    /*if(is_string($id))
         $num = 0;
-    else   
+    else   */
         $num = $id;
-    $values = array(':id_superuser'=> $id,
-                    ':id_session'=> $num);
+    $values = array(':id_superuser'=> (int) $id,
+                    ':id_session'=> (string) $num);
+    
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
-    var_dump($values);
+    //var_dump($values);
+    //die();
     try{
         $statement->execute($values);
     }catch(PDOException $e){
