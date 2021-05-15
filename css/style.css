@@ -32,7 +32,7 @@ table.multi{
 table.single{
 	margin:auto;
 	border-collapse: collapse;
-    border: 2px solid gray;
+    /*border: 2px solid gray;*/
 }
 
 table.single > td{

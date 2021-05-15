@@ -56,14 +56,38 @@
                     }
                 }
             }else if($utente->setCustomer() === false){
-                echo "<h4>Username</h4> <p> " . $utente->getUsername() . "</p>";
-                echo "<br>";
-                echo "<h4>Email</h4> <p> " . $utente->getEmail() . "</p>";
+
+                echo "<table class='single'>";
+                echo "<tr><td>Username</td><td>" . $utente->getFirstname() . "</td></tr>
+                    <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
+                echo "</table>";  
                 echo "<br><br>";
+
                 echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
 
             }else{
-                echo "<h4>Nome</h4> <p> " . $utente->getFirstname(). "</p>";
+
+                if($utente->getGender() == "M")
+                    $temp = "Uomo";
+                else if ($utente->getGender() == "F")
+                    $temp = "Donna";
+                else
+                    $temp = "Non specificato";
+
+                echo "<table class='single'>";
+                echo "<tr><td>Username</td><td>" . $utente->getFirstname() . "</td></tr>
+                    <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
+                echo "
+                    <tr><td>Nome</td><td>" . $utente->getFirstname() . "</td></tr>
+                    <tr><td>Cognome</td><td class='gray'>" . $utente->getLastname() . "</td></tr>
+                    <tr><td>Email</td><td>" . $utente->getEmail() . "</td></tr>
+                    <tr><td>Data di nascita</td><td class='gray'>" . $utente->getBirth() . "</td></tr>
+                    <tr><td>Genere</td><td>" . $temp . "</td></tr>
+                    <tr><td>Indirizzo</td><td class='gray'>" . $utente->getAddress() . "</td></tr>
+                    <tr><td>Citt&agrave;</td><td>" . $utente->getCity() . "</td></tr>
+                    <tr><td>CAP</td><td  class='gray'>" . $utente->getPostalCode() . "</td></tr>";
+                echo "</table>";  
+                /*echo "<h4>Nome</h4> <p> " . $utente->getFirstname(). "</p>";
                 echo "<br>";
                 echo "<h4>Cognome</h4> <p> " . $utente->getLastname(). "</p>";
                 echo "<br>";
@@ -81,7 +105,7 @@
                 echo "<br>";
                 echo "<h4>Città</h4> <p> " . $utente->getCity(). "</p>";
                 echo "<br>";
-                echo "<h4>CAP</h4> <p> " . $utente->getPostalCode(). "</p>";
+                echo "<h4>CAP</h4> <p> " . $utente->getPostalCode(). "</p>";*/
             }
         ?>
     </div>
