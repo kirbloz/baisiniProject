@@ -11,7 +11,7 @@
 <div class="wrapper user-area">
     <br>
 
-    <div class='color-lightb user-nav'>
+    <div class='color-lightb user-nav row'>
         <ul>
             <li><a href="areaUtente.php">Torna indietro</a></li>
             <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>

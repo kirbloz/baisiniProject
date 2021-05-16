@@ -12,7 +12,7 @@
     <div class="wrapper user-area">
         <br>
 
-        <div class='color-lightb user-nav'>
+        <div class='color-lightb user-nav row'>
             <ul>
                 <li><a href="superuserShowcase.php?matricola=self">Visualizza le tue informazioni</a></li>
                 <li><a href="superuserfetch.php?select=users">Gestione utenti</a></li>

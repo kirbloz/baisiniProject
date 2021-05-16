@@ -5,11 +5,13 @@
 		<div class="wrapper centered">
 			<br><br>
 			<div class="container">
-				<div class="content">
-				Benvenuto sul portale Web di EASY LAN
-				</div>
-				<div class="content">
-				Benvenuto sul portale Web di EASY LAN
+				<div class="row">
+					<div class="col-md-6">
+						<div class="p-3 border bg-light">Benvenuto sul portale Web di EASY LAN</div>
+					</div>
+					<div class="col-md-6">
+						<div class="p-3 border bg-light">Buona permanenza</div>
+					</div>
 				</div>
 		</div>
 

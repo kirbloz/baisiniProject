@@ -177,6 +177,10 @@ table.multi input{
 	padding: 0 10px;
 }
 
+ul{
+	list-style-type:none;
+	padding:0;
+}
 .navlinks a{
 	color:#fff;
 	font-size:24px;
@@ -194,13 +198,6 @@ footer{
 	margin-top: 80%;
 }
 
-/*.index-bg img{
-	max-width:100%;
-	max-height:100%;
-	object-fit:fit-content;
-}*/
-
-
 /* navbar nell'area utente */
 
 .user-area{
@@ -209,7 +206,7 @@ footer{
 	position: relative;
 	margin-left: 10%;
 	margin-right: 10%;
-	display:table;
+	
 	clear:both;
 }
 
@@ -220,6 +217,8 @@ footer{
 
 .user-nav{
 	max-width: 400px;
+	float:none;
+	display:inline-block;
 }
 
 .user-div{
@@ -275,7 +274,7 @@ footer{
 	padding-bottom: 10px;
 }
 
-input{
+.login-form input{
 	width: 200px;
 	font-family: monospace;
 	font-size: 14px;
@@ -287,16 +286,16 @@ input{
 	outline:none;
 }
 
-input[type="text"], [type="password"], [type="email"]{
+.login-form input[type="text"], [type="password"], [type="email"]{
 	background:#fff;
 	color:#8e98ae;
 }
 
-input:focus{
+.login-form input:focus{
 	width: 220px;
 }
 
-input.button{
+.login-form input.button{
 	padding:5px;
 	background-color:#1f1f2e;
 	color:#e0e0eb;
@@ -323,15 +322,13 @@ input.button{
 }*/
 
 .container{
-	display: flex;
+	/*display: flex;
 	flex-flow: row wrap;
-	border: 2px solid red;
-	justify-content: space-around;
+	/*border: 2px solid red;
+	justify-content: space-around;*/
+	font-size: 18px;
 }
 
-.content{
-	display: flex;
-	padding:10px;
-	width: auto;
-	border: 2px solid black;
+.col li{
+	text-decoration: none;
 }

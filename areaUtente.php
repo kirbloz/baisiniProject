@@ -9,7 +9,7 @@
         $utente = generateUserOBJ(session_id());
     ?>	
 
-    <div class="wrapper user-area">
+    <div class="container wrapper user-area row">
         <br>
 
         <div class='color-lightb user-nav'>
@@ -20,7 +20,7 @@
             </ul>
         </div>
 
-        <div class="user-data">
+        <div class="user-data ">
             <?php
                 echo "Benvenuto " . $utente->getUsername() . ".\r\nQuesta &egrave; la tua area utente.\r\nUsa i collegamenti a lato per accedere ai vari servizi"
             ?>
