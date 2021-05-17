@@ -18,7 +18,8 @@ a{
 }
 
 hr{
-	margin: 20px;
+	margin-top: 20px;
+	margin-bottom:20px;
 }
 
 table.multi{
@@ -242,7 +243,7 @@ footer{
 }
 
 .user-info p{
-	background-color: rgb(201, 198, 198);
+	/*background-color: rgb(201, 198, 198);*/
 	border-radius: 15px;
 	min-width: 200px;
 	display: inline-block;
@@ -327,8 +328,23 @@ footer{
 	/*border: 2px solid red;
 	justify-content: space-around;*/
 	font-size: 18px;
+	box-sizing: border-box;
 }
 
 .col li{
 	text-decoration: none;
 }
+
+
+.ticket{
+	margin-bottom:20px; 
+	border: solid 1px rgb(177, 177, 177); 
+	border-radius: .25rem;
+	background-color: #e0e0e0;
+}
+ .ticket div{
+	padding: 4px;
+ }
+
+
+ 

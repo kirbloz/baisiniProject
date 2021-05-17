@@ -8,7 +8,7 @@
         
 ?>	
 
-<div class="wrapper user-area">
+<div class="wrapper user-area row">
     <br>
 
     <div class='color-lightb user-nav'>

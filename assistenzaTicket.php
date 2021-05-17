@@ -28,43 +28,26 @@
 
         <div class="row">
         <?php
-            var_dump($_POST);
+            //var_dump($_POST);
             if(isset($_POST['submit'])){
+                //controllo la compilazione del form
                 if(empty($_POST['description']) || empty($_POST['title_request'])){
                     echo "<p class='centered error'>Compila tutti i campi.</p>";
-                    
                 }else{
-                    date_default_timezone_set('Europe/Rome');
-                    $query = "INSERT INTO ticket(id_user, title_request, description, image, date) VALUES(:id_user, :title_request, :description, :image, :date)";
-                    $values = array(
-                        ':id_user' => $utente->getId(),
-                        ':title_request'=> $_POST['title_request'],
-                        ':description' => $_POST['description'],
-                        ':image' => NULL,
-                        ':date' => date('Y-m-d H:i:s')
-                    );
-
-                    global $connection;
-                    $statement = $connection->prepare($query);
-                    //se query multiple prepara prima e poi fai nel for con i rispetti values
-                    try{
-                        $statement->execute($values);
-                    }catch(PDOException $e){
-                        var_dump($statement);
-                        echo "<p class='centered error'>Errore nell'esecuzione della query</p> " . $e;
-                        die();
-                    }
-
-                    echo 'Ticket inviato con successo.';
+                    //procedo con il salvataggio e invio mail del ticket
+                    if($utente->saveTicket($_POST))
+                        echo "<p class='centered alert alert-info'>Ticket inviato con successo.</p>";
+                        //echo "<p class='centered alert alert-info'>Non è stato possibile completare la richiesta. Riprova più tardi.</p>";
+                
                 }
-                
-
-                
+            }else if (isset($_GET) && isset($_GET['show'])){
+                //se non c'è stato un submit, controllo se è stato premuto il tasto di visione dei ticket
+                $utente->showTicket();
             }
         ?>
         </div>
-
-        <div class="row">
+        <br>
+        <div class="row">   
             <div class="container" >
                 <div class="col">Compila i campi sottostanti per inviare un ticket d'assistenza via email alla nostra assistenza.</div>
             </div>
@@ -94,7 +77,7 @@
                     </div>
                 </div>
 
-            <input type="submit" class="" name="submit" value="Invia" style="margin-top:5px;">
+            <input type="submit" class="btn btn-primary" name="submit" value="Invia" style="margin-top:5px;">
             </form>
         </div>
     </div>

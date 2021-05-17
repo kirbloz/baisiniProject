@@ -162,11 +162,11 @@
                         echo "</tr>";
                     }
                     echo "</table>";
-                    echo "<input type='submit' value='cancella selezionati' name='submit'>";
+                    echo "<input type='submit' class='btn' value='Cancella selezionati' name='submit'>";
                     echo "</form>";
                 }
                 
-                echo "fect users";
+                //echo "fect users";
 
             }else if($_GET['select'] == 'techs'){
                 /*
@@ -285,11 +285,11 @@
                         echo "</tr>";
                     }
                     echo "</table>";
-                    echo "<input type='submit' value='cancella selezionati' name='submit'>";
+                    echo "<input type='submit' class='btn' value='Cancella selezionati' name='submit'>";
                     echo "</form>";
                 }
                 
-                echo "fect techs";
+                //echo "fect techs";
                 
             }else if($_GET['select'] == 'components'){
                 if($utente->getPower()<2){

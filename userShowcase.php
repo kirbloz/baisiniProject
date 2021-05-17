@@ -15,7 +15,6 @@
         <ul>
             <li><a href="areaUtente.php">Torna indietro</a></li>
             <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
-            <li><a href="estimateGenerator.php">Richiedi un preventivo</a></li>
             <li><a href="userShowcase.php?redirect=changepwd">Cambia password</a></li>
             <li><a href="signupCustomer.php">Aggiorna le tue informazioni</a></li>
             <li><a href="userShowcase.php?redirect=deleteaccount">Elimina il tuo account</a></li>
@@ -75,10 +74,8 @@
                     $temp = "Non specificato";
 
                 echo "<table class='single'>";
-                echo "<tr><td>Username</td><td>" . $utente->getFirstname() . "</td></tr>
-                    <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
-                echo "
-                    <tr><td>Nome</td><td>" . $utente->getFirstname() . "</td></tr>
+                echo "<tr><td>Username</td><td class='gray'>" . $utente->getFirstname() . "</td></tr>";
+                echo "<tr><td>Nome</td><td>" . $utente->getFirstname() . "</td></tr>
                     <tr><td>Cognome</td><td class='gray'>" . $utente->getLastname() . "</td></tr>
                     <tr><td>Email</td><td>" . $utente->getEmail() . "</td></tr>
                     <tr><td>Data di nascita</td><td class='gray'>" . $utente->getBirth() . "</td></tr>

@@ -366,6 +366,112 @@ class User {
         //tutto a posto, lo script ritorna in logout.inc.php e andrà in logout.php
     }
 
+    public function saveTicket(array $form){
+        if(empty($this->email)){
+            echo "<p class='centered alert alert-info'>Email non valida. Controlla i tuoi dati dalla tua area utente.</p>";
+            return false;
+        }
+        date_default_timezone_set('Europe/Rome');
+        $query = "INSERT INTO ticket(id_user, title_request, description, image, date) VALUES(:id_user, :title_request, :description, :image, :date)";
+        $values = array(
+            ':id_user' => $this->getId(),
+            ':title_request'=> $_POST['title_request'],
+            ':description' => $_POST['description'],
+            ':image' => NULL,
+            ':date' => date('Y-m-d')
+        );
+
+        global $connection;
+        $statement = $connection->prepare($query);
+        //se query multiple prepara prima e poi fai nel for con i rispetti values
+        try{
+            $statement->execute($values);
+        }catch(PDOException $e){
+            /*var_dump($statement);
+            echo "<p class='centered error'>Errore nell'esecuzione della query</p> " . $e;
+            die();*/
+            return false;
+        }
+
+        if(!$statement) //errore
+            return false;
+        
+        //blocco di script per inviare la email
+        $to = (string) $this->email;
+
+        $subject = "Conferma invio ticket - " . $_POST['title_request'];
+        $message = "Buongiorno " . $this->getFirstname() . " la tua richiesta di assistenza <b>" . $_POST['title_request'] . "</b>.
+        <br>Uno dei nostri tecnici si occuper&agrave; di te al prima possibile con una email all'indirizzo specificato nelle informazioni del tuo profilo!
+        <br><br>Questa email &egrave; stata inviata dal sistema automatizzato. Si prega di non rispondere.
+        <br><hr><br>" . $_POST['description'] . "<br> Fine trasmissione. <a href='localhost/baisiniProject/index.php'>EasyLAN</a> ";
+        $headers = "From: easylanproject@gmail.com";
+        //$headers .= "Content-type: text/html\r\n";
+
+        if(!mail($to, $subject, $message, $headers))
+            return false;
+        return true;
+    }
+
+    public function showTicket(){
+        date_default_timezone_set('Europe/Rome');
+        $query = "SELECT * FROM ticket WHERE id_user = :id_user";
+        $values = array(
+            ':id_user' => $this->getId()
+        );
+
+        global $connection;
+        $statement = $connection->prepare($query);
+        //se query multiple prepara prima e poi fai nel for con i rispetti values
+        try{
+            $statement->execute($values);
+            
+        }catch(PDOException $e){
+            echo "<p class='centered alert alert-info'>Nessun ticket trovato.</p>";
+            echo $e;
+            //die();
+        }
+
+        if($statement->rowCount() > 0){
+            //var_dump($statement);
+
+            echo "Nel database sono presenti " . $statement->rowCount() . " tickets.<br><br>";
+            $arrayTicket = ($statement->fetchAll(PDO::FETCH_ASSOC));
+            //var_dump($arrayComp);
+            if ($arrayTicket == false)
+                echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+            else{
+                $tot = 0;
+                //inizio la stampa della tabella
+        
+                foreach ($arrayTicket as $row) {
+                    $orario = strtotime($row['date']);
+                    if($row['isOpen'])
+                        $status = 'Aperto';
+                    else
+                        $status = 'Chiuso';
+
+                    echo "<div class='container ticket' >";
+                        echo "<div class='row '>";
+                            echo "<div class='col-sm-4 m-1'><b>ID Ticket:</b> " . $row['id_ticket'] . "</div>";
+                            echo "<div class='col-sm-4 m-1'>Titolo: " . $row['title_request'] . "</div>";
+                            echo "<div class='col-sm-4 m-1'>Data: " . date('Y-m-d', $orario) . "</div>";
+                            echo "<div class='col-sm-4 m-1'>Status: " . $status . "</div>";
+                            echo "</div>"; 
+                            echo "<div class='row'>";
+                                echo "<div class='col m-1'><b>Contenuto:</b> " . $row['description'] . "</div>";
+                            echo "</div>";
+                    echo "</div><br><br>";
+                }
+            }
+        }else if(!$statement) //errore
+            echo "<p class='centered error'>Errore nell'esecuzione della query, riprova più tardi.</p>";
+        else
+            echo "<p class='centered alert alert-info'>Nessun ticket trovato</p><br><br><br>";
+        
+        
+
+    }
+
     private function loginDB($uid, $pwd){
         
         //controllo che l'utente cerchi di loggare un account che esiste effettivamente
