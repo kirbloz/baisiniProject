@@ -79,7 +79,7 @@
         ?>
         
         <div class="centered redirect-login"> 
-            <a href="areaUtente.php">Torna indietro.</a>
+            <a href="userShowcase.php">Torna indietro.</a>
         </div>
     </div>
 

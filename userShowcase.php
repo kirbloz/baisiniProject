@@ -11,7 +11,7 @@
 <div class="wrapper user-area">
     <br>
 
-    <div class='color-lightb user-nav row'>
+    <div class='color-lightb user-nav '>
         <ul>
             <li><a href="areaUtente.php">Torna indietro</a></li>
             <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
@@ -65,44 +65,9 @@
                 echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
 
             }else{
-
-                if($utente->getGender() == "M")
-                    $temp = "Uomo";
-                else if ($utente->getGender() == "F")
-                    $temp = "Donna";
-                else
-                    $temp = "Non specificato";
-
-                echo "<table class='single'>";
-                echo "<tr><td>Username</td><td class='gray'>" . $utente->getFirstname() . "</td></tr>";
-                echo "<tr><td>Nome</td><td>" . $utente->getFirstname() . "</td></tr>
-                    <tr><td>Cognome</td><td class='gray'>" . $utente->getLastname() . "</td></tr>
-                    <tr><td>Email</td><td>" . $utente->getEmail() . "</td></tr>
-                    <tr><td>Data di nascita</td><td class='gray'>" . $utente->getBirth() . "</td></tr>
-                    <tr><td>Genere</td><td>" . $temp . "</td></tr>
-                    <tr><td>Indirizzo</td><td class='gray'>" . $utente->getAddress() . "</td></tr>
-                    <tr><td>Citt&agrave;</td><td>" . $utente->getCity() . "</td></tr>
-                    <tr><td>CAP</td><td  class='gray'>" . $utente->getPostalCode() . "</td></tr>";
-                echo "</table>";  
-                /*echo "<h4>Nome</h4> <p> " . $utente->getFirstname(). "</p>";
-                echo "<br>";
-                echo "<h4>Cognome</h4> <p> " . $utente->getLastname(). "</p>";
-                echo "<br>";
-                echo "<h4>Data di nascita</h4> <p> " . $utente->getBirth(). "</p>";
-                echo "<br>";
-                if($utente->getGender() == "M")
-                    $temp = "Uomo";
-                else if ($utente->getGender() == "F")
-                    $temp = "Donna";
-                else
-                    $temp = "Non specificato";
-                echo "<h4>Genere</h4> <p> " . $temp . "</p>";
-                echo "<br>";
-                echo "<h4>Indirizzo</h4> <p> " . $utente->getAddress(). "</p>";
-                echo "<br>";
-                echo "<h4>Città</h4> <p> " . $utente->getCity(). "</p>";
-                echo "<br>";
-                echo "<h4>CAP</h4> <p> " . $utente->getPostalCode(). "</p>";*/
+                $_GET['idUser'] = $utente->getId();
+                $_GET['superuser'] = false; 
+                require_once('common/showDetails.inc.php');
             }
         ?>
     </div>
