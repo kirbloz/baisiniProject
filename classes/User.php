@@ -118,8 +118,7 @@ class User {
         //includo per la connessione
         require_once('../db/databasehandler.inc.php');
 
-        //controllo che il risultato sia PER FORZA false, perchè in caso non sia nè true
-        //nè false potrebbe non riconoscere l'errore
+        //controllo che il risultato sia PER FORZA false, perchè in caso non sia nè true nè false potrebbe non riconoscere l'errore
         if(emptyInputSignup($username, $pwd, $email_address) !== false){
             header('location:../signup.php?error=emptyinput');
             die();
