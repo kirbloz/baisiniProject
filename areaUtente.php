@@ -15,7 +15,8 @@
         <div class='color-lightb user-nav'>
             <ul>
                 <li><a href="userShowcase.php">Visualizza le tue informazioni</a></li>
-                <li><a href="assistenzaTicket.php">Richiedi assistenza</a></li>
+                <li><a href="userfetch.php?select=tickets">Richiedi assistenza</a></li>
+                <li><a href="userfetch.php?select=works">Area Interventi</a></li>
             </ul>
         </div>
 

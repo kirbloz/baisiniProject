@@ -341,6 +341,7 @@ footer{
 	border: solid 1px rgb(177, 177, 177); 
 	border-radius: .25rem;
 	background-color: #e0e0e0;
+	padding:10px;
 }
  .ticket div{
 	padding: 4px;
