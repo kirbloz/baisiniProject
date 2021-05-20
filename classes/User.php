@@ -257,14 +257,6 @@ class User
 
         if ($oldvalues['gender'] == "")
             $oldvalues['gender'] = NULL;
-        if ($oldvalues['address'] == "")
-            $oldvalues['address'] = NULL;
-        if ($oldvalues['city'] == "")
-            $oldvalues['city'] = NULL;
-        if ($oldvalues['postal_code'] == "")
-            $oldvalues['postal_code'] = NULL;
-        if ($oldvalues['birth_date'] == "")
-            $oldvalues['birth_date'] = NULL;
 
         //e preparo l'array di valori
         $values = array(
@@ -294,6 +286,63 @@ class User
 
         //rimando l'utente alla pagina di signupCustomer con il codice corretto
         header('location:../signupCustomer.php?error=none&firstname=' . $oldvalues['firstname'] . '&lastname=' . $oldvalues['lastname']);
+        die();
+    }
+
+    public function update_Customer(array $newvalues)
+    {
+        if (invalidUserN($newvalues['firstname']) !== false) {
+            echo '<p class="alert alert-danger">Nome non valido.</p>';
+            return 0;
+        }
+
+        if (invalidUserN($newvalues['lastname']) !== false) {
+            echo '<p class="alert alert-danger">Cognome non valido.</p>';
+            return 0;
+        }
+        //preparo la query
+        $query = "UPDATE customer SET firstname = :firstname, lastname = :lastname, gender = :gender, address = :address, city = :city, postal_code = :postal_code, birth_date = :birth_date WHERE id_user = :id_user";
+
+        if ($newvalues['gender'] == "")
+            $newvalues['gender'] = NULL;
+        if ($newvalues['address'] == "")
+            $newvalues['address'] = NULL;
+        if ($newvalues['city'] == "")
+            $newvalues['city'] = NULL;
+        if ($newvalues['postal_code'] == "")
+            $newvalues['postal_code'] = NULL;
+        if ($newvalues['birth_date'] == "")
+            $newvalues['birth_date'] = NULL;
+
+        //e preparo l'array di valori
+        $values = array(
+            ':id_user' => $this->id,
+            ':firstname' => $newvalues['firstname'],
+            ':lastname' => $newvalues['lastname'],
+            ':gender' => $newvalues['gender'],
+            ':address' => $newvalues['address'],
+            ':city' => $newvalues['city'],
+            ':postal_code' => $newvalues['postal_code'],
+            ':birth_date' => $newvalues['birth_date']
+        );
+        global $connection;
+        $statement = $connection->prepare($query);
+        try {
+            $statement->execute($values);
+            /*var_dump($statement);
+            var_dump($values);
+            die();*/
+        } catch (PDOException $e) {
+            //return false;
+            var_dump($statement);
+            echo $e;
+
+            die();
+        }
+
+        $this->setCustomer();
+        //rimando l'utente alla pagina di signupCustomer con il codice corretto
+        echo "<p class='centered alert alert-info'>Informazioni salvate corretamente. <b><a href='userShowcase.php'>Aggiorna qui la pagina</a></b></p>";
         die();
     }
 

@@ -517,11 +517,10 @@ function fetchMatricola(Superuser $utente)
 
 function fetchidUser()
 {
-    //l'argomento idUser lo utilizzo solta
 
 
     //preparo la query per la ricerca e l'array per i valori
-    echo "</div><br><div class='wrapper'>";
+    echo "</div><div class='wrapper'><h4>Informazioni cliente</h4><hr>";
     @require_once('db/databasehandler.inc.php');
     $query = "SELECT * FROM user LEFT JOIN customer USING(id_user) WHERE id_user = :idUser;";
     $values[':idUser'] = $_GET['idUser'];
@@ -551,19 +550,108 @@ function fetchidUser()
     else
         $temp = "Non specificato";
 
-    echo "<table class='single'>";
-    echo "  
-        <tr><td>ID</td><td>" . $statement['id_user'] . "</td></tr>
-        <tr><td>Username</td><td class='gray'>" . $statement['username'] . "</td></tr>
-        <tr><td>Email</td><td>" . $statement['email'] . "</td></tr>
-        <tr><td>Nome</td><td class='gray'>" . $statement['firstname'] . "</td></tr>
-        <tr><td>Cognome</td><td>" . $statement['lastname'] . "</td></tr>
-        <tr><td>Data di nascita</td><td class='gray'>" . $statement['birth_date'] . "</td></tr>
-        <tr><td>Genere</td><td>" . $statement['gender'] . "</td></tr>
-        <tr><td>Indirizzo</td><td class='gray'>" . $statement['address'] . "</td></tr>
-        <tr><td>Citt&agrave;</td><td>" . $statement['city'] . "</td></tr>
-        <tr><td>CAP</td><td class='gray'>" . $statement['postal_code'] . "</td></tr>";
-    echo "</table>";
+    echo '<div class="container ">
+            <div class="row single">
+                <form class="form-horizontal" method="post" action="">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                IdUser:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($statement['id_user']) .'" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Nome:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="firstname" value="' .htmlentities($statement['firstname']) .'" required> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Cognome:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="lastname" value="' .htmlentities($statement['lastname']) .'" required> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Username:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="username" placeholder="' .htmlentities($statement['username']) .'" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Email:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="email" placeholder="' .htmlentities($statement['email']) .'" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Data di nascita:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'" required> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Genere:
+                            </div>
+                            <div class="col-sm-4" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="gender" value="' .htmlentities($temp) .'"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Citt&agrave;:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="city" value="' .htmlentities($statement['city']) .'" required> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Indirizzo:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="address" value="' .htmlentities($statement['address']) .'"> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                CAP:
+                            </div>
+                            <div class="col-sm-7" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="postal_code" value="' .htmlentities($statement['postal_code']) .'"> 
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-primary" name="submit" value="Salva">
+                                <span></span>
+                                <input type="reset" class="btn btn-default" value="Reset">
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <form action="" method="post">
+                                    <input type="submit" class="btn btn-default" value="Aggiorna">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>';
 
     /*
             aggiungere query per visualizzare i lavori relativi alla persona

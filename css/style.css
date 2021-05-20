@@ -40,6 +40,12 @@ table.single > td{
 	padding:10px;
 }
 
+.single.row div{
+	margin: 7px;
+	overflow: hidden;
+	align-content: center;
+}
+
 table.multi th{
 	padding:7px 10px;
 	background-color: #afc3cc;
