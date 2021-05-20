@@ -156,7 +156,7 @@ function fetchidUser()
     else
         $temp = "Non specificato";
 
-    echo '<div class="container ">
+    echo '<div class="container">
             <div class="row single">
                 <form class="form-horizontal" method="post" action="userShowcase.php">
                     <div class="form-group">

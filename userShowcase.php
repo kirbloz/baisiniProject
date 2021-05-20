@@ -58,13 +58,48 @@ $utente = generateUserOBJ(session_id());
         }
     } else if ($utente->setCustomer() === false) {
 
-        echo "<table class='single'>";
+        /*echo "<table class='single'>";
         echo "<tr><td>Username</td><td>" . $utente->getUsername() . "</td></tr>
                     <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
-        echo "</table>";
-        echo "<br><br>";
+        echo "</table>";*/
+        echo '<div class="container">
+            <div class="row single centered">
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                IdUser:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Username:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Email:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+        echo "";
 
-        echo "Sembra che tu non sia ancora registrato come cliente. <a href='signupCustomer.php'>Puoi farlo qui.<a/>";
+        if(isset($_GET['add'])){
+            if($_GET['add'] == 'customer'){
+                
+            }
+        }else
+            echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a href='userShowcase.php?add=customer'><b>qui</b><a/>.</p>";
     } else{
         //echo "ok show";
         //var_dump($_POST);
