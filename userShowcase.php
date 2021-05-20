@@ -38,7 +38,7 @@ $utente = generateUserOBJ(session_id());
             echo "<div class='centered' style='margin-top:10px;'>";
             echo "Sei sicuro di voler eliminare il tuo profilo?";
             echo "<form action='php/logout.inc.php' method='post'>";
-            echo "<input class='button' id='confirm' name='submit' type='submit'  value='DELETE'/></form>";
+            echo "<input class='btn btn-primary' id='confirm' name='submit' type='submit'  value='DELETE'/></form>";
             echo "</div>";
         } else if ($_GET['redirect'] == 'changepwd') {
             echo "<div class='wrapper login-box centered' style='margin-top:10px; transform: scale(1.15);'>";
