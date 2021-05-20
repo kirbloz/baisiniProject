@@ -18,10 +18,9 @@ include('php/header.php')
 
 <!-- slider -->
 <div id="slides" class="carousel slide" data-ride="carousel">
-	<ul class="carousel-indicatiors">
+	<ul class="carousel-indicators">
 		<li data-target="#slides" data-slide-to="0" class="active"></li>
 		<li data-target="#slides" data-slide-to="1"></li>
-		<li data-target="#slides" data-slide-to="2"></li>
 	</ul>
 	<div class="carousel-inner">
 		<div class="carousel-item active">
@@ -35,22 +34,19 @@ include('php/header.php')
 		<div class="carousel-item">
 			<img src="images/table.jpg">
 		</div>
-		<div class="carousel-item">
-			<img src="images/cables.png">
-		</div>
 	</div>
 </div>
 
 <!-- jumbotron -->
 <div class="container-fluid">
-<div class="row jumbotron">
-	<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-		<p class="lead">Un portale online per accedere ai diversi servizi legati al mercato della connettivit&agrave; offerti dall'azienda EasyLAN </p>
+	<div class="row jumbotron">
+		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+			<p class="lead">Un portale online per accedere ai diversi servizi legati al mercato della connettivit&agrave; offerti dall'azienda EasyLAN </p>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
+			<a href="#"><button type="button" class="btn btn-outline-secondary btn-lg">Leggi</button></a>
+		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-		<a href="#"><button type="button" class="btn btn-outline-secondary btn-lg">Leggi</button></a>
-	</div>
-</div>
 </div>
 <!-- -->
 <div class="container-fluid">
@@ -72,37 +68,38 @@ include('php/header.php')
 <!--footer-->
 
 <footer>
-<div class="container-fluid padding">
-<div class="row text-center">
-	<div class="col-md-4">
-		<hr class="light">
-		<b>EASYLAN</b>
-		<hr class="light">
-		<p>324-092-2939</p>
-		<p>easylanproject@gmail.com</p>
-		<p>Olivelli Putelli</p>
+	<div class="container-fluid padding">
+		<div class="row text-center">
+			<div class="col-md-4">
+				<hr class="light">
+				<b>EASYLAN</b>
+				<hr class="light">
+				<p>324-092-2939</p>
+				<p>easylanproject@gmail.com</p>
+				<p>Olivelli Putelli</p>
+			</div>
+			<div class="col-md-4">
+				<hr class="light">
+				<p>Orari</p>
+				<hr class="light">
+				<p>Settembre-Giugno</p>
+				<p>08:00 - 14:00</p>
+			</div>
+			<div class="col-md-4">
+				<hr class="light">
+				<p>Le nostre sedi</p>
+				<hr class="light">
+				<p>Darfo</p>
+				<p>Brescia</p>
+			</div>
+		</div>
 	</div>
-	<div class="col-md-4">
-		<hr class="light">
-		<p>Orari</p>
-		<hr class="light">
-		<p>Settembre-Giugno</p>
-		<p>08:00 - 14:00</p>
-	</div>
-	<div class="col-md-4">
-		<hr class="light">
-		<p>Le nostre sedi</p>
-		<hr class="light">
-		<p>Darfo</p>
-		<p>Brescia</p>
-	</div>
-</div>
-</div>
 	<div id="privacy-link" class="col-12 text-center">
-	<hr class="light-100">
+		<hr class="light-100">
 		<a href="https://www.iubenda.com/privacy-policy/27774228" rel="noreferrer nofollow" target="_blank"> &copy;Privacy Policy</a> - <a href="#" role="button" class="iubenda-advertising-preferences-link">Personalizza tracciamento pubblicitario</a>
 	</div>
 </footer>
 
 </body>
+
 </html>
