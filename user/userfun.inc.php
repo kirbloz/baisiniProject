@@ -47,7 +47,7 @@ function printTicketArea(User $utente)
         <br>
         <div class="row">
             <div class="container">
-                <div class="col">Compila i campi sottostanti per inviare un ticket d\'assistenza via email alla nostra assistenza.</div>
+                <div class="col">Compila i campi sottostanti per inviare un ticket via email alla nostra assistenza.</div>
             </div>
         </div>
         <br>
@@ -121,56 +121,10 @@ function printWorkArea(User $utente)
         //se non c'è stato un submit, controllo se è stato premuto il tasto di visione dei ticket
         $utente->showWork();
     }
-
-    /*
-    
-        L'UTENTE NON PUO' CREARE TUPLE PER LAVORI. VANNO RICHIESTI PER VIA TELEFONICA O ASSISTENZA O DI PERSONA.
-        SARA' UN DIPENDENTE A CREARE IL LAVORO CHE POI RISULTERA' CONSULTABILE ANCHE DALL'UTENTE NELLA SUA AREA    
-    
-    */
-
-    /*echo '</div>
-    <br>
-    <div class="row">
-        <div class="container">
-            <div class="col">Compila i campi sottostanti per inviare un ticket d\'assistenza via email alla nostra assistenza.</div>
-        </div>
-    </div>
-    <br>
-    <div class="row">
-        <form action="" method="post">
-
-            <div class="row g-3">
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" name="title_request" placeholder="Titolo">
-                </div>
-                <div class="col-sm" style="text-align:left; padding-top:5px;">';
-
-    date_default_timezone_set('Europe/Rome');
-    $orario = date('m/d/Y H:i:s');
-    echo $orario;
-
-
-    echo        '</div>
-            </div>
-
-            <div class="row g-3">
-                <div class="form-group">
-                    <label for="request">Inserisci qui la tua richiesta:</label>
-                    <textarea name="description" class="form-control rounded-25" id="request" rows="5" max-rows="8"></textarea>
-                </div>
-            </div>
-
-            <input type="submit" class="btn btn-primary" name="submit" value="Invia" style="margin-top:5px;">
-        </form>
-    </div>
-    </div>';*/
 }
 
 function fetchidUser()
 {
-
-
     //preparo la query per la ricerca e l'array per i valori
     echo "</div><div class='wrapper'><h4>Informazioni cliente</h4><hr>";
     @require_once('db/databasehandler.inc.php');

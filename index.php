@@ -94,9 +94,9 @@ include('php/header.php')
 			</div>
 		</div>
 	</div>
-	<div id="privacy-link" class="col-12 text-center">
+	<div id="privacy-link" class="col-12 text-center" >
 		<hr class="light-100">
-		<a href="https://www.iubenda.com/privacy-policy/27774228" rel="noreferrer nofollow" target="_blank"> &copy;Privacy Policy</a> - <a href="#" role="button" class="iubenda-advertising-preferences-link">Personalizza tracciamento pubblicitario</a>
+		<a style="color:#fff;" href="https://www.iubenda.com/privacy-policy/27774228" rel="noreferrer nofollow" target="_blank"> &copy;Privacy Policy</a> - <a style="color:#fff;" href="#" role="button" class="iubenda-advertising-preferences-link">Personalizza tracciamento pubblicitario</a>
 	</div>
 </footer>
 

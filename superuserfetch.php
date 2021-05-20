@@ -7,15 +7,18 @@
     @include('php/function.inc.php');
     $utente = generateSuperuserOBJ(session_id());
 
+    /*
 
-    //in base alla var specificata in get vado a eseguire script diversi
-    //prima controllo se è necessario il redirect
+        SFRUTTO LA VAR SELECT NEL GET PER ESEGUIRE UN'AZIONE DIVERSA
+        PRIMA CONTROLLO CHE L'URL SIA LECITO
+
+    */
     //se idUser o matricola sono != empty allora entro nelle condizioni
     if (!(isset($_GET)   &&  (isset($_GET['select']) || (isset($_GET['idUser']) || isset($_GET['matricola']))))) {
         header('location:areaSuperutente.php'); //sto cercando di accedere alla pagina in maniera illecita
     }
     /*
-        dopo aver controllato che posso essere in questa pagina, 
+        dopo aver controllato
         !(c'è get AND c'è select OR (idUser OR matricola))
         decido se visualizzare tabelle multiple(tutti gli utenti/superutenti) 
         o tabelle singole(1 utente/superutente)
@@ -47,15 +50,21 @@
             else
                 echo "<br><br><p class='centered error' style='margin: 10px 0px;'> Non hai i privilegi per accedere a quest'area. </p>";
         } else {
-            //se non ho l'id di un signolo user o tecnico mi preparo a visualizzare le tabelle multiple
-            //quindi se faccio tabelle multiple
+            /*
+
+                NON SONO STATI SPECIFICATI PARAMETRI PER LE TAB SINGOLE. ALLORA CONTROLLO
+                IL VALORE DI SELECT PER DECIDERE A QUALE GESTIONE ACCEDERE
+                (utenti/dipendenti/componenti/interventi)
+
+            */
             echo '<div class="wrapper user-area">
                         <div class="color-lightb user-nav">
                         <ul>
                             <li><a href="areaSuperutente.php">Torna indietro</a></li>
                         </ul>
                     </div>
-                    <br><br><br>';
+                </div>';
+            //echo '<div class="wrapper user-info">';
 
             require_once('admin/adminfun.inc.php');
             //se effettivamente ho specificato dei parametri di ricerca aka il select vado
@@ -66,10 +75,9 @@
                                     TABELLA UTENTI
                 */
                 if ($utente->getPower() < 1)
-                    echo "<p class='centered error' style='margin: 10px 0px;'> Non hai i privilegi per accedere a quest'area. </p>";
+                    echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
                 else {
                     fetchUsers();
-                    //ho stampato la tabella "fect users";
                 }
             } else if ($_GET['select'] == 'techs') {
 
@@ -77,21 +85,39 @@
                                         TABELLA TECNICI
                 */
                 if ($utente->getPower() < 2)
-                    echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";
+                    echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
                 else {
-
                     fetchTechs();
-                    //echo "fect techs";
                 }
             } else if ($_GET['select'] == 'components') {
-                if ($utente->getPower() < 2) {
-                    echo "<p class='centered error'> Non hai i privilegi per accedere a quest'area. </p>";
-                } else {
 
+                /*
+                                        TABELLA COMPONENTI
+                */
+                if ($utente->getPower() < 2) {
+                    echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
+                } else {
                     fetchComponents();
                 }
+            } else if ($_GET['select'] == 'works') {
+
+                /*
+                                        TABELLA INTERVENTI
+                */
+                if ($utente->getPower() < 1) {
+                    echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
+                } else {
+                    fetchWorks();
+                    //se è stato submittato il form di ricerca in fetchWorks, allora invoco fetchWorksShow
+                    if(isset($_GET['IdUserWork'])){
+                        fetchWorksShow($_GET['IdUserWork']);
+                        
+                    }
+
+                }
             } else
-                echo "<p class='centered error'>Parametri errati</p>";
+                echo "<p class='centered alert alert-danger col-4'>Parametri errati</p>";
+            //echo "</div>";
         }
     }
         ?>

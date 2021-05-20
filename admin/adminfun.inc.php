@@ -559,7 +559,7 @@ function fetchidUser()
                                 IdUser:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="" value="' .htmlentities($statement['id_user']) .'" disabled> 
+                                <input type="text" class="form-control" name="" value="' . htmlentities($statement['id_user']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -567,7 +567,7 @@ function fetchidUser()
                                 Nome:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="firstname" value="' .htmlentities($statement['firstname']) .'" disabled> 
+                                <input type="text" class="form-control" name="firstname" value="' . htmlentities($statement['firstname']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -575,7 +575,7 @@ function fetchidUser()
                                 Cognome:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="lastname" value="' .htmlentities($statement['lastname']) .'" disabled> 
+                                <input type="text" class="form-control" name="lastname" value="' . htmlentities($statement['lastname']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -583,7 +583,7 @@ function fetchidUser()
                                 Username:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="username" value="' .htmlentities($statement['username']) .'" disabled> 
+                                <input type="text" class="form-control" name="username" value="' . htmlentities($statement['username']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -591,7 +591,7 @@ function fetchidUser()
                                 Email:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="email" value="' .htmlentities($statement['email']) .'" disabled> 
+                                <input type="text" class="form-control" name="email" value="' . htmlentities($statement['email']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -599,7 +599,7 @@ function fetchidUser()
                                 Data di nascita:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'" disabled> 
+                                <input type="text" class="form-control" name="birth_date" value="' . htmlentities($statement['birth_date']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -607,7 +607,7 @@ function fetchidUser()
                                 Genere:
                             </div>
                             <div class="col-sm-4" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="gender" value="' .htmlentities($temp) .'" disabled> 
+                                <input type="text" class="form-control" name="gender" value="' . htmlentities($temp) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -615,7 +615,7 @@ function fetchidUser()
                                 Citt&agrave;:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="city" value="' .htmlentities($statement['city']) .'" disabled> 
+                                <input type="text" class="form-control" name="city" value="' . htmlentities($statement['city']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -623,7 +623,7 @@ function fetchidUser()
                                 Indirizzo:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="address" value="' .htmlentities($statement['address']) .'" disabled> 
+                                <input type="text" class="form-control" name="address" value="' . htmlentities($statement['address']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -631,7 +631,7 @@ function fetchidUser()
                                 CAP:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="postal_code" value="' .htmlentities($statement['postal_code']) .'" disabled> 
+                                <input type="text" class="form-control" name="postal_code" value="' . htmlentities($statement['postal_code']) . '" disabled> 
                             </div>
                         </div>
                     </div>
@@ -645,4 +645,150 @@ function fetchidUser()
             i suoi preventivi
             varie ed eventuali
         */
+}
+
+function fetchWorks()
+{
+    $query = "SELECT id_user, customer.firstname, customer.lastname 
+            FROM work RIGHT JOIN customer USING (id_customer)
+            ORDER BY customer.lastname ASC;";
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute();
+    } catch (PDOException $e) {
+        echo "<br><p class='centered alert alert-info col-6'>Errore. Riprova pi&ugrave; tardi.</p>";
+        echo $e;
+        //die();
+    }
+
+    if ($statement->rowCount() < 0) {
+        echo "<p class='centered alert alert-info col-6'>Nessun cliente trovato nel database.</p>";
+    } else {
+
+        $arrayUsers = ($statement->fetchAll(PDO::FETCH_ASSOC));
+        //var_dump($arrayUsers);
+        ?>
+        <div class="wrapper user-info" style="text-align:left;">
+            <div class="row">
+            <?php
+                echo 'Nel database sono presenti '.$statement->rowCount().' clienti.<br><br>';
+            ?>
+            </div>
+            <form class="row" method="get" action="superuserfetch.php">
+                <div class="row form-group">
+                    <div class="col-sm-5">
+                        <select class="form-select" name="IdUserWork">
+                            <option selected disabled>Scegli il cliente..</option>
+                            <?php
+                            foreach ($arrayUsers as $user) {
+                                echo "<option value=\"" . $user['id_user'] . "\">" . $user['lastname'] . " " . $user['firstname'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" class="btn btn-primary" value="Trova">
+                    </div>
+                    <input type="hidden" name="select" value="works">
+                </div>
+            </form>
+            <hr>
+        </div>
+        <?php
+    }
+}
+
+
+function fetchWorksShow(int $idUser)
+{
+    date_default_timezone_set('Europe/Rome');
+    $query = "SELECT work.* FROM work INNER JOIN customer USING (id_customer) WHERE id_user = :id_user;";
+    $values = array(
+        ':id_user' => $idUser
+    );
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo "<p class='centered alert alert-info col-6'>Nessun intervento programmato trovato.</p>";
+        echo $e;
+        die();
+    }
+
+    if ($statement->rowCount() > 0) {
+        $arrayWork = ($statement->fetchAll(PDO::FETCH_ASSOC));
+        //var_dump($arrayWork);
+        //die();
+        if ($arrayWork == false)
+            echo "<p class='centered alert alert-info col-6'>Errore nell'esecuzione della query</p>";
+        else {
+            $tot = 0;
+            //inizio la stampa della serie
+            echo '<div class="wrapper">';
+            foreach ($arrayWork as $row) {
+                if (isset($row['start_date'])) {
+                    $dataI = date('d-m-Y', strtotime($row['start_date']));
+                } else
+                    $dataI = NULL;
+                if (isset($row['finish_date'])) {
+                    $dataF = date('d-m-Y', strtotime($row['start_date']));
+                } else
+                    $dataF = NULL;
+
+                echo "<div class='container ticket' >";
+                echo "<div class='row '>";
+                echo "<div class='col-sm-4 '><b>ID Intervento:</b> " . $row['id_work'] . "</div>";
+                echo "<div class='col-sm-4 '>Data Inizio: " . $dataI . "</div>";
+                echo "<div class='col-sm-4 '>Data Fine: " . $dataF . "</div>";
+                echo "</div>";
+                echo "<div class='row'>";
+                echo "<div class='col-sm-4 '>Citt&agrave;: " . $row['city'] . "</div>";
+                echo "<div class='col-sm-4 '>Indirizzo: " . $row['address'] . "</div>";
+                echo "<div class='col-sm-4 '>CAP: " . $row['postal_code'] . "</div>";
+                echo "</div>";
+                echo "<div class='row'>";
+                echo "<div class='col m-1'><b>Descrizione:</b> " . $row['description'] . "</div>";
+                echo "</div>";
+
+                /*stampo i tecnici impegnati nel lavoro*/
+                echo "<div class='row'>";
+                $query = "SELECT firstname, lastname FROM technician INNER JOIN carry_out USING (id_technician) WHERE id_work = :id_work";
+                $values = array(
+                    ':id_work' => $row['id_work']
+                );
+
+                $statement = $connection->prepare($query);
+                //se query multiple prepara prima e poi fai nel for con i rispetti values
+                try {
+                    $statement->execute($values);
+                } catch (PDOException $e) {
+                    echo "<p>Nessun tecnico assegnato all'intervento.</p>";
+                    //echo $e;
+                    //die();
+                }
+
+                if ($statement->rowCount() > 0 && !isset($e)) {
+                    echo "<div class='col m-1'><b>Tecnici assegnato all'intervento:</b></div><br>";
+                    echo "<ul>";
+                    $arrayWorkers = ($statement->fetchAll(PDO::FETCH_ASSOC));
+                    foreach ($arrayWorkers as $innerrow) {
+                        echo "<li>" . $innerrow['lastname'] . " " . $innerrow['firstname'] . "</li>";
+                    }
+                    echo "</ul>";
+                }
+
+                echo "</div>";
+                echo "</div><br><br>";
+            }
+        }
+    } else if (!$statement) //errore
+        echo "<p class='centered alert alert-info col-6'>Errore nell'esecuzione della query, riprova più tardi.</p>";
+    else
+        echo "<p class='centered alert alert-info col-6'>Nessun intervento trovato</p><br><br><br>";
 }

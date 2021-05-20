@@ -14,7 +14,7 @@ body {
 }
 
 a {
-	text-decoration: none;
+	text-decoration: none !important;
 	color: #32363C;
 }
 
@@ -190,7 +190,7 @@ ul {
 .carousel-caption {
 	position: absolute;
 	top: 45%;
-	transform: translateY(-50%);
+	transform: translateY(-30%);
 }
 
 .carousel-caption h1 {
@@ -375,7 +375,7 @@ hr.light-100 {
 	border: solid 1px rgb(177, 177, 177);
 	border-radius: .25rem;
 	background-color: #e0e0e0;
-	padding: 10px;
+	padding: 10px 20px;
 }
 
 .ticket div {
