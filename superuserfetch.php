@@ -55,7 +55,7 @@
                             <li><a href="areaSuperutente.php">Torna indietro</a></li>
                         </ul>
                     </div>
-                    <br><br>';
+                    <br><br><br>';
 
             require_once('admin/adminfun.inc.php');
             //se effettivamente ho specificato dei parametri di ricerca aka il select vado
