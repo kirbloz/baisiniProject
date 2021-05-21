@@ -517,8 +517,6 @@ function fetchMatricola(Superuser $utente)
 
 function fetchidUser()
 {
-
-
     //preparo la query per la ricerca e l'array per i valori
     echo "</div><br><br><div class='wrapper'><h4>Informazioni cliente</h4><hr>";
     @require_once('db/databasehandler.inc.php');
@@ -670,14 +668,14 @@ function fetchWorks()
 
         $arrayUsers = ($statement->fetchAll(PDO::FETCH_ASSOC));
         //var_dump($arrayUsers);
-        ?>
+?>
         <div class="wrapper user-info" style="text-align:left;">
             <div class="row">
-            <?php
-                echo 'Nel database sono presenti '.$statement->rowCount().' clienti.<br><br>';
-            ?>
+                <?php
+                echo 'Nel database sono presenti ' . $statement->rowCount() . ' clienti.<br><br>';
+                ?>
             </div>
-            <form class="row" method="get" action="superuserfetch.php">
+            <form class="row" method="get" action="">
                 <div class="row form-group">
                     <div class="col-sm-5">
                         <select class="form-select" name="IdUserWork">
@@ -690,14 +688,17 @@ function fetchWorks()
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <input type="submit" class="btn btn-primary" value="Trova">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Trova">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Aggiungi">
                     </div>
                     <input type="hidden" name="select" value="works">
                 </div>
             </form>
             <hr>
         </div>
-        <?php
+<?php
     }
 }
 
@@ -791,4 +792,276 @@ function fetchWorksShow(int $idUser)
         echo "<p class='centered alert alert-info col-6'>Errore nell'esecuzione della query, riprova più tardi.</p>";
     else
         echo "<p class='centered alert alert-info col-6'>Nessun intervento trovato</p><br><br><br>";
+}
+
+function fetchWorksAdd(int $idUser)
+{
+    $query = "SELECT * FROM user INNER JOIN customer USING (id_user) WHERE id_user = :id_user;";
+    $values[':id_user'] = $idUser;
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo $e;
+        echo "<p class='centered alert alert-info col-6'>Qualcosa &egrave; andato storto. Riprova pi&ugrave; tardi.</p>";
+        die();
+    }
+
+    if ($statement->rowCount() > 0)
+        $arrayUser = $statement->fetch(PDO::FETCH_ASSOC);
+    else {
+        echo "<p class='centered alert alert-info col-6'>Cliente non trovato.</p>";
+        die();
+    }
+
+    //la seconda query mi prepara l'array di tecnici disponibili
+    $query = "SELECT id_technician, firstname, lastname 
+                FROM technician;";
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute();
+    } catch (PDOException $e) {
+        echo $e;
+        echo "<p class='centered alert alert-info col-6'>Qualcosa &egrave; andato storto. Riprova pi&ugrave; tardi.</p>";
+        die();
+    }
+
+    if ($statement->rowCount() > 0)
+        $arrayTechs = $statement->fetchAll(PDO::FETCH_ASSOC);
+    else {
+        echo "<p class='centered alert alert-info col-6'>Nessun dipendente trovato.</p>";
+        die();
+    }
+
+
+    //echo "stampa form parzialmente completato con i dati dell'idUserWork";
+
+    echo "<h4 class='centered'>Compila i campi</h4>";
+    echo '
+    <div class="container">
+        <div class="row single">
+            <form class="form-horizontal" method="post" action="admin/workarea.inc.php">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            IdUser:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['id_user']) . '" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Nome:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['firstname']) . '" value="" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Cognome:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['lastname']) . '" value="" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Data di nascita:
+                        </div>
+                        <div class="col-sm-4" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['birth_date']) . '" value="" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Genere:
+                        </div>
+                        <div class="col-sm-3" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control custom-select" name="" placeholder="' . htmlentities($arrayUser['gender']) . '" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Citt&agrave;:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['city']) . '" value="" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Indirizzo:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['address']) . '" value="" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            CAP:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['postal_code']) . '"value="" disabled> 
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Inizio:
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="start_date"  required> 
+                        </div>
+                        <div class="col-sm-2">
+                            Fine:
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="finish_date"> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="request">Descrizione:</label>
+                            <textarea name="description" class="form-control rounded-25" id="request" rows="5" max-rows="8"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-control custom-select" name="tech1">
+                                <option selected value="">Tecnico 1</option>';
+
+    foreach ($arrayTechs as $tech) {
+        echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
+    }
+
+    echo '</select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control custom-select" name="tech2">
+                                <option selected>Tecnico 2</option>';
+
+    foreach ($arrayTechs as $tech) {
+        echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
+    }
+
+    echo '</select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control custom-select" name="tech3">
+                                <option selected>Tecnico 3</option>';
+
+    foreach ($arrayTechs as $tech) {
+        echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
+    }
+
+    echo '</select>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id_customer" value="' . htmlentities($arrayUser['id_customer']) . '">
+                    <input type="hidden" name="address" value="' . htmlentities($arrayUser['address']) . '"> 
+                    <input type="hidden" name="postal_code" value="' . htmlentities($arrayUser['postal_code']) . '"> 
+                    <input type="hidden" name="city" value="' . htmlentities($arrayUser['city']) . '">  
+                        
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Aggiungi">
+                            <span></span>
+                            <input type="reset" class="btn btn-default" value="Reset">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+}
+
+function saveWorkDB($array)
+{
+    require('../db/databasehandler.inc.php');
+    $query = "INSERT INTO work(description, start_date, postal_code, city, address, finish_date, id_customer) VALUES(:description, :start_date, :postal_code, :city, :address, :finish_date, :id_customer)";
+
+    //global $connection;
+    if ($array['postal_code'] == "")
+        $array['postal_code'] = NULL;
+    if ($array['address'] == "")
+        $array['address'] = NULL;
+    if ($array['finish_date'] == "")
+        $array['finish_date'] = NULL;
+
+    $values = array(
+        ':description' => $array['description'],
+        ':start_date' => $array['start_date'],
+        ':postal_code' => $array['postal_code'],
+        ':city' => $array['city'],
+        ':address' => $array['address'],
+        ':finish_date' => $array['finish_date'],
+        ':id_customer' => $array['id_customer']
+    );
+
+    $statement = $connection->prepare($query);
+    /*try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        //return false;
+        //var_dump($statement);
+        echo "<br>";
+        echo $e;
+        $connection = null;
+        die();
+    }*/
+
+    //devo popolare anche carryout quindi vado a vedere quanti tecnici ho e eseguo in un foreach
+    //per sapere quale id_work prendo quello più recente
+
+    $query = "SELECT MAX(id_work) as id_work FROM work WHERE id_customer = :id_customer;";
+    $statement = $connection->prepare($query);
+    $values = array();
+    $values['id_customer'] = $array['id_customer'];
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo "<br>";
+        header('location:../index.php');
+    }
+
+    echo "<br><br>";
+    $id_work = $statement->fetch(PDO::FETCH_ASSOC);
+    $values = array();
+
+    //mi preparo per la prossima query
+
+    $arrayTechs[] = (string)$array['tech1']; //ogni valore di $arrayTechs è una stringa
+    $arrayTechs[] = (string)$array['tech2'];
+    $arrayTechs[] = (string)$array['tech3'];
+
+    var_dump($arrayTechs);
+    foreach ($arrayTechs as $tech) {
+        
+        if ($tech != "Tecnico 1" && $tech != "Tecnico 2" && $tech != "Tecnico 3") {
+            $query = "INSERT INTO carry_out(id_work, id_technician, total_duration) VALUES(:id_work, :id_technician, :total_duration)";
+            $statement = $connection->prepare($query);
+
+            $values = array(
+                ':id_work' => $id_work,
+                ':id_tecnichian' => $tech,
+                ':total_duration' => NULL
+            );
+
+            try {
+                $statement->execute($values);
+            } catch (PDOException $e) {
+                echo "<br>";
+                echo $e;
+                die();
+            }
+        }
+    }
+    echo "<br><br>end query";
 }
