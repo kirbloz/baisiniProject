@@ -62,8 +62,7 @@
                         <ul>
                             <li><a href="areaSuperutente.php">Torna indietro</a></li>
                         </ul>
-                    </div>
-                </div>';
+                    </div>';
             //echo '<div class="wrapper user-info">';
 
             require_once('admin/adminfun.inc.php');
@@ -107,13 +106,21 @@
                 if ($utente->getPower() < 1) {
                     echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
                 } else {
+                    echo '</div><div class="wrapper">';
                     fetchWorks();
                     //se è stato submittato il form di ricerca in fetchWorks, allora invoco fetchWorksShow
-                    if(isset($_GET['IdUserWork'])){
+                    if (isset($_GET['IdUserWork']) && $_GET['submit'] == 'Trova') {
                         fetchWorksShow($_GET['IdUserWork']);
-                        
+                    } else if (isset($_GET['IdUserWork']) && $_GET['submit'] == 'Aggiungi') {
+                        if (isset($_POST['submit'])) {
+                            echo "salva nel db";
+                            var_dump($_POST);
+                        } else
+                            fetchWorksAdd($_GET['IdUserWork']);
                     }
-
+                    if (isset($_GET['error']) && $_GET['error'] = 'noerror')
+                        echo "<p class='centered alert alert-info col-4'> Intervento programmato correttamente. </p>";
+                    echo "</div>";
                 }
             } else
                 echo "<p class='centered alert alert-danger col-4'>Parametri errati</p>";
