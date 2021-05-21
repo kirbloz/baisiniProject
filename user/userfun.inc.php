@@ -80,8 +80,8 @@ function printTicketArea(User $utente)
             </form>
         </div>
         </div>';
-    }else{
-    echo    '<div class="row">
+    } else {
+        echo    '<div class="row">
             <p class="centered alert alert-warning">Non &egrave; stato possibile completare la richiesta perch&egrave; non sei registrato come Cliente. Puoi farlo <a href="signupCustomer.php">qui</a>.</p>
         </div>';
     }
@@ -110,7 +110,6 @@ function printWorkArea(User $utente)
         NON PUO' CREARLI/AGGIUNGERLI
     */
     $utente->showWork();
-
 }
 
 function fetchidUser(int $userID)
@@ -155,7 +154,7 @@ function fetchidUser(int $userID)
                                 IdUser:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($statement['id_user']) .'" disabled> 
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['id_user']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -163,7 +162,7 @@ function fetchidUser(int $userID)
                                 Nome:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="firstname" value="' .htmlentities($statement['firstname']) .'" required> 
+                                <input type="text" class="form-control" name="firstname" value="' . htmlentities($statement['firstname']) . '" required> 
                             </div>
                         </div>
                         <div class="row">
@@ -171,7 +170,7 @@ function fetchidUser(int $userID)
                                 Cognome:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="lastname" value="' .htmlentities($statement['lastname']) .'" required> 
+                                <input type="text" class="form-control" name="lastname" value="' . htmlentities($statement['lastname']) . '" required> 
                             </div>
                         </div>
                         <div class="row">
@@ -179,7 +178,7 @@ function fetchidUser(int $userID)
                                 Username:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="username" placeholder="' .htmlentities($statement['username']) .'" disabled> 
+                                <input type="text" class="form-control" name="username" placeholder="' . htmlentities($statement['username']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -187,7 +186,7 @@ function fetchidUser(int $userID)
                                 Email:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="email" placeholder="' .htmlentities($statement['email']) .'" disabled> 
+                                <input type="text" class="form-control" name="email" placeholder="' . htmlentities($statement['email']) . '" disabled> 
                             </div>
                         </div>
                         <div class="row">
@@ -195,7 +194,7 @@ function fetchidUser(int $userID)
                                 Data di nascita:
                             </div>
                             <div class="col-sm-4" style="text-align:left; margin:5px;">
-                                <input type="date" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'"> 
+                                <input type="date" class="form-control" name="birth_date" value="' . htmlentities($statement['birth_date']) . '"> 
                             </div>
                         </div>
                         <div class="row">
@@ -204,7 +203,7 @@ function fetchidUser(int $userID)
                             </div>
                             <div class="col-sm-4" style="text-align:left; margin:5px;">
                                 <select class="form-control custom-select" name="gender">
-                                    <option selected>' .htmlentities($temp) .'</option>
+                                    <option selected>' . htmlentities($temp) . '</option>
                                     <option>M</option>
                                     <option>F</option>
                                     <option>NB</option>
@@ -216,7 +215,7 @@ function fetchidUser(int $userID)
                                 Citt&agrave;:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="city" value="' .htmlentities($statement['city']) .'" required> 
+                                <input type="text" class="form-control" name="city" value="' . htmlentities($statement['city']) . '" required> 
                             </div>
                         </div>
                         <div class="row">
@@ -224,7 +223,7 @@ function fetchidUser(int $userID)
                                 Indirizzo:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="address" value="' .htmlentities($statement['address']) .'"> 
+                                <input type="text" class="form-control" name="address" value="' . htmlentities($statement['address']) . '"> 
                             </div>
                         </div>
                         <div class="row">
@@ -232,7 +231,7 @@ function fetchidUser(int $userID)
                                 CAP:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="postal_code" value="' .htmlentities($statement['postal_code']) .'"> 
+                                <input type="text" class="form-control" name="postal_code" value="' . htmlentities($statement['postal_code']) . '"> 
                             </div>
                         </div>
                         
@@ -257,10 +256,11 @@ function fetchidUser(int $userID)
         */
 }
 
-function showCustomerForm(User $utente){
+function showCustomerForm(User $utente)
+{
 
     echo "</div><div class='wrapper'><h4>Registrazione cliente</h4><hr>";
-    echo'
+    echo '
     <div class="container">
         <div class="row single">
             <form class="form-horizontal" method="post" action="php/customersignup.inc.php">
@@ -270,7 +270,7 @@ function showCustomerForm(User $utente){
                             IdUser:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $utente->getId() . '" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -278,7 +278,7 @@ function showCustomerForm(User $utente){
                             Username:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $utente->getUsername() . '" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -286,7 +286,7 @@ function showCustomerForm(User $utente){
                             Email:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $utente->getEmail() . '" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -363,5 +363,5 @@ function showCustomerForm(User $utente){
             </div>
         </div>
     </div>';
-
 }
+
