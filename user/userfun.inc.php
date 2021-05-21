@@ -105,22 +105,12 @@ function printWorkArea(User $utente)
     <div class="wrapper user-info" style="text-align:left;">
 
         <div class="row">';
-    //var_dump($_POST);
-    if (isset($_POST['submit'])) {
-        //controllo la compilazione del form
-        if (empty($_POST['description']) || empty($_POST['title_request'])) {
-            echo "<p class='centered error'>Compila tutti i campi.</p>";
-        } else {
-            //procedo con il salvataggio e invio mail del ticket
-            if ($utente->saveWork($_POST))
-                echo "<p class='centered alert alert-info'>Ticket inviato con successo.</p>";
-            //echo "<p class='centered alert alert-info'>Non è stato possibile completare la richiesta. Riprova più tardi.</p>";
+    /*
+        L'UTENTE HA SOLO LA POSSIBILITA' DI VISUALIZZARE INTERVENTI PROGRAMMATI,
+        NON PUO' CREARLI/AGGIUNGERLI
+    */
+    $utente->showWork();
 
-        }
-    } else /*if (isset($_GET) && isset($_GET['show'])) */ {
-        //se non c'è stato un submit, controllo se è stato premuto il tasto di visione dei ticket
-        $utente->showWork();
-    }
 }
 
 function fetchidUser(int $userID)
@@ -137,7 +127,7 @@ function fetchidUser(int $userID)
     try {
         $statement->execute($values);
     } catch (PDOException $e) {
-        echo "<p class='centered error'>Nessun utente trovato</p>";
+        echo "<p class='centered alert alert-danger col-6'>Nessun utente trovato</p>";
         //die();
         echo $e;
     }
@@ -146,7 +136,7 @@ function fetchidUser(int $userID)
     if ($statement->rowCount() > 0)
         $statement = $statement->fetch(PDO::FETCH_ASSOC);
     else
-        echo "<p class='centered error'>Nessun utente trovato</p>";
+        echo "<p class='centered alert alert-danger col-6'>Nessun utente trovato</p>";
     //var_dump($statement);
 
     if ($statement['gender'] == "M")
@@ -204,8 +194,8 @@ function fetchidUser(int $userID)
                             <div class="col-sm-2">
                                 Data di nascita:
                             </div>
-                            <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'"> 
+                            <div class="col-sm-4" style="text-align:left; margin:5px;">
+                                <input type="date" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'"> 
                             </div>
                         </div>
                         <div class="row">
@@ -304,7 +294,7 @@ function showCustomerForm(User $utente){
                             Nome:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="firstname" value="" required> 
+                            <input type="text" class="form-control" name="firstname" placeholder="*" value="" required> 
                         </div>
                     </div>
                     <div class="row">
@@ -312,15 +302,15 @@ function showCustomerForm(User $utente){
                             Cognome:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="lastname" value="" required> 
+                            <input type="text" class="form-control" name="lastname" placeholder="*" value="" required> 
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
                             Data di nascita:
                         </div>
-                        <div class="col-sm-7" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="birth_date" value=""> 
+                        <div class="col-sm-4" style="text-align:left; margin:5px;">
+                            <input type="date" class="form-control" name="birth_date" value=""> 
                         </div>
                     </div>
                     <div class="row">
@@ -341,7 +331,7 @@ function showCustomerForm(User $utente){
                             Citt&agrave;:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="city" value="" required> 
+                            <input type="text" class="form-control" name="city" placeholder="*" value="" required> 
                         </div>
                     </div>
                     <div class="row">
