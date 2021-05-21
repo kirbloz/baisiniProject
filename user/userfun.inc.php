@@ -123,13 +123,13 @@ function printWorkArea(User $utente)
     }
 }
 
-function fetchidUser()
+function fetchidUser(int $userID)
 {
     //preparo la query per la ricerca e l'array per i valori
     echo "</div><div class='wrapper'><h4>Informazioni cliente</h4><hr>";
     @require_once('db/databasehandler.inc.php');
     $query = "SELECT * FROM user LEFT JOIN customer USING(id_user) WHERE id_user = :idUser;";
-    $values[':idUser'] = $_GET['idUser'];
+    $values[':idUser'] = $userID;
 
     global $connection;
     $statement = $connection->prepare($query);
@@ -205,7 +205,7 @@ function fetchidUser()
                                 Data di nascita:
                             </div>
                             <div class="col-sm-7" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'" required> 
+                                <input type="text" class="form-control" name="birth_date" value="' .htmlentities($statement['birth_date']) .'"> 
                             </div>
                         </div>
                         <div class="row">
@@ -260,4 +260,113 @@ function fetchidUser()
             i suoi preventivi
             varie ed eventuali
         */
+}
+
+function showCustomerForm(User $utente){
+
+    echo "</div><div class='wrapper'><h4>Registrazione cliente</h4><hr>";
+    echo'
+    <div class="container">
+        <div class="row single">
+            <form class="form-horizontal" method="post" action="php/customersignup.inc.php">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            IdUser:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Username:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Email:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Nome:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="firstname" value="" required> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Cognome:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="lastname" value="" required> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Data di nascita:
+                        </div>
+                        <div class="col-sm-7" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="birth_date" value=""> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Genere:
+                        </div>
+                        <div class="col-sm-3" style="text-align:left; margin:5px;">
+                            <select class="form-control custom-select" name="gender">
+                                <option selected></option>
+                                <option>M</option>
+                                <option>F</option>
+                                <option>NB</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Citt&agrave;:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="city" value="" required> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            Indirizzo:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="address" value=""> 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            CAP:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left; margin:5px;">
+                            <input type="text" class="form-control" name="postal_code" value=""> 
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Salva">
+                            <span></span>
+                            <input type="reset" class="btn btn-default" value="Reset">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>';
+
 }

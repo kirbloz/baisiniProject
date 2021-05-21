@@ -62,44 +62,48 @@ $utente = generateUserOBJ(session_id());
         echo "<tr><td>Username</td><td>" . $utente->getUsername() . "</td></tr>
                     <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
         echo "</table>";*/
-        echo '<div class="container">
-            <div class="row single centered">
-                <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-2">
-                                IdUser:
-                            </div>
-                            <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                Username:
-                            </div>
-                            <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                Email:
-                            </div>
-                            <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        echo "";
-
         if(isset($_GET['add'])){
-            if($_GET['add'] == 'customer'){
-                
+            
+            if(isset($_GET['error'])){
+                if($_GET['error'] == 'none')
+                    echo "<p class='centered alert alert-info'>Informazioni salvate corretamente. <b><a href='userShowcase.php'>Aggiorna qui la pagina</a></b></p>";
+            }else if($_GET['add'] == 'customer'){
+                require_once('user/userfun.inc.php');
+                showCustomerForm($utente);
             }
-        }else
+        }else{
+            echo '<div class="container">
+                    <div class="row single centered">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                        IdUser:
+                                    </div>
+                                    <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        Username:
+                                    </div>
+                                    <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        Email:
+                                    </div>
+                                    <div class="col-sm-6" style="text-align:left; margin:5px;">
+                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
             echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a href='userShowcase.php?add=customer'><b>qui</b><a/>.</p>";
+        }
     } else{
         //echo "ok show";
         //var_dump($_POST);
@@ -116,10 +120,8 @@ $utente = generateUserOBJ(session_id());
                 $_POST=NULL;
             }
         }
-            $_GET['idUser'] = $utente->getId();
-            $_GET['superuser'] = false;
-            require_once('user/userfun.inc.php');
-            fetchidUser();
+        require_once('user/userfun.inc.php');
+        fetchidUser($utente->getId());
     }
 
     //controllo POST se sono stato rimandato qui dopo aver usato la form in fetchIdUser per aggiornare i dati

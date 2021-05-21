@@ -234,41 +234,47 @@ class User
         $this->email = $values['email'];
     }
 
-    public function add_Customer(array $oldvalues)
+    public function add_Customer(array $values)
     {
         //controllo che non esista il customer, anche se avviene già in un altra pagina, ma tengo il controllo lato server in ogni caso
         if (!($this->setCustomer() === false)) //false solo se non c'è una tupla
-            header('location:../signupCustomer.php?error=customeralreadexists');
+            header('location:../userShowcase.php');
 
         //preparo la query
         $query = "INSERT INTO customer(id_user, firstname, lastname, gender, address, city, postal_code, birth_date) VALUES(:id_user, :firstname, :lastname, :gender, :address, :city, :postal_code, :birth_date)";
 
         //faccio il controllo sull'input
-
-        if (invalidUserN($oldvalues['firstname']) !== false) {
-            header('location:../signupCustomer.php?error=invalidname');
-            die();
+        if (invalidUserN($values['firstname']) !== false) {
+            echo '<p class="alert alert-danger">Nome non valido.</p>';
+            return 0;
         }
 
-        if (invalidUserN($oldvalues['lastname']) !== false) {
-            header('location:../signupCustomer.php?error=invalidname');
-            die();
+        if (invalidUserN($values['lastname']) !== false) {
+            echo '<p class="alert alert-danger">Cognome non valido.</p>';
+            return 0;
         }
 
-        if ($oldvalues['gender'] == "")
-            $oldvalues['gender'] = NULL;
+        if ($values['address'] == "")
+            $values['address'] = NULL;
+        if ($values['city'] == "")
+            $values['city'] = NULL;
+        if ($values['postal_code'] == "")
+            $values['postal_code'] = NULL;
+        if ($values['birth_date'] == "")
+            $values['birth_date'] = NULL;
 
         //e preparo l'array di valori
         $values = array(
             ':id_user' => $this->id,
-            ':firstname' => $oldvalues['firstname'],
-            ':lastname' => $oldvalues['lastname'],
-            ':gender' => $oldvalues['gender'],
-            ':address' => $oldvalues['address'],
-            ':city' => $oldvalues['city'],
-            ':postal_code' => $oldvalues['postal_code'],
-            ':birth_date' => $oldvalues['birth_date']
+            ':firstname' => $values['firstname'],
+            ':lastname' => $values['lastname'],
+            ':gender' => $values['gender'],
+            ':address' => $values['address'],
+            ':city' => $values['city'],
+            ':postal_code' => $values['postal_code'],
+            ':birth_date' => $values['birth_date']
         );
+
         global $connection;
         $statement = $connection->prepare($query);
         try {
@@ -280,13 +286,12 @@ class User
             //return false;
             var_dump($statement);
             echo $e;
-
             die();
         }
 
-        //rimando l'utente alla pagina di signupCustomer con il codice corretto
-        header('location:../signupCustomer.php?error=none&firstname=' . $oldvalues['firstname'] . '&lastname=' . $oldvalues['lastname']);
-        die();
+        $this->setCustomer();
+        //rimando l'utente alla pagina userShowcase con il codice corretto
+        header('location:../userShowcase.php?add=customer&error=none');
     }
 
     public function update_Customer(array $newvalues)
@@ -341,7 +346,7 @@ class User
         }
 
         $this->setCustomer();
-        //rimando l'utente alla pagina di signupCustomer con il codice corretto
+        //rimando l'utente indietro con il codice corretto
         echo "<p class='centered alert alert-info'>Informazioni salvate corretamente. <b><a href='userShowcase.php'>Aggiorna qui la pagina</a></b></p>";
         die();
     }
