@@ -10,7 +10,7 @@
             header("location:../logout.php?error=deletedaccount");
         else
             header("location:../logout.php?error=nodeletedaccount");
-    }else if(isset($_POST['submit']) && $_POST['submit'] == "CHANGE"){
+    }else if(isset($_POST['submit']) && $_POST['submit'] == "Salva"){
         @session_start();
         @include('php/function.inc.php');
 
@@ -26,8 +26,6 @@
 
         $utente->changePWD($_POST['pwd'], $_POST['repeat_pwd']);
         //tutto ok, faccio fare il logout
-        var_dump($utente);
-        die();
         $utente->logout_user();
         header("location:../logout.php?error=changedpwd");
         echo "yea";
