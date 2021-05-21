@@ -17,23 +17,31 @@ include('php/header.php')
 
 
 <!-- slider -->
-<div id="slides" class="carousel slide" data-ride="carousel">
+<div id="slides" class="carousel slide" data-bs-ride="carousel">
 	<ul class="carousel-indicators">
-		<li data-target="#slides" data-slide-to="0" class="active"></li>
-		<li data-target="#slides" data-slide-to="1"></li>
+		<li  data-target="#slides" data-bs-slide-to="0" class="active" aria-current="true" aria-label="One"></li>
+		<li  data-target="#slides" data-bs-slide-to="1" aria-label="Two"></li>
 	</ul>
 	<div class="carousel-inner">
 		<div class="carousel-item active">
-			<img src="images/bg.jpg">
-			<div class="carousel-caption">
-				<h1 class="display-2">Easy LAN</h1>
+			<img class="d-block w-100" src="images/bg.jpg">
+			<div class="carousel-caption d-none d-md-block">
+				<h1 class="display-4">Easy LAN</h1>
 				<h3>Il tuo fornitore di connettivit&agrave;</h3>
-				<button type="button" class="btn btn-outline-light btn-lg">Iniziamo</button>
+				<a href="signup.php"><button type="button" class="btn btn-outline-light btn-lg">Iniziamo</button></a>
 			</div>
 		</div>
 		<div class="carousel-item">
-			<img src="images/table.jpg">
+			<img class="d-block w-100" src="images/table.jpg">
 		</div>
+		<!--<button class="carousel-control-prev" type="button" data-bs-target="#slides" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#slides" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>-->
 	</div>
 </div>
 
@@ -41,7 +49,7 @@ include('php/header.php')
 <div class="container-fluid">
 	<div class="row jumbotron">
 		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-			<p class="lead">Un portale online per accedere ai diversi servizi legati al mercato della connettivit&agrave; offerti dall'azienda EasyLAN </p>
+			<p class="lead">Un portale online per accedere ai diversi servizi legati al mercato della connettivit&agrave; offerti dall'azienda EasyLAN. Contattaci per maggiori informazioni.</p>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
 			<a href="#"><button type="button" class="btn btn-outline-secondary btn-lg">Leggi</button></a>
