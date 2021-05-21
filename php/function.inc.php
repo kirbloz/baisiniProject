@@ -164,7 +164,7 @@ function generateSuperuserOBJ(string $sid){
     $temp->setEverything($sid, true);
     //var_dump($temp);
     return $temp;
-    echo "generatesuperuser";
+    //echo "generatesuperuser";
     die();
 }
 
