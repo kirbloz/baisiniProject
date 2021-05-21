@@ -565,7 +565,7 @@ class User
         try {
             $statement->execute($values);
         } catch (PDOException $e) {
-            echo "<p class='centered alert alert-info'>Nessun intervento programmato trovato.</p>";
+            echo "<p class='centered alert alert-info col-6'>Nessun intervento programmato trovato.</p>";
             //echo $e;
             //die();
         }
@@ -576,7 +576,7 @@ class User
             //var_dump($arrayWork);
             //die();
             if ($arrayWork == false)
-                echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+                echo "<p class='centered alert alert-danger col-6'>Errore nell'esecuzione della query</p>";
             else {
                 $tot = 0;
                 //inizio la stampa della tabella
@@ -638,9 +638,9 @@ class User
                 }
             }
         } else if (!$statement) //errore
-            echo "<p class='centered error'>Errore nell'esecuzione della query, riprova più tardi.</p>";
+            echo "<p class='centered alert alert-danger col-6'>Errore nell'esecuzione della query, riprova più tardi.</p>";
         else
-            echo "<p class='centered alert alert-info'>Nessun intervento trovato</p><br><br><br>";
+            echo "<p class='centered alert alert-info col-6'>Nessun intervento trovato</p><br><br><br>";
     }
 
     private function loginDB($uid, $pwd)
