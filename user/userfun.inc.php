@@ -213,7 +213,12 @@ function fetchidUser(int $userID)
                                 Genere:
                             </div>
                             <div class="col-sm-4" style="text-align:left; margin:5px;">
-                                <input type="text" class="form-control" name="gender" value="' .htmlentities($temp) .'"> 
+                                <select class="form-control custom-select" name="gender">
+                                    <option selected>' .htmlentities($temp) .'</option>
+                                    <option>M</option>
+                                    <option>F</option>
+                                    <option>NB</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
