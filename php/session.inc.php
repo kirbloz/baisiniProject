@@ -89,10 +89,12 @@ function createSession($id){
     if(checkActive()) 
         deleteSessionTuple($id);
 
-    $query = "DELETE FROM session WHERE id_user = :id_user";
+    $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
 
-    $values = array(':id_user'=> $id);
-
+    $values = array(
+        ':id_user'=> $id,
+        ':id_session' => session_id()
+        );
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
@@ -103,6 +105,7 @@ function createSession($id){
         header('location:../login.php?error=queryfailed');
         die();
     }
+
     //fetch 
     $statement = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -163,8 +166,6 @@ function createSupersession($id){
     
     if($statement != false)
             deleteSupersessionTuple($id);
-        
-
     
     /*$query = "SELECT * FROM supersession WHERE id_supersession = :id_supersession";
 
@@ -305,7 +306,6 @@ function getSupersessionTuple($id){
         //return false;
         var_dump($statement);
         echo $e;
-        
         die();
     }
     //se trovo una sessione allora restituisco la tupla
