@@ -1,27 +1,13 @@
 <?php
 include('php/header.php')
 ?>
-<!--<img class="index-bg" src="images/bg.jpg" alt="image">-->
-<!--<div class="wrapper centered">
-	<br><br>
-	
-		<div class="row">
-			<div class="col-md-6">
-				<div class="p-3 border bg-light">Benvenuto sul portale Web di EASY LAN</div>
-			</div>
-			<div class="col-md-6">
-				<div class="p-3 border bg-light">Buona permanenza</div>
-			</div>
-		</div>
-</div>-->
 
-
-<!-- slider -->
-<div id="slides" class="carousel slide" data-bs-ride="carousel">
-	<ul class="carousel-indicators">
-		<li  data-target="#slides" data-bs-slide-to="0" class="active" aria-current="true" aria-label="One"></li>
-		<li  data-target="#slides" data-bs-slide-to="1" aria-label="Two"></li>
-	</ul>
+<div id="carousel" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		<button type="button" data-bs-target="#carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+	</div>
 	<div class="carousel-inner">
 		<div class="carousel-item active">
 			<img class="d-block w-100" src="images/bg.jpg">
@@ -32,18 +18,28 @@ include('php/header.php')
 			</div>
 		</div>
 		<div class="carousel-item">
-			<img class="d-block w-100" src="images/table.jpg">
+			<img src="images/second.jpg" class="d-block w-100" alt="...">
+			<div class="carousel-caption d-none d-md-block">
+			</div>
 		</div>
-		<!--<button class="carousel-control-prev" type="button" data-bs-target="#slides" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#slides" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>-->
+		<div class="carousel-item">
+			<img src="images/third.jpg" class="d-block w-100" alt="...">
+			<div class="carousel-caption d-none d-md-block">
+			</div>
+		</div>
 	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
 </div>
+
+
+
 
 <!-- jumbotron -->
 <div class="container-fluid">
@@ -102,7 +98,7 @@ include('php/header.php')
 			</div>
 		</div>
 	</div>
-	<div id="privacy-link" class="col-12 text-center" >
+	<div id="privacy-link" class="col-12 text-center">
 		<hr class="light-100">
 		<a style="color:#fff;" href="https://www.iubenda.com/privacy-policy/27774228" rel="noreferrer nofollow" target="_blank"> &copy;Privacy Policy</a> - <a style="color:#fff;" href="#" role="button" class="iubenda-advertising-preferences-link">Personalizza tracciamento pubblicitario</a>
 	</div>
