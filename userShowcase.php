@@ -50,7 +50,7 @@ $utente = generateUserOBJ(session_id());
                             <div class='col-sm-6 m-auto'>
                                 <input class='form-control' type='password' name='repeat_pwd' placeholder='Ripeti password' required><br>
                             </div>
-                            <input class='btn btn-primary' name='submit' type='submit' value='CHANGE'/>
+                            <input class='btn btn-primary' name='submit' type='submit' value='Salva'/>
                         </form>
                     </div>
                 </div>";
@@ -87,7 +87,7 @@ $utente = generateUserOBJ(session_id());
                                         IdUser:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getId()) .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getId() .'" disabled> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -95,7 +95,7 @@ $utente = generateUserOBJ(session_id());
                                         Username:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getUsername()) .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getUsername() .'" disabled> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -103,13 +103,13 @@ $utente = generateUserOBJ(session_id());
                                         Email:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .htmlentities($utente->getEmail()) .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getEmail() .'" disabled> 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>';
-            echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a href='userShowcase.php?add=customer'><b>qui</b><a/>.</p>";
+            echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a class='alert-link' href='userShowcase.php?add=customer'>qui<a/>.</p>";
         }
     } else{
         //echo "ok show";
