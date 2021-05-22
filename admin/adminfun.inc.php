@@ -7,7 +7,6 @@ function fetchUsers()
     //elimina gli utenti
     if (isset($_POST['submit'])) {
         //var_dump($_POST);
-        echo "<br>tot selected: " . sizeof($_POST['id_users']) . "<br>";
         $deleted = sizeof($_POST['id_users']);
 
         //preparo la connessione e la query
@@ -25,7 +24,7 @@ function fetchUsers()
                 $deleted--;
             }
         }
-        echo "<br>tot deleted: " . sizeof($_POST['id_users']) . "<br>";
+        echo "</div><br><p class='alert alert-success col-md-5 centered'> Hai eliminato " . sizeof($_POST['id_users']) . " utenti.</p><div>";
         unset($_POST);
     }
 
@@ -96,8 +95,14 @@ function fetchUsers()
         echo "</tr>";
     }
     echo "</table>";
-    echo "<input type='submit' class='btn btn-secondary' value='Cancella selezionati' name='submit'>";
-    echo "</form>";
+    echo '<div class="row" style="margin: 10px 40px;">
+            <div class="col-md-6">
+            <input type="submit" class="btn btn-secondary" value="Elimina selezionati" name="submit">
+                <span></span>
+                <input type="reset" class="btn btn-default" value="Reset">
+                </form>
+            </div>
+        </div>';
 }
 
 function fetchTechs()
@@ -107,7 +112,6 @@ function fetchTechs()
     //elimina gli utenti
     if (isset($_POST['submit'])) {
         //var_dump($_POST);
-        echo "<br>Selected: " . sizeof($_POST['id_techs']) . "<br>";
         $deleted = sizeof($_POST['id_techs']);
 
         //preparo la connessione e la query
@@ -125,10 +129,9 @@ function fetchTechs()
                 $deleted--;
             }
         }
-        echo "<br>Deleted: " . sizeof($_POST['id_techs']) . "<br>";
+        echo "</div><br><p class='alert alert-success col-md-5 centered'> Hai eliminato " . sizeof($_POST['id_techs']) . " dipendenti.</p><div>";
         unset($_POST);
     }
-
 
     echo "</div><br><div class='wrapper'>";
     /**/
@@ -210,8 +213,14 @@ function fetchTechs()
         echo "</tr>";
     }
     echo "</table>";
-    echo "<input type='submit' class='btn btn-secondary' value='Cancella selezionati' name='submit'>";
-    echo "</form>";
+    echo '<div class="row" style="margin: 10px 40px;">
+            <div class="col-md-6">
+            <input type="submit" class="btn btn-secondary" value="Elimina selezionati" name="submit">
+                <span></span>
+                <input type="reset" class="btn btn-default" value="Reset">
+                </form>
+            </div>
+        </div>';
 }
 
 function fetchComponents()
@@ -278,6 +287,28 @@ function fetchComponents()
 
 function fetchMatricola(Superuser $utente)
 {
+    if (isset($_POST['submit'])) {
+        //var_dump($_POST);
+        $deleted = sizeof($_POST['id_users']);
+
+        //preparo la connessione e la query
+        $query = "DELETE FROM technician WHERE id_technician = :id_technician";
+        global $connection;
+        $statement = $connection->prepare($query);
+
+        //eseguola query per ogni id
+        foreach ($_POST['id_techs'] as $userid) {
+            $values[':id_techs'] = $userid;
+            try {
+                $statement->execute($values);
+            } catch (PDOException $e) {
+                echo "<p  class='centered alert alert-danger'>" . $e . "</p>";
+                $deleted--;
+            }
+        }
+        echo "</div><br><p class='alert alert-success col-md-5 centered'> Hai eliminato " . sizeof($_POST['id_techs']) . " dipendenti.</p><div>";
+        unset($_POST);
+    }
 
     echo "</div><br><div class='wrapper'>";
     @require_once('db/databasehandler.inc.php');
@@ -518,8 +549,14 @@ function fetchMatricola(Superuser $utente)
                 echo "</tr>";
             }
             echo "</table>";
-            echo "<br><br><input type='submit' class='btn btn-secondary' value='cancella selezionati' name='submit'>";
-            echo "</form>";
+            echo '<div class="row" style="margin: 10px 40px;">
+                <div class="col-md-6">
+                <input type="submit" class="btn btn-secondary" value="Elimina selezionati" name="submit">
+                    <span></span>
+                    <input type="reset" class="btn btn-default" value="Reset">
+                    </form>
+                </div>
+            </div>';
         } else
             echo "<br><p class='centered alert alert-danger'>Nessun sottoposto trovato</p>";
         echo "</div><br>";
@@ -598,8 +635,14 @@ function fetchMatricola(Superuser $utente)
                 echo "</tr>";
             }
             echo "</table>";
-            echo "<br><br><br><input type='submit' class='btn btn-secondary' value='cancella selezionati' name='submit'>";
-            echo "</form>";
+            echo '<div class="row" style="margin: 10px 40px;">
+                    <div class="col-md-6">
+                    <input type="submit" class="btn btn-secondary" value="Elimina selezionati" name="submit">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Reset">
+                        </form>
+                    </div>
+                </div>';
         }
         echo "</div><br>";
     }
