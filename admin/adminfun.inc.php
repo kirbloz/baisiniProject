@@ -189,9 +189,7 @@ function fetchTechs()
         //eseguo la ricerca della tupla del capo
         $capo = superuserExists($row['id_supervisor']);
         if (!is_array($capo))
-            echo "<td class='gray'> Unknown </td>";
-        else if ($capo['firstname'] == $row['firstname'] && $capo['lastname'] == $row['lastname'])
-            echo "<td class='gray'>Nessuno</td>";
+            echo "<td class='gray'> Nessuno </td>";
         else
             echo "<td class='gray'>" . $capo['firstname'] . " " . $capo['lastname'] . "</td>";
 
@@ -647,7 +645,7 @@ function fetchidUser()
 
 function fetchWorks()
 {
-    $query = "SELECT id_user, customer.firstname, customer.lastname 
+    $query = "SELECT DISTINCT id_user, customer.firstname, customer.lastname 
             FROM work RIGHT JOIN customer USING (id_customer)
             ORDER BY customer.lastname ASC;";
 
@@ -668,7 +666,7 @@ function fetchWorks()
 
         $arrayUsers = ($statement->fetchAll(PDO::FETCH_ASSOC));
         //var_dump($arrayUsers);
-?>
+    ?>
         <div class="wrapper user-info" style="text-align:left;">
             <div class="row">
                 <?php
@@ -698,7 +696,7 @@ function fetchWorks()
             </form>
             <hr>
         </div>
-<?php
+    <?php
     }
 }
 
@@ -932,9 +930,12 @@ function fetchWorksAdd(int $idUser)
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-2">
+                            Tecnici coinvolti:
+                        </div>
                         <div class="col-md-3">
                             <select class="form-control custom-select" name="tech1">
-                                <option selected value="">Tecnico 1</option>';
+                                <option selected value=""></option>';
 
     foreach ($arrayTechs as $tech) {
         echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
@@ -944,7 +945,7 @@ function fetchWorksAdd(int $idUser)
                         </div>
                         <div class="col-md-3">
                             <select class="form-control custom-select" name="tech2">
-                                <option selected>Tecnico 2</option>';
+                                <option selected value=""></option>';
 
     foreach ($arrayTechs as $tech) {
         echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
@@ -954,7 +955,7 @@ function fetchWorksAdd(int $idUser)
                         </div>
                         <div class="col-md-3">
                             <select class="form-control custom-select" name="tech3">
-                                <option selected>Tecnico 3</option>';
+                                <option selected value=""></option>';
 
     foreach ($arrayTechs as $tech) {
         echo "<option value=\"" . $tech['id_technician'] . "\">" . $tech['lastname'] . " " . $tech['firstname'] . "</option>";
@@ -985,6 +986,8 @@ function fetchWorksAdd(int $idUser)
 function saveWorkDB($array)
 {
     require('../db/databasehandler.inc.php');
+
+    $connection->beginTransaction();
     $query = "INSERT INTO work(description, start_date, postal_code, city, address, finish_date, id_customer) VALUES(:description, :start_date, :postal_code, :city, :address, :finish_date, :id_customer)";
 
     //global $connection;
@@ -1011,9 +1014,10 @@ function saveWorkDB($array)
     } catch (PDOException $e) {
         //return false;
         //var_dump($statement);
+        $connection->rollBack();
         echo "<br>";
         echo $e;
-        die();
+        header('location:../superuserfetch.php?select=works&error=query');
     }
 
     //devo popolare anche carryout quindi vado a vedere quanti tecnici ho e eseguo in un foreach
@@ -1022,12 +1026,12 @@ function saveWorkDB($array)
     $query = "SELECT MAX(id_work) as id_work FROM work WHERE id_customer = :id_customer;";
     $statement = $connection->prepare($query);
     $values = array();
-    $values['id_customer'] = $array['id_customer'];
+    $values[':id_customer'] = $array['id_customer'];
     try {
         $statement->execute($values);
     } catch (PDOException $e) {
         echo "<br>";
-        header('location:../index.php');
+        header('location:../superuserfetch.php?select=works&error=query');
     }
 
     echo "<br><br>";
@@ -1036,30 +1040,26 @@ function saveWorkDB($array)
 
     $query = "INSERT INTO carry_out(id_work, id_technician, total_duration) VALUES(:id_work, :id_technician, :total_duration)";
     $statement = $connection->prepare($query);
-    var_dump($id_work);
+    
     for ($i = 1; $i <= 3; $i++) {
-
-        if ($id_work != 'Tecnico 1' && $id_work != 'Tecnico 2' && $id_work != 'Tecnico 3') {
-            echo "<br><br> Customer-Tech-Work:";
-            echo $array['id_customer'] . " " . $array['tech' . $i] . " " . $id_work;
-
+        //se nel select non è stato impostato nessun tecnico, allora il valore nel post sarà "", quindi scarto
+        if ($array['tech' . $i] != "") {
+            //array è il POST
             $values = array(
                 ':id_work' => $id_work,
-                ':id_tecnichian' => $array['tech' . $i],
+                ':id_technician' => $array['tech' . $i],
                 ':total_duration' => 0
             );
-            echo "<br><br>";
-            var_dump($values);
-
             try {
                 $statement->execute($values);
+                //echo "<br> QUERY NUMERO " . $i;
             } catch (PDOException $e) {
-                echo "<br>";
-                echo $e;
-                die();
-            }
+                $connection->rollBack();
+                header('location:../superuserfetch.php?select=works&error=query');
+            }   
         }
     }
 
-    echo "<br><br>end query<br>";
+    //committo le query accumulate fin'ora
+    $connection->commit();
 }
