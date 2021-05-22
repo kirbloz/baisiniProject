@@ -691,7 +691,7 @@ class User
 
     public function logout_user()
     {
-        deleteSessionTuple($this->username);
+        deleteSessionTuple(session_id());
         $this->__destruct();
     }
 }
