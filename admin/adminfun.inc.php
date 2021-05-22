@@ -49,17 +49,17 @@ function fetchUsers()
     } catch (PDOException $e) {
         //var_dump($statement);
         //echo $e;
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
     }
 
     if ($statement->rowCount() < 0) {
-        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+        echo "<p  class='centered alert alert-danger'>Nessun dipendente trovato</p>";
     }
     echo "<br><br>Nel database sono presenti " . $statement->rowCount() . " utenti.<br><br>";
     $arrayTech = ($statement->fetchAll(PDO::FETCH_ASSOC));
     //var_dump($arrayTech);
     if ($arrayTech == false)
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
 
     /**/
     echo "<form method='post' action=''>";
@@ -96,7 +96,7 @@ function fetchUsers()
         echo "</tr>";
     }
     echo "</table>";
-    echo "<input type='submit' class='btn' value='Cancella selezionati' name='submit'>";
+    echo "<input type='submit' class='btn btn-secondary' value='Cancella selezionati' name='submit'>";
     echo "</form>";
 }
 
@@ -107,7 +107,7 @@ function fetchTechs()
     //elimina gli utenti
     if (isset($_POST['submit'])) {
         //var_dump($_POST);
-        echo "<br>tot selected: " . sizeof($_POST['id_techs']) . "<br>";
+        echo "<br>Selected: " . sizeof($_POST['id_techs']) . "<br>";
         $deleted = sizeof($_POST['id_techs']);
 
         //preparo la connessione e la query
@@ -121,11 +121,11 @@ function fetchTechs()
             try {
                 $statement->execute($values);
             } catch (PDOException $e) {
-                echo "<p class='centered error'>" . $e . "</p>";
+                echo "<p  class='centered alert alert-danger'>" . $e . "</p>";
                 $deleted--;
             }
         }
-        echo "<br>tot deleted: " . sizeof($_POST['id_techs']) . "<br>";
+        echo "<br>Deleted: " . sizeof($_POST['id_techs']) . "<br>";
         unset($_POST);
     }
 
@@ -149,30 +149,30 @@ function fetchTechs()
     } catch (PDOException $e) {
         //var_dump($statement);
         //echo $e;
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
     }
 
     if ($statement->rowCount() < 0) {
-        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+        echo "<p  class='centered alert alert-danger'>Nessun dipendente trovato</p>";
     }
     echo "<br><br>Nel database sono presenti " . $statement->rowCount() . " dipendenti.<br><br>";
     $arrayTech = ($statement->fetchAll(PDO::FETCH_ASSOC));
     //var_dump($arrayTech);
     if ($arrayTech == false)
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
 
     echo "<form method='post' action=''>";
     echo "<table class='multi'>";
     echo "<thead><tr>";
     echo "  <th> </th>
-                        <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>Genere</th>
-                            <th>Data di nascita</th>
-                            <th>Email</th>
-                            <th>Ufficio</th>
-                            <th>Supervisore</th>
-                            <th>Power Level</th>";
+            <th>Nome</th>
+                <th>Cognome</th>
+                <th>Genere</th>
+                <th>Data di nascita</th>
+                <th>Email</th>
+                <th>Ufficio</th>
+                <th>Supervisore</th>
+                <th>Power Level</th>";
     echo "</tr></thead>";
 
     //per ogni row(dipendente) cerco il relativo superiore
@@ -210,7 +210,7 @@ function fetchTechs()
         echo "</tr>";
     }
     echo "</table>";
-    echo "<input type='submit' class='btn' value='Cancella selezionati' name='submit'>";
+    echo "<input type='submit' class='btn btn-secondary' value='Cancella selezionati' name='submit'>";
     echo "</form>";
 }
 
@@ -235,17 +235,17 @@ function fetchComponents()
     } catch (PDOException $e) {
         //var_dump($statement);
         //echo $e;
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
     }
 
     if ($statement->rowCount() < 0) {
-        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+        echo "<p  class='centered alert alert-danger'>Nessun dipendente trovato</p>";
     }
     echo "<br><br>Nel database sono presenti " . $statement->rowCount() . " tipologie di componenti.<br><br>";
     $arrayComp = ($statement->fetchAll(PDO::FETCH_ASSOC));
     //var_dump($arrayComp);
     if ($arrayComp == false)
-        echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
+        echo "<p  class='centered alert alert-danger'>Errore nell'esecuzione della query</p>";
     else {
         $tot = 0;
         //inizio la stampa della tabella
@@ -295,7 +295,7 @@ function fetchMatricola(Superuser $utente)
     try {
         $statement->execute($values);
     } catch (PDOException $e) {
-        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+        echo "<p class='centered alert alert-danger'>Nessun dipendente trovato</p>";
         echo $e;
         //die();
     }
@@ -304,29 +304,104 @@ function fetchMatricola(Superuser $utente)
     if ($statement->rowCount() > 0)
         $statement = $statement->fetch(PDO::FETCH_ASSOC);
     else
-        echo "<p class='centered error'>Nessun dipendente trovato</p>";
+    echo "<p class='centered alert alert-danger'> Nessun dipendente trovato</p>";
     //var_dump($statement);
 
     /*
             TABELLA INDIVIDUALE DI UN TECHNICIAN
     */
-    echo "<table class='single'>";
-    echo "  
-        <tr><td>ID</td><td>" . $statement['id_technician'] . "</td></tr>
-        <tr><td>Nome</td><td class='gray'>" . $statement['firstname'] . "</td></tr>
-        <tr><td>Cognome</td><td>" . $statement['lastname'] . "</td></tr>
-        <tr><td>Email</td><td class='gray'>" . $statement['email'] . "</td></tr>
-        <tr><td>Data di nascita</td><td>" . $statement['birth_date'] . "</td></tr>
-        <tr><td>Genere</td><td class='gray'>" . $statement['gender'] . "</td></tr>";
+
+    if ($statement['gender'] == "M")
+        $temp = "Uomo";
+    else if ($statement['gender'] == "F")
+        $temp = "Donna";
+    else
+        $temp = "Non specificato";
+
+    echo '<div class="row single">
+                <form class="form-horizontal " method="" action="">
+                    <div class="form-group mx-auto">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Matricola:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['id_technician']) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Nome:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['firstname']) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Cognome:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['lastname']) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Email:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['email']) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Data di nascita:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="date" class="form-control" name="" value="' . htmlentities($statement['birth_date']) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Genere:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <select class="form-control custom-select" name="">
+                                    <option selected disabled>' . htmlentities($temp) . '</option>
+                                </select>
+                            </div>
+                        </div>';
 
     //controllo che id_supervisor non sia null (in quel caso non ho supervisori) e poi stampo il nome
     if (empty($statement['id_supervisor']))
-        echo "<tr><td>Supervisore</td><td>Nessuno</td></tr>";
+        echo '<div class="row">
+                            <div class="col-sm-2">
+                                Supervisore:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="Nessuno" disabled> 
+                            </div>
+                        </div>';
     else {
         $capo = superuserExists($statement['id_supervisor']);
         if (!is_array($capo))
-            echo "<tr><td>Supervisore</td><td> Unknown </td></tr>";
-        else echo "<tr><td>Supervisore</td><td>" . $capo['firstname'] . " " . $capo['lastname'] . "</td></tr>";
+            echo '<div class="row">
+                            <div class="col-sm-2">
+                                Supervisore:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="Nessuno" disabled> 
+                            </div>
+                        </div>';
+        else
+            echo '<div class="row">
+                    <div class="col-sm-2">
+                        Supervisore:
+                    </div>
+                    <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                        <input type="text" class="form-control" name="" placeholder="' . $capo['lastname'] . " " . $capo['lastname'] . '" disabled> 
+                    </div>
+                </div>';
         $capo = NULL;
     }
 
@@ -345,9 +420,25 @@ function fetchMatricola(Superuser $utente)
             $string = "Unknown";
     }
 
-    echo "<tr><td>Power Level</td><td class='gray'>" . $string . "</td></tr>
-            <tr><td>Ufficio</td><td>" . $statement['id_office'] . "</td></tr>";
-    echo "</table>";
+    echo    '<div class="row">
+                            <div class="col-sm-2">
+                                Power Level:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($string) . '" disabled> 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                Ufficio:
+                            </div>
+                            <div class="col-sm-7 col-md-5" style="text-align:left; margin:5px;">
+                                <input type="text" class="form-control" name="" placeholder="' . htmlentities($statement['id_office']) . '" disabled> 
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>';
 
     /*
         STAMPO TABELLE SOTTOPOSTI SE SONO UN POWER > 1 ALTRIMENTI IL SUPERIORE
@@ -366,9 +457,9 @@ function fetchMatricola(Superuser $utente)
         $statement = $connection->prepare($query);
         try {
             $statement->execute($values);
-            echo "<p>Elenco tabulare dei sottoposti: </p>";
+            echo "<p class='centered'>Elenco tabulare dei sottoposti: </p>";
         } catch (PDOException $e) {
-            echo "<p class='centered error'>Errore. Nessun sottoposto trovato</p>";
+            echo "<p class='centered alert alert-danger'>Errore. Nessun sottoposto trovato</p>";
             //echo $e;
             die();
         }
@@ -427,12 +518,13 @@ function fetchMatricola(Superuser $utente)
                 echo "</tr>";
             }
             echo "</table>";
-            echo "<br><input type='submit' value='cancella selezionati' name='submit'>";
+            echo "<br><br><input type='submit' class='btn btn-secondary' value='cancella selezionati' name='submit'>";
             echo "</form>";
         } else
-            echo "<p class='error'> Nessun sottoposto trovato</p>";
-        echo "</div>";
+            echo "<br><p class='centered alert alert-danger'>Nessun sottoposto trovato</p>";
+        echo "</div><br>";
     }
+
     //dipendente normale, stampo il supervisore
     if ($utente->getPower() == 0) {
         echo "<br><div class='superiori'>";
@@ -506,10 +598,10 @@ function fetchMatricola(Superuser $utente)
                 echo "</tr>";
             }
             echo "</table>";
-            echo "<input type='submit' value='cancella selezionati' name='submit'>";
+            echo "<br><br><br><input type='submit' class='btn btn-secondary' value='cancella selezionati' name='submit'>";
             echo "</form>";
         }
-        echo "</div>";
+        echo "</div><br>";
     }
 }
 
@@ -666,7 +758,7 @@ function fetchWorks()
 
         $arrayUsers = ($statement->fetchAll(PDO::FETCH_ASSOC));
         //var_dump($arrayUsers);
-    ?>
+?>
         <div class="wrapper user-info" style="text-align:left;">
             <div class="row">
                 <?php
@@ -696,7 +788,7 @@ function fetchWorks()
             </form>
             <hr>
         </div>
-    <?php
+<?php
     }
 }
 
@@ -1040,7 +1132,7 @@ function saveWorkDB($array)
 
     $query = "INSERT INTO carry_out(id_work, id_technician, total_duration) VALUES(:id_work, :id_technician, :total_duration)";
     $statement = $connection->prepare($query);
-    
+
     for ($i = 1; $i <= 3; $i++) {
         //se nel select non è stato impostato nessun tecnico, allora il valore nel post sarà "", quindi scarto
         if ($array['tech' . $i] != "") {
@@ -1056,7 +1148,7 @@ function saveWorkDB($array)
             } catch (PDOException $e) {
                 $connection->rollBack();
                 header('location:../superuserfetch.php?select=works&error=query');
-            }   
+            }
         }
     }
 
