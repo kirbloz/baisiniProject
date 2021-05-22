@@ -57,13 +57,5 @@
         
         ?>
     </div>
-    <div class="wrapper centered redirect-login">
-            foot
-    </div>
-    <!--
-                birth date cannot be null in database
-                mettere un valore di default = NULL e cambiare database
-    -->
     <br>
-
 </body>
