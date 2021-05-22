@@ -244,16 +244,8 @@ function fetchidUser(int $userID)
                             </div>
                         </div>
                     </div>
-                
             </div>
         </div>';
-
-    /*
-            aggiungere query per visualizzare i lavori relativi alla persona
-            i suoi ticket
-            i suoi preventivi
-            varie ed eventuali
-        */
 }
 
 function showCustomerForm(User $utente)
