@@ -30,9 +30,6 @@
 				<a class="navbar-brand" style="color:#3f3f3f" href="index.php">
 					<h2>Easy LAN PORTAL</h2>
 				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 					<?php
