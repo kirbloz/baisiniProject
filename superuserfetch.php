@@ -122,7 +122,6 @@
                 }
             } else
                 echo "<p class='centered alert alert-danger col-4'>Parametri errati</p>";
-            //echo "</div>";
         }
     }
         ?>
