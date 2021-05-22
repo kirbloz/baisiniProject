@@ -63,13 +63,11 @@
                             <li><a href="areaSuperutente.php">Torna indietro</a></li>
                         </ul>
                     </div>';
-            //echo '<div class="wrapper user-info">';
 
             require_once('admin/adminfun.inc.php');
             //se effettivamente ho specificato dei parametri di ricerca aka il select vado
             //a eseguire lo script necessario
             if ($_GET['select'] == 'users') {
-
                 /*
                                     TABELLA UTENTI
                 */
@@ -79,7 +77,6 @@
                     fetchUsers();
                 }
             } else if ($_GET['select'] == 'techs') {
-
                 /*
                                         TABELLA TECNICI
                 */
@@ -89,7 +86,6 @@
                     fetchTechs();
                 }
             } else if ($_GET['select'] == 'components') {
-
                 /*
                                         TABELLA COMPONENTI
                 */
@@ -99,7 +95,6 @@
                     fetchComponents();
                 }
             } else if ($_GET['select'] == 'works') {
-
                 /*
                                         TABELLA INTERVENTI
                 */
@@ -107,19 +102,22 @@
                     echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
                 } else {
                     echo '</div><div class="wrapper">';
-                    fetchWorks();
+                    fetchWorks(); //stampo il menu TROVA - AGGIUNGI
                     //se è stato submittato il form di ricerca in fetchWorks, allora invoco fetchWorksShow
+
                     if (isset($_GET['IdUserWork']) && $_GET['submit'] == 'Trova') {
-                        fetchWorksShow($_GET['IdUserWork']);
+                        fetchWorksShow($_GET['IdUserWork']); //stampo i lavori di un cliente
+
                     } else if (isset($_GET['IdUserWork']) && $_GET['submit'] == 'Aggiungi') {
-                        if (isset($_POST['submit'])) {
-                            echo "salva nel db";
-                            var_dump($_POST);
-                        } else
-                            fetchWorksAdd($_GET['IdUserWork']);
+                        fetchWorksAdd($_GET['IdUserWork']); //stampo il form per l'aggiunta
                     }
-                    if (isset($_GET['error']) && $_GET['error'] = 'noerror')
-                        echo "<p class='centered alert alert-info col-4'> Intervento programmato correttamente. </p>";
+
+                    //gestione dei messaggi d'errore
+                    if (isset($_GET['error']))
+                        if ($_GET['error'] == 'noerror')
+                            echo "<p class='centered alert alert-info col-4'> Intervento programmato correttamente. </p>";
+                        else if ($_GET['error'] == 'query')
+                            echo "<p class='centered alert alert-danger col-4'> C'&egrave; stato un problema col database. Riprova pi&ugrave; tardi o contattaci. </p>";
                     echo "</div>";
                 }
             } else
