@@ -225,7 +225,7 @@ class Superuser
 
         public function logout_user()
         {
-                deleteSuperSessionTuple($this->matricola);
+                deleteSuperSessionTuple(session_id());
                 $this->__destruct();
         }
         //da adattare alla classe
