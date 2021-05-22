@@ -8,25 +8,19 @@ $utente = generateUserOBJ(session_id());
 
 ?>
 
-<div class="wrapper user-area">
-    <br>
-
+<div class="wrapper user-area ">
     <div class='color-lightb user-nav '>
         <ul>
             <li><a href="areaUtente.php">Torna indietro</a></li>
-            <li><a href="userfetch.php?select=tickets">Richiedi assistenza</a></li>
-            <li><a href="userfetch.php?select=works">Area Interventi</a></li>
             <li><a href="userShowcase.php?redirect=changepwd">Cambia password</a></li>
             <li><a href="userShowcase.php?redirect=deleteaccount">Elimina il tuo account</a></li>
         </ul>
     </div>
-
     <div class="user-div">
         <?php
         echo "Benvenuto " . $utente->getUsername() . ".\r\nQueste sono le tue informazioni.\r\nUsa i collegamenti a lato per accedere ai vari servizi."
         ?>
     </div>
-
 </div>
 
 <div class="wrapper user-info">
@@ -39,9 +33,9 @@ $utente = generateUserOBJ(session_id());
             echo "Sei sicuro di voler eliminare il tuo profilo?";
             echo "<form action='php/logout.inc.php' method='post'>
             <input class='btn btn-primary' name='submit' type='submit'  value='DELETE'/></form>
-            </div>";
+            </div><br>";
         } else if ($_GET['redirect'] == 'changepwd') {
-            echo "<div class='centered mb-3'>
+            echo "</div><div class='centered mb-3'>
                     <div class='form-group'>
                         <form action='php/logout.inc.php?isUser=true' method='post'>
                             <div class='col-sm-6 m-auto'>
@@ -53,7 +47,7 @@ $utente = generateUserOBJ(session_id());
                             <input class='btn btn-primary' name='submit' type='submit' value='Salva'/>
                         </form>
                     </div>
-                </div>";
+                </div><br>";
 
             if (isset($_GET['error']) && $_GET['error'] == 'invalidinput') {
                 echo "<p class='centered error'> Inserisci valori validi. </p>";
@@ -65,21 +59,16 @@ $utente = generateUserOBJ(session_id());
         }
     } else if ($utente->setCustomer() === false) {
 
-        /*echo "<table class='single'>";
-        echo "<tr><td>Username</td><td>" . $utente->getUsername() . "</td></tr>
-                    <tr><td>Email</td><td class='gray'>" . $utente->getEmail() . "</td></tr>";
-        echo "</table>";*/
-        if(isset($_GET['add'])){
-            
-            if(isset($_GET['error'])){
-                if($_GET['error'] == 'none')
+        if (isset($_GET['add'])) {
+            if (isset($_GET['error'])) {
+                if ($_GET['error'] == 'none')
                     echo "<p class='centered alert alert-info'>Informazioni salvate corretamente. <b><a href='userShowcase.php'>Aggiorna qui la pagina</a></b></p>";
-            }else if($_GET['add'] == 'customer'){
+            } else if ($_GET['add'] == 'customer') {
                 require_once('user/userfun.inc.php');
                 showCustomerForm($utente);
             }
-        }else{
-            echo '<div class="container">
+        } else {
+            echo '<div class="wrapper">
                     <div class="row single centered">
                         <div class="form-group">
                             <div class="row">
@@ -87,7 +76,7 @@ $utente = generateUserOBJ(session_id());
                                         IdUser:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getId() .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' . $utente->getId() . '" disabled> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -95,7 +84,7 @@ $utente = generateUserOBJ(session_id());
                                         Username:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getUsername() .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' . $utente->getUsername() . '" disabled> 
                                     </div>
                                 </div>
                                 <div class="row">
@@ -103,7 +92,7 @@ $utente = generateUserOBJ(session_id());
                                         Email:
                                     </div>
                                     <div class="col-sm-6" style="text-align:left; margin:5px;">
-                                        <input type="text" class="form-control" name="" placeholder="' .$utente->getEmail() .'" disabled> 
+                                        <input type="text" class="form-control" name="" placeholder="' . $utente->getEmail() . '" disabled> 
                                     </div>
                                 </div>
                             </div>
@@ -111,9 +100,8 @@ $utente = generateUserOBJ(session_id());
                     </div>';
             echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a class='alert-link' href='userShowcase.php?add=customer'>qui<a/>.</p>";
         }
-    } else{
-        //echo "ok show";
-        //var_dump($_POST);
+    } else {
+
         if (isset($_POST)) {
             if (isset($_POST['submit']) && $_POST['submit'] == 'Salva') {
                 if ($_POST['gender'] == "Uomo")
@@ -124,16 +112,14 @@ $utente = generateUserOBJ(session_id());
                     $_POST['gender'] = "NB";
                 //var_dump($_POST);
                 $utente->update_Customer($_POST);
-                $_POST=NULL;
+                $_POST = NULL;
             }
         }
         require_once('user/userfun.inc.php');
         fetchidUser($utente->getId());
     }
 
-    //controllo POST se sono stato rimandato qui dopo aver usato la form in fetchIdUser per aggiornare i dati
-    
     ?>
 </div>
-
+</div>
 </body>
