@@ -252,6 +252,7 @@ function deleteSessionTuple($id)
 
         die();
     }
+    
     try {
         @session_start();
         session_unset();
