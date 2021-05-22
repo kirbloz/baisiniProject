@@ -1006,16 +1006,15 @@ function saveWorkDB($array)
     );
 
     $statement = $connection->prepare($query);
-    /*try {
+    try {
         $statement->execute($values);
     } catch (PDOException $e) {
         //return false;
         //var_dump($statement);
         echo "<br>";
         echo $e;
-        $connection = null;
         die();
-    }*/
+    }
 
     //devo popolare anche carryout quindi vado a vedere quanti tecnici ho e eseguo in un foreach
     //per sapere quale id_work prendo quello più recente
@@ -1032,27 +1031,25 @@ function saveWorkDB($array)
     }
 
     echo "<br><br>";
-    $id_work = $statement->fetch(PDO::FETCH_ASSOC);
+    $id_work = $statement->fetch(PDO::FETCH_ASSOC)['id_work'];
     $values = array();
 
-    //mi preparo per la prossima query
+    $query = "INSERT INTO carry_out(id_work, id_technician, total_duration) VALUES(:id_work, :id_technician, :total_duration)";
+    $statement = $connection->prepare($query);
+    var_dump($id_work);
+    for ($i = 1; $i <= 3; $i++) {
 
-    $arrayTechs[] = (string)$array['tech1']; //ogni valore di $arrayTechs è una stringa
-    $arrayTechs[] = (string)$array['tech2'];
-    $arrayTechs[] = (string)$array['tech3'];
-
-    var_dump($arrayTechs);
-    foreach ($arrayTechs as $tech) {
-        
-        if ($tech != "Tecnico 1" && $tech != "Tecnico 2" && $tech != "Tecnico 3") {
-            $query = "INSERT INTO carry_out(id_work, id_technician, total_duration) VALUES(:id_work, :id_technician, :total_duration)";
-            $statement = $connection->prepare($query);
+        if ($id_work != 'Tecnico 1' && $id_work != 'Tecnico 2' && $id_work != 'Tecnico 3') {
+            echo "<br><br> Customer-Tech-Work:";
+            echo $array['id_customer'] . " " . $array['tech' . $i] . " " . $id_work;
 
             $values = array(
                 ':id_work' => $id_work,
-                ':id_tecnichian' => $tech,
-                ':total_duration' => NULL
+                ':id_tecnichian' => $array['tech' . $i],
+                ':total_duration' => 0
             );
+            echo "<br><br>";
+            var_dump($values);
 
             try {
                 $statement->execute($values);
@@ -1063,5 +1060,6 @@ function saveWorkDB($array)
             }
         }
     }
-    echo "<br><br>end query";
+
+    echo "<br><br>end query<br>";
 }
