@@ -22,8 +22,6 @@ In breve i servizi WEB a disposizione dei terzi sono:
    <ol>possibilità di visualizzare le richieste di assistenza, e gli interventi/installazioni richiesti dai clienti in sede fisica, telefonica o via email;</ol>
 </ul>
 
----
-
 ## Dettagli tecnici
 
 **Gestione degli utenti:** la gestione degli utenti avviene tramite memorizzazione nel database di tuple che contengono username, email e password. La password viene salvata come hash prodotto dalla funzione PHP password_hash() che utilizza l’algoritmo BCRYPT. C’è a disposizione dell’utente la possibilità di registrare ulteriori informazioni – utili poi per la prenotazione di interventi – tramite la registrazione dell’entità Customer, ovvero Cliente. 
