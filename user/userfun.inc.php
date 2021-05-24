@@ -25,7 +25,7 @@ function printTicketArea(User $utente)
         da stampare a schermo
     */
 
-    if ($utente->setCustomer() == true) {
+    //if ($utente->setCustomer() == true) {
 
         if (isset($_POST['submit'])) {
             //controllo la compilazione del form
@@ -81,11 +81,11 @@ function printTicketArea(User $utente)
             </form>
         </div>
         </div>';
-    } else {
+    /*} else {
         echo    '<div class="row">
             <p class="centered alert alert-warning">Non &egrave; stato possibile completare la richiesta perch&egrave; non sei registrato come Cliente. Puoi farlo <a class="alert-link" href="php/customersignup.inc.php">qui</a>.</p>
         </div>';
-    }
+    }*/
 }
 
 function printWorkArea(User $utente)

@@ -19,6 +19,7 @@ $utente = generateSuperuserOBJ(session_id());
             <li><a href="superuserfetch.php?select=techs">Gestione dipendenti</a></li>
             <li><a href="superuserfetch.php?select=components">Gestione componenti</a></li>
             <li><a href="superuserfetch.php?select=works">Gestione interventi</a></li>
+            <li><a href="superuserfetch.php?select=tickets">Gestione ticket</a></li>
         </ul>
     </div>
 

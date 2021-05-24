@@ -825,7 +825,7 @@ function fetchWorks()
             </form>
             <hr>
         </div>
-<?php
+    <?php
     }
 }
 
@@ -977,7 +977,7 @@ function fetchWorksAdd(int $idUser)
                             IdUser:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['id_user']) . '" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['id_user'] . '" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -985,7 +985,7 @@ function fetchWorksAdd(int $idUser)
                             Nome:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['firstname']) . '" value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['firstname'] . '" value="" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -993,7 +993,7 @@ function fetchWorksAdd(int $idUser)
                             Cognome:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['lastname']) . '" value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['lastname'] . '" value="" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -1001,7 +1001,7 @@ function fetchWorksAdd(int $idUser)
                             Data di nascita:
                         </div>
                         <div class="col-sm-4" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['birth_date']) . '" value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['birth_date'] . '" value="" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -1009,7 +1009,7 @@ function fetchWorksAdd(int $idUser)
                             Genere:
                         </div>
                         <div class="col-sm-3" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control custom-select" name="" placeholder="' . htmlentities($arrayUser['gender']) . '" disabled>
+                            <input type="text" class="form-control custom-select" name="" placeholder="' . $arrayUser['gender'] . '" disabled>
                         </div>
                     </div>
                     <div class="row">
@@ -1017,7 +1017,7 @@ function fetchWorksAdd(int $idUser)
                             Citt&agrave;:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['city']) . '" value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['city'] . '" value="" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -1025,7 +1025,7 @@ function fetchWorksAdd(int $idUser)
                             Indirizzo:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['address']) . '" value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['address'] . '" value="" disabled> 
                         </div>
                     </div>
                     <div class="row">
@@ -1033,7 +1033,7 @@ function fetchWorksAdd(int $idUser)
                             CAP:
                         </div>
                         <div class="col-sm-6" style="text-align:left; margin:5px;">
-                            <input type="text" class="form-control" name="" placeholder="' . htmlentities($arrayUser['postal_code']) . '"value="" disabled> 
+                            <input type="text" class="form-control" name="" placeholder="' . $arrayUser['postal_code'] . '"value="" disabled> 
                         </div>
                     </div>
                     <hr>
@@ -1092,10 +1092,10 @@ function fetchWorksAdd(int $idUser)
     echo '</select>
                         </div>
                     </div>
-                    <input type="hidden" name="id_customer" value="' . htmlentities($arrayUser['id_customer']) . '">
-                    <input type="hidden" name="address" value="' . htmlentities($arrayUser['address']) . '"> 
-                    <input type="hidden" name="postal_code" value="' . htmlentities($arrayUser['postal_code']) . '"> 
-                    <input type="hidden" name="city" value="' . htmlentities($arrayUser['city']) . '">  
+                    <input type="hidden" name="id_customer" value="' . $arrayUser['id_customer'] . '">
+                    <input type="hidden" name="address" value="' . $arrayUser['address'] . '"> 
+                    <input type="hidden" name="postal_code" value="' . $arrayUser['postal_code'] . '"> 
+                    <input type="hidden" name="city" value="' . $arrayUser['city'] . '">  
                         
                     <div class="row">
                         <div class="col-md-6">
@@ -1190,4 +1190,177 @@ function saveWorkDB($array)
 
     //committo le query accumulate fin'ora
     $connection->commit();
+}
+
+function fetchTickets()
+{
+    $query = "SELECT DISTINCT id_user, username
+            FROM ticket RIGHT JOIN user USING (id_user)
+            ORDER BY username ASC;";
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute();
+    } catch (PDOException $e) {
+        echo "<br><p class='centered alert alert-info col-6'>Errore. Riprova pi&ugrave; tardi.</p>";
+        echo $e;
+        //die();
+    }
+
+    if ($statement->rowCount() < 0) {
+        echo "<p class='centered alert alert-info col-6'>Nessun utente trovato nel database.</p>";
+    } else {
+
+        $arrayUsers = ($statement->fetchAll(PDO::FETCH_ASSOC));
+        //var_dump($arrayUsers);
+    ?>
+        <div class="wrapper user-info" style="text-align:left;">
+            <div class="row">
+                <?php
+                echo 'Nel database sono presenti ' . $statement->rowCount() . ' utenti.<br><br>';
+                ?>
+            </div>
+            <form class="row" method="get" action="">
+                <div class="row form-group">
+                    <div class="col-sm-5">
+                        <select class="form-select" name="idUserTicket">
+                            <!-- la form richiama superuserfetch-->
+                            <option selected disabled>Scegli il cliente..</option>
+
+                            <?php
+                            foreach ($arrayUsers as $user) {
+                                echo "<option value=\"" . $user['id_user'] . "\">" . $user['username'] . "</option>";
+                            }
+                            ?>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="submit" class="btn btn-primary" name="submit" value="Trova">
+                    </div>
+                    <input type="hidden" name="select" value="tickets">
+                </div>
+            </form>
+            <hr>
+        </div>
+<?php
+    }
+}
+
+function fetchTicketsShow($idUser)
+{
+    date_default_timezone_set('Europe/Rome');
+    $query = "SELECT ticket.* FROM ticket INNER JOIN user USING (id_user) WHERE id_user = :id_user;";
+    $values = array(
+        ':id_user' => $idUser
+    );
+
+    global $connection;
+    $statement = $connection->prepare($query);
+    //se query multiple prepara prima e poi fai nel for con i rispetti values
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo "<p class='centered alert alert-info col-6'>Nessun ticket trovato.</p>";
+        echo $e;
+        die();
+    }
+
+    if ($statement->rowCount() > 0) {
+
+        echo "Nel database sono presenti " . $statement->rowCount() . " tickets.<br><br>";
+        $arrayTicket = ($statement->fetchAll(PDO::FETCH_ASSOC));
+        //var_dump($arrayTicket);
+        //die();
+        if ($arrayTicket == false)
+            echo "<p class='centered alert alert-info col-6'>Errore nell'esecuzione della query</p>";
+        else {
+            $tot = 0;
+            //inizio la stampa della serie
+            foreach ($arrayTicket as $row) {
+                $orario = strtotime($row['date']);
+                if ($row['isOpen'])
+                    $status = 'Aperto';
+                else
+                    $status = 'Chiuso';
+
+                echo "<div class='container ticket' >";
+                echo "<form action='admin/ticketarea.inc.php' method='post'><div class='row'>";
+                echo "<div class='col-sm-4 m-1'><b>ID Ticket:</b> " . $row['id_ticket'] . "</div>";
+                echo "<div class='col-sm-4 m-1'>Titolo: " . $row['title_request'] . "</div>";
+                echo "<div class='col-sm-4 m-1'>Data: " . date('d-m-Y', $orario) . "</div>";
+                echo "<div class='col-sm-4 m-1'>Status: " . $status . "</div>";
+                echo "</div>";
+                echo "<div class='row'>";
+                echo "<div class='col m-1'><b>Contenuto:</b> " . $row['description'] . "</div>";
+                echo "</div>";
+                echo '<div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-primary" name="submit" value="Modifica Status">
+                            <span></span>
+                            <input type="submit" class="btn btn-danger" name="submit" value="Elimina">
+
+                            <input type="hidden" name="id_ticket" value="' . $row['id_ticket']  . '">
+                            <input type="hidden" name="isOpen" value="' . $row['isOpen']  . '">
+                            </form>
+                        </div>
+                    </div>';
+                echo "</div><br><br>";
+            }
+        }
+    } else if (!$statement) //errore
+        echo "<p class='centered alert alert-info col-6'>Errore nell'esecuzione della query, riprova più tardi.</p>";
+    else
+        echo "<p class='centered alert alert-info col-6'>Nessun intervento trovato</p><br><br><br>";
+}
+
+function deleteTicketDB($id_ticket)
+{
+    $query = "DELETE FROM ticket WHERE id_ticket = :id_ticket;";
+    $values = array(
+        ':id_ticket' => $id_ticket
+    );
+
+    global $connection;
+    $statement = $connection->prepare($query);
+
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        /*echo "<p class='centered alert alert-info col-6'>Ticket inesistente.</p>";
+        echo $e;
+        die();*/
+        return false;
+    }
+    return true;
+}
+
+function editTicketDB($id_ticket, $isOpen)
+{
+    $query = "UPDATE ticket SET isOpen = :bin WHERE id_ticket = :id_ticket;";
+
+    if($isOpen)
+        $isOpen = 0;
+    else
+        $isOpen = 1;
+
+    $values = array(
+        ':id_ticket' => $id_ticket,
+        ':bin' => $isOpen
+    );
+
+    global $connection;
+    $statement = $connection->prepare($query);
+
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        /*echo "<p class='centered alert alert-info col-6'>Ticket inesistente.</p>";
+        echo $e;
+        die();*/
+        return false;
+    }
+    return true;
 }

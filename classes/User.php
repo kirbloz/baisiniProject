@@ -473,7 +473,7 @@ class User
         <br><br>Questa email &egrave; stata inviata dal sistema automatizzato. Si prega di non rispondere.
         <br><hr><br>" . $_POST['description'] . "<br> Fine trasmissione. <a href='localhost/baisiniProject/index.php'>EasyLAN</a> ";
         $headers = "From: easylanproject@gmail.com";
-        //$headers .= "Content-type: text/html\r\n";
+        $headers .= "Content-type: text/html\r\n";
 
         if (!mail($to, $subject, $message, $headers))
             return false;
@@ -503,7 +503,7 @@ class User
 
             echo "Nel database sono presenti " . $statement->rowCount() . " tickets.<br><br>";
             $arrayTicket = ($statement->fetchAll(PDO::FETCH_ASSOC));
-            //var_dump($arrayComp);
+            //var_dump($arrayTicket);
             if ($arrayTicket == false)
                 echo "<p class='centered error'>Errore nell'esecuzione della query</p>";
             else {

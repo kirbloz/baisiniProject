@@ -23,7 +23,7 @@ dopo aver controllato
 decido se visualizzare tabelle multiple(tutti gli utenti/superutenti) 
 o tabelle singole(1 utente/superutente)
 */ else {
-    
+
     //se ho idUser o matricola allora devo stampare le tabelle singole
     if (isset($_GET['idUser']) || isset($_GET['matricola'])) {
 
@@ -119,6 +119,44 @@ o tabelle singole(1 utente/superutente)
                         echo "<p class='centered alert alert-info col-4'> Intervento programmato correttamente. </p>";
                     else if ($_GET['error'] == 'query')
                         echo "<p class='centered alert alert-danger col-4'> C'&egrave; stato un problema col database. Riprova pi&ugrave; tardi o contattaci. </p>";
+                echo "</div>";
+            }
+        } else if ($_GET['select'] == 'tickets') {
+            /*
+                                TABELLA TICKETS
+            */
+            if ($utente->getPower() < 0) {
+                echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
+            } else {
+                echo '</div><div class="wrapper">';
+                fetchTickets(); //stampo il menu TROVA - AGGIUNGI
+
+                //gestione dei messaggi d'errore
+                if (isset($_GET['error'])) {
+                    if ($_GET['error'] == 'noerroredit')
+                        echo "<p class='centered alert alert-success col-4'> Ticket modificato correttamente. </p>";
+                    else if ($_GET['error'] == 'query')
+                        echo "<p class='centered alert alert-danger col-4'> C'&egrave; stato un problema col database. Riprova pi&ugrave; tardi o contattaci. </p>";
+                    else if ($_GET['error'] == 'noerrordelete')
+                        echo "<p class='centered alert alert-info col-4'> Ticket eliminato correttamente. </p>";
+                    echo "</div>";
+                    die();
+                }
+
+                //se è stato submittato il form di ricerca in fetchTickets, invoco fetchTicketsShow
+                if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Trova') {
+                    //echo "show";
+                    fetchTicketsShow($_GET['idUserTicket']); //stampo i ticket di un cliente
+
+                    //non mi serve più l'else if perchè è tutto gestito dalla form in fetchTicketsShow che rimanda a ticketarea.inc.php
+                }/* else if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Modifica') {
+                    fetchTicketsEdit($_GET['idUserTicket']); //stampo il form per l'aggiunta
+                    echo "edit";
+                } else if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Elimina') {
+                    fetchTicketsEdit($_GET['idUserTicket']); //stampo il form per l'aggiunta
+                    echo "delete";
+
+                }*/
                 echo "</div>";
             }
         } else
