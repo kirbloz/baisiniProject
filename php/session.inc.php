@@ -107,15 +107,6 @@ function createSession($id)
         die();
     }
 
-    //fetch 
-    $statement = $statement->fetch(PDO::FETCH_ASSOC);
-
-    if ($statement !== false)
-        if ($statement->rowCount() > 1)
-            deleteSessionTuple($statement['id_session']);
-
-    $statement = NULL;
-
     @session_start();
     if (session_id() == NULL || session_id() == "" || session_id() == false)
         if (!session_regenerate_id())
