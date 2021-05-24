@@ -23,6 +23,7 @@ dopo aver controllato
 decido se visualizzare tabelle multiple(tutti gli utenti/superutenti) 
 o tabelle singole(1 utente/superutente)
 */ else {
+    
     //se ho idUser o matricola allora devo stampare le tabelle singole
     if (isset($_GET['idUser']) || isset($_GET['matricola'])) {
 
