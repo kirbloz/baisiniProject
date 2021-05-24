@@ -83,7 +83,7 @@ function printTicketArea(User $utente)
         </div>';
     } else {
         echo    '<div class="row">
-            <p class="centered alert alert-warning">Non &egrave; stato possibile completare la richiesta perch&egrave; non sei registrato come Cliente. Puoi farlo <a href="signupCustomer.php">qui</a>.</p>
+            <p class="centered alert alert-warning">Non &egrave; stato possibile completare la richiesta perch&egrave; non sei registrato come Cliente. Puoi farlo <a class="alert-link" href="php/customersignup.inc.php">qui</a>.</p>
         </div>';
     }
 }
