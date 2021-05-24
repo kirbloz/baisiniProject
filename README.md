@@ -17,9 +17,9 @@ L’impresa EasyLAN gestita da un’omonima società desidera creare un database
 
 In breve i servizi WEB a disposizione dei terzi sono:
 <ul>
-   <ol>registrazione e login per accedere all’area utente;
-   <ol>invio ticket per l'assistenza;
-   <ol>possibilità di visualizzare le richieste di assistenza, e gli interventi/installazioni richiesti dai clienti in sede fisica, telefonica o via email;
+   <ol>registrazione e login per accedere all’area utente;</ol>
+   <ol>invio ticket per l'assistenza;</ol>
+   <ol>possibilità di visualizzare le richieste di assistenza, e gli interventi/installazioni richiesti dai clienti in sede fisica, telefonica o via email;</ol>
 </ul>
 
 ---
@@ -39,4 +39,4 @@ Il Power Level è un valore che può essere 0 – 1 – 2.
 Può accedere alla sua Area Utente e visualizzare gli interventi in cui risulta parte della manodopera, ma può anche visualizzare la sua “Squadra” – tutti i Tecnici Dipendenti supervisionati da questa persona – con i relativi dati ed interventi. Ha inoltre accesso alla gestione degli user.
 2: il Tecnico relativo a questo Superutente è un Capo Ufficio. La sua matricola può apparire in nessuno o più campi id_supervisor di diversi Tecnici con Power Level uguale a uno. La sua matricola appare nella tabella office sotto il nome di id_manager. È la persona che idealmente si occupa di dirigere i singoli uffici ed ha accesso alla gestione sia degli user che dei superuser. Ha accesso al gestionale per gli ordini: può cambiare lo stato di un pagamento, inserire nuovi ordini e consultare la disponibilità di componenti.
 
-*/*Baisini Wade, 2021 */*
+*/* Baisini Wade, 2021 */*
