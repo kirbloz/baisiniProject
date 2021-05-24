@@ -1304,6 +1304,7 @@ function fetchTicketsShow($idUser)
 
                             <input type="hidden" name="id_ticket" value="' . $row['id_ticket']  . '">
                             <input type="hidden" name="isOpen" value="' . $row['isOpen']  . '">
+                            <input type="hidden" name="id_user" value="'. $idUser .'">
                             </form>
                         </div>
                     </div>';
@@ -1337,11 +1338,11 @@ function deleteTicketDB($id_ticket)
     return true;
 }
 
-function editTicketDB($id_ticket, $isOpen)
+function editTicketDB($id_ticket, $isOpen, $idUser)
 {
     $query = "UPDATE ticket SET isOpen = :bin WHERE id_ticket = :id_ticket;";
 
-    if($isOpen)
+    if ($isOpen)
         $isOpen = 0;
     else
         $isOpen = 1;
@@ -1362,5 +1363,46 @@ function editTicketDB($id_ticket, $isOpen)
         die();*/
         return false;
     }
+
+    $query = "SELECT username, email, title_request FROM user INNER JOIN ticket USING(id_user) WHERE id_user = :id_user AND id_ticket = :id_ticket;";
+    $values = array(
+        ':id_ticket' => $id_ticket,
+        ':id_user' => $idUser
+    );
+
+    global $connection;
+    $statement = $connection->prepare($query);
+
+    try {
+        $statement->execute($values);
+    } catch (PDOException $e) {
+        echo "<p class='centered alert alert-info col-6'>Ticket inesistente.</p>";
+        echo $e;
+        die();
+        return false;
+    }
+
+    //username e mail dell'utente relativo al ticket
+    $statement = ($statement->fetch(PDO::FETCH_ASSOC));
+
+    if($isOpen)
+        $isOpen = 'Aperto';
+    else
+        $isOpen = 'Chiuso';
+
+    //blocco di script per inviare la email
+    $to = $statement['email'];
+
+    $subject = "Notifica ticket - " . $statement['title_request'];
+    $message = "Buongiorno " . $statement['username'] . " lo status della tua richiesta di assistenza <b>" . $statement['title_request'] . "</b> &egrave; ora <b>" . $isOpen . "</b>. 
+                <br><br>Questa email &egrave; stata inviata dal sistema automatizzato. Si prega di non rispondere.
+                <br><hr><br> Fine trasmissione. <a href='http://baisiniproject.altervista.org/'>EasyLAN</a> \r\n<br>";
+    $headers = "From: easylanproject@gmail.com\r\n";
+    $headers .= "Content-type: text/html\r\n";
+
+    if (!mail($to, $subject, $message, $headers))
+        return false;
+
+
     return true;
 }

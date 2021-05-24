@@ -13,7 +13,7 @@ if (isset($_POST)) {
             header('location:../superuserfetch.php?select=tickets&error=noerrordelete');
         die();
     } else if ($_POST['submit'] == 'Modifica Status') {
-        if (editTicketDB($_POST['id_ticket'], $_POST['isOpen']) == false) {
+        if (editTicketDB($_POST['id_ticket'], $_POST['isOpen'], $_POST['id_user']) == false) {
             header('location:../superuserfetch.php?select=tickets&error=query');
         } else
             header('location:../superuserfetch.php?select=tickets&error=noerroredit');
