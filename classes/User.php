@@ -253,6 +253,8 @@ class User
             $values['city'] = NULL;
         if ($values['postal_code'] == "")
             $values['postal_code'] = NULL;
+        if (strlen($values['postal_code']) > 5)
+            $values['postal_code'] = NULL;
         if ($values['birth_date'] == "")
             $values['birth_date'] = NULL;
 
