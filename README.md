@@ -16,11 +16,11 @@ Il sito web sarà hostato da Altervista, integrato di DB sviluppato con MySQL Wo
 L’impresa EasyLAN gestita da un’omonima società desidera creare un database per amministrare la sua attività ma anche mettere a disposizione un sito web per l’accesso dei clienti a certi servizi. 
 
 In breve i servizi WEB a disposizione dei terzi sono:
-<li>
+<ul>
    <ol>registrazione e login per accedere all’area utente;
    <ol>invio ticket per l'assistenza;
    <ol>possibilità di visualizzare le richieste di assistenza, e gli interventi/installazioni richiesti dai clienti in sede fisica, telefonica o via email;
-</li>
+</ul>
 
 ---
 
