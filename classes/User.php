@@ -468,11 +468,11 @@ class User
         $to = (string) $this->email;
 
         $subject = "Conferma invio ticket - " . $_POST['title_request'];
-        $message = "Buongiorno " . $this->getFirstname() . " la tua richiesta di assistenza <b>" . $_POST['title_request'] . "</b>.
+        $message = "Buongiorno " . $this->getFirstname() . " la tua richiesta di assistenza <b>" . $_POST['title_request'] . "</b> &egrave; stata ricevuta.
         <br>Uno dei nostri tecnici si occuper&agrave; di te al prima possibile con una email all'indirizzo specificato nelle informazioni del tuo profilo!
         <br><br>Questa email &egrave; stata inviata dal sistema automatizzato. Si prega di non rispondere.
-        <br><hr><br>" . $_POST['description'] . "<br> Fine trasmissione. <a href='localhost/baisiniProject/index.php'>EasyLAN</a> ";
-        $headers = "From: easylanproject@gmail.com";
+        <br><hr><br>" . $_POST['description'] . "<br> Fine trasmissione. <a href='http://baisiniproject.altervista.org/'>EasyLAN</a> ";
+        $headers = "From: easylanproject@gmail.com\r\n";
         $headers .= "Content-type: text/html\r\n";
 
         if (!mail($to, $subject, $message, $headers))
