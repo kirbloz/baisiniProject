@@ -228,31 +228,28 @@ function createSupersession($id)
 
 function deleteSessionTuple($id)
 {
-
     $query = "DELETE FROM session WHERE id_user = :id_user OR id_session = :id_session";
     if (!is_int($id))
         $num = 0;
     else
         $num = $id;
+
     $values = array(
         ':id_user' => $num,
         ':id_session' => $id
     );
+
     global $connection;
     //preparo query
     $statement = $connection->prepare($query);
     try {
         $statement->execute($values);
     } catch (PDOException $e) {
-        //return false;
-        echo $e;
-        echo nl2br("\r\n");
-        var_dump($statement);
-        echo nl2br("\r\n");
-
-        die();
+        /*echo $e;
+        die();*/
+        header("location:index.php");
     }
-    
+
     try {
         @session_start();
         session_unset();
@@ -266,7 +263,6 @@ function deleteSessionTuple($id)
 //$id può essere l'id del superutente oppure sid ((super)session id)
 function deleteSupersessionTuple($id)
 {
-
     $query = "DELETE FROM supersession WHERE id_superuser = :id_superuser OR id_supersession = :id_session";
     /*if(is_string($id))
         $num = 0;
@@ -278,19 +274,14 @@ function deleteSupersessionTuple($id)
     );
 
     global $connection;
-    //preparo query
     $statement = $connection->prepare($query);
-    //var_dump($values);
-    //die();
+
     try {
         $statement->execute($values);
     } catch (PDOException $e) {
-        //return false;
-        echo $e;
-        echo nl2br("\r\n");
-        var_dump($statement);
-        echo nl2br("\r\n");
-        die();
+        /*echo $e;
+        die();*/
+        header("location:index.php");
     }
 
     try {

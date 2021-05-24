@@ -5,7 +5,6 @@ if (!checkActive())
 @include('php/function.inc.php');
 $utente = generateUserOBJ(session_id());
 //var_dump($utente);
-
 ?>
 
 <div class="wrapper user-area ">
@@ -17,15 +16,17 @@ $utente = generateUserOBJ(session_id());
         </ul>
     </div>
     <div class="user-div">
+
         <?php
         echo "Benvenuto " . $utente->getUsername() . ".\r\nQueste sono le tue informazioni.\r\nUsa i collegamenti a lato per accedere ai vari servizi."
         ?>
+
     </div>
 </div>
 
 <div class="wrapper user-info">
+
     <?php
-    //var_dump($_POST);
     if (isset($_GET) && isset($_GET['redirect'])) {
 
         if ($_GET['redirect'] == 'deleteaccount') {
@@ -48,7 +49,6 @@ $utente = generateUserOBJ(session_id());
                         </form>
                     </div>
                 </div><br>";
-
             if (isset($_GET['error']) && $_GET['error'] == 'invalidinput') {
                 echo "<p class='centered error'> Inserisci valori validi. </p>";
             } else if (isset($_GET['error']) && $_GET['error'] == 'samepwd') {
@@ -67,6 +67,7 @@ $utente = generateUserOBJ(session_id());
                 require_once('user/userfun.inc.php');
                 showCustomerForm($utente);
             }
+            
         } else {
             echo '<div class="wrapper">
                     <div class="row single centered">
@@ -101,7 +102,6 @@ $utente = generateUserOBJ(session_id());
             echo "<p class='centered alert alert-info'>Sembra che tu non sia ancora registrato come cliente. Puoi farlo <a class='alert-link' href='userShowcase.php?add=customer'>qui<a/>.</p>";
         }
     } else {
-
         if (isset($_POST)) {
             if (isset($_POST['submit']) && $_POST['submit'] == 'Salva') {
                 if ($_POST['gender'] == "Uomo")
@@ -118,8 +118,10 @@ $utente = generateUserOBJ(session_id());
         require_once('user/userfun.inc.php');
         fetchidUser($utente->getId());
     }
-
     ?>
+
 </div>
 </div>
 </body>
+
+</html>

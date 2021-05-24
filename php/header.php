@@ -19,7 +19,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="/images/fav.ico" />
+	<link rel="shortcut icon" href="/images/favicon.ico" />
 </head>
 
 <body>
@@ -32,20 +32,20 @@
 				</a>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
-					<?php
-					if(checkActive()){
-						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaUtente.php')
-							echo '<li class="nav-item"><a class="nav-link" href="areaUtente.php">Area Utente</a></li>';
+						<?php
+						if (checkActive()) {
+							if ($_SERVER['REQUEST_URI'] != '/baisiniProject/areaUtente.php')
+								echo '<li class="nav-item"><a class="nav-link" href="areaUtente.php">Area Utente</a></li>';
 							echo '<li class="nav-item"><a class="nav-link" href="php/logout.inc.php">Logout</a></li>';
-					}else if(checkActiveSuper()){
-						if($_SERVER['REQUEST_URI'] != '/baisiniProject/areaSuperutente.php')
-							echo '<li class="nav-item"><a class="nav-link" href="areaSuperutente.php">Area Utente</a></li>';
+						} else if (checkActiveSuper()) {
+							if ($_SERVER['REQUEST_URI'] != '/baisiniProject/areaSuperutente.php')
+								echo '<li class="nav-item"><a class="nav-link" href="areaSuperutente.php">Area Utente</a></li>';
 							echo '<li class="nav-item"><a class="nav-link" href="php/logout.inc.php">Logout</a></li>';
-					}else{
-						echo '<li class="nav-item"><a class="nav-link" id="login-button" href="login.php">Login</a></li>';
-						echo '<li class="nav-item"><a class="nav-link" href="signup.php">Registrati</a></li>';
-					}
-					?>
+						} else {
+							echo '<li class="nav-item"><a class="nav-link" id="login-button" href="login.php">Login</a></li>';
+							echo '<li class="nav-item"><a class="nav-link" href="signup.php">Registrati</a></li>';
+						}
+						?>
 					</ul>
 				</div>
 			</div>

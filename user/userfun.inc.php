@@ -19,9 +19,10 @@ function printTicketArea(User $utente)
     <div class="wrapper user-info" style="text-align:left;">
 
         <div class="row">';
-    //var_dump($_POST);
+
     /*
         posso accedere all'area ticket solo se sono un customer, perchè necessito di più dati
+        da stampare a schermo
     */
 
     if ($utente->setCustomer() == true) {
@@ -87,8 +88,6 @@ function printTicketArea(User $utente)
     }
 }
 
-
-
 function printWorkArea(User $utente)
 {
     echo '<div class="wrapper user-area ">
@@ -130,7 +129,6 @@ function fetchidUser(int $userID)
         //die();
         echo $e;
     }
-
 
     if ($statement->rowCount() > 0)
         $statement = $statement->fetch(PDO::FETCH_ASSOC);
@@ -250,7 +248,6 @@ function fetchidUser(int $userID)
 
 function showCustomerForm(User $utente)
 {
-
     echo "</div><div class='wrapper'><h4>Registrazione cliente</h4><hr>";
     echo '
     <div class="container">
@@ -356,4 +353,3 @@ function showCustomerForm(User $utente)
         </div>
     </div>';
 }
-

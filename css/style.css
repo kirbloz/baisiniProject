@@ -169,7 +169,6 @@ ul {
 
 .navbar {
 	padding: .8rem;
-	
 }
 
 .navbar-nav li {
@@ -222,8 +221,8 @@ ul {
 	padding: 2.5rem 1rem;
 	margin-bottom: 1rem;
 	background-color: var(--bs-light);
-	border-radius: .3rem;  
-  }
+	border-radius: .3rem;
+}
 
 /* footer */
 

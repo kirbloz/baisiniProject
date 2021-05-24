@@ -9,7 +9,5 @@ if (isset($_POST)) {
     //probabilmente l'url è stato manomesso, rispedisco indietro
     header('location:../superuserfetch.php?select=works');
 }
-
 //echo "work aggiunto";
 header('location:../superuserfetch.php?select=works&error=noerror');
-

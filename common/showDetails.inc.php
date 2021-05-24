@@ -24,7 +24,7 @@ if (isset($_GET['superuser']) && $_GET['superuser']) {
 require_once('admin/adminfun.inc.php');
 if (isset($_GET['matricola'])) {
     fetchMatricola($utente);
-    //gli passo l'oggetto del superutente loggato
+    // passo l'oggetto del superutente loggato
 } else if (isset($_GET['idUser'])) {
     fetchidUser();
 }

@@ -287,6 +287,7 @@ function fetchComponents()
 
 function fetchMatricola(Superuser $utente)
 {
+    @require_once('db/databasehandler.inc.php');
     if (isset($_POST['submit'])) {
         //var_dump($_POST);
         $deleted = sizeof($_POST['id_users']);
@@ -311,7 +312,7 @@ function fetchMatricola(Superuser $utente)
     }
 
     echo "</div><br><div class='wrapper'>";
-    @require_once('db/databasehandler.inc.php');
+
     $query = "SELECT id_superuser, superuser.id_technician, password, email, firstname, lastname, gender, birth_date, id_supervisor, labor_hourly, id_office, power FROM superuser INNER JOIN technician USING(id_technician) WHERE superuser.id_technician = :matricola;";
 
     if (($_GET['matricola'] == 'self'))
@@ -335,7 +336,7 @@ function fetchMatricola(Superuser $utente)
     if ($statement->rowCount() > 0)
         $statement = $statement->fetch(PDO::FETCH_ASSOC);
     else
-    echo "<p class='centered alert alert-danger'> Nessun dipendente trovato</p>";
+        echo "<p class='centered alert alert-danger'> Nessun dipendente trovato</p>";
     //var_dump($statement);
 
     /*
@@ -769,13 +770,6 @@ function fetchidUser()
                 
             </div>
         </div>';
-
-    /*
-            aggiungere query per visualizzare i lavori relativi alla persona
-            i suoi ticket
-            i suoi preventivi
-            varie ed eventuali
-        */
 }
 
 function fetchWorks()
@@ -972,7 +966,6 @@ function fetchWorksAdd(int $idUser)
 
 
     //echo "stampa form parzialmente completato con i dati dell'idUserWork";
-
     echo "<h4 class='centered'>Compila i campi</h4>";
     echo '
     <div class="container">

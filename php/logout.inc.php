@@ -4,7 +4,6 @@
 @include_once('../php/session.inc.php');
 @include_once('../php/function.inc.php');
 
-
 if (isset($_POST['submit']) && $_POST['submit'] == "DELETE") {
     if (deleteUserTuple())
         header("location:../logout.php?error=deletedaccount");
@@ -35,7 +34,6 @@ if (isset($_POST['submit']) && $_POST['submit'] == "DELETE") {
 //eseguo questo pezzo dopo tutto per permettere il funzionamento di generateUserOBJ
 //controlla se effettivamente c'è una sessione e la cancello
 //nei primi due if tutto è ok, faccio redirect
-
 
 if (checkActive()) {
     deleteSessionTuple(session_id());

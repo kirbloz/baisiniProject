@@ -2,6 +2,7 @@
 include('php/header.php')
 ?>
 
+<!-- stampa delle slide -->
 <div id="carousel" class="carousel slide" data-bs-ride="carousel">
 	<div class="carousel-indicators">
 		<button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -38,10 +39,7 @@ include('php/header.php')
 	</button>
 </div>
 
-
-
-
-<!-- jumbotron -->
+<!-- stampa del jumbotron -->
 <div class="container-fluid">
 	<div class="row jumbotron">
 		<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
@@ -69,8 +67,8 @@ include('php/header.php')
 		</div>
 	</div>
 </div>
-<!--footer-->
 
+<!-- stampa del footer-->
 <footer>
 	<div class="container-fluid padding">
 		<div class="row text-center">

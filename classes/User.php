@@ -3,12 +3,8 @@
 @include_once('../php/function.inc.php');
 @include_once('php/session.inc.php');
 @include_once('session.inc.php');
-@include_once('../db/databasehandler.inc.php');
-@include_once('db/databasehandler.inc.php');
-
 class User
 {
-
     private $id,                //id_user
         $username,          //username      
         $email;             //email
@@ -20,9 +16,6 @@ class User
         $address,
         $city,
         $postal_code;
-
-    //attributi da customer
-    //wip
 
     public function __construct()
     {
@@ -279,9 +272,6 @@ class User
         $statement = $connection->prepare($query);
         try {
             $statement->execute($values);
-            /*var_dump($statement);
-            var_dump($values);
-            die();*/
         } catch (PDOException $e) {
             //return false;
             var_dump($statement);
@@ -419,7 +409,6 @@ class User
         }
 
         //inserisco la nuova pwd nel db
-        //preparo la query
         $query = "UPDATE user SET password = :pwd_hash WHERE id_user = :id_user;";
 
         //crypto la password e preparo l'array di valori
@@ -460,7 +449,7 @@ class User
 
         global $connection;
         $statement = $connection->prepare($query);
-        //se query multiple prepara prima e poi fai nel for con i rispetti values
+
         try {
             $statement->execute($values);
         } catch (PDOException $e) {
@@ -509,7 +498,6 @@ class User
         }
 
         if ($statement->rowCount() > 0) {
-            //var_dump($statement);
 
             echo "Nel database sono presenti " . $statement->rowCount() . " tickets.<br><br>";
             $arrayTicket = ($statement->fetchAll(PDO::FETCH_ASSOC));
@@ -546,10 +534,10 @@ class User
             echo "<p class='centered alert alert-info'>Nessun ticket trovato</p><br><br><br>";
     }
 
-    public function saveWork()
+    /*public function saveWork()
     {
         echo "funzione fittizia da rimuovere.";
-    }
+    }*/
 
     public function showWork()
     {
@@ -566,8 +554,6 @@ class User
             $statement->execute($values);
         } catch (PDOException $e) {
             echo "<p class='centered alert alert-info col-6'>Nessun intervento programmato trovato.</p>";
-            //echo $e;
-            //die();
         }
 
         if ($statement->rowCount() > 0) {
@@ -580,7 +566,7 @@ class User
             else {
                 $tot = 0;
                 //inizio la stampa della tabella
-
+                //formatto i campi DATE se isset
                 foreach ($arrayWork as $row) {
                     if (isset($row['start_date'])) {
                         $dataI = date('d-m-Y', strtotime($row['start_date']));
@@ -627,8 +613,8 @@ class User
                         echo "<div class='col m-1'><b>Tecnici assegnato all'intervento:</b></div><br>";
                         echo "<ul>";
                         $arrayWorkers = ($statement->fetchAll(PDO::FETCH_ASSOC));
-                        foreach($arrayWorkers as $innerrow){
-                            echo "<li>" . $innerrow['lastname'] . " " . $innerrow['firstname']. "</li>";
+                        foreach ($arrayWorkers as $innerrow) {
+                            echo "<li>" . $innerrow['lastname'] . " " . $innerrow['firstname'] . "</li>";
                         }
                         echo "</ul>";
                     }
@@ -645,7 +631,6 @@ class User
 
     private function loginDB($uid, $pwd)
     {
-
         //controllo che l'utente cerchi di loggare un account che esiste effettivamente
         //se l'utente esiste ne ho già salvate le credenziali nella variabile
         $uid_result = $this->getUserTuple($uid, false);
@@ -663,7 +648,6 @@ class User
 
     private function createDB($username, $pwd, $email_address)
     {
-
         //preparo la query
         $query = "INSERT INTO user( username, password, email) VALUES(:username, :password, :email_address)";
 

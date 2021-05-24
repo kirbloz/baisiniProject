@@ -3,12 +3,8 @@
 @include_once('../php/function.inc.php');
 @include_once('php/session.inc.php');
 @include_once('session.inc.php');
-@include_once('../db/databasehandler.inc.php');
-@include_once('db/databasehandler.inc.php');
-
 class Superuser
 {
-
         private $id,                //id_superuser
                 $matricola,         //id_technician
                 $email;             //username      
@@ -148,9 +144,6 @@ class Superuser
                 $this->id_supervisor = $values['id_supervisor'];
                 $this->id_office = $values['id_office'];
                 $this->power = $values['power'];
-                
-                //var_dump($this);
-                //die();
         }
 
         public function changePWD(string $pwd, string $repeat_pwd)
@@ -228,5 +221,4 @@ class Superuser
                 deleteSuperSessionTuple(session_id());
                 $this->__destruct();
         }
-        //da adattare alla classe
 }

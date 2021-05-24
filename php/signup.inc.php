@@ -1,11 +1,11 @@
 <?php
 
-if(!isset($_POST['submit'])){
+if (!isset($_POST['submit'])) {
     //se l'utente è arrivato su questa pagina senza submittare il form
     //lo rispedisce indietro
     header('location:../signup.php?error=nosubmit');
     die();
-}else{
+} else {
     //includo la classe User
     require('../classes/User.php');
 

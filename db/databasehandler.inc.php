@@ -12,4 +12,3 @@ try {
 } catch (PDOException $e) {
     die("Connessione al DB non riuscita" . $e);
 }
-
