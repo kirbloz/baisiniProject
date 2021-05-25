@@ -306,7 +306,7 @@ function getSupersessionTuple($id)
         return $statement->fetch(PDO::FETCH_ASSOC);
     } else {
         //var_dump($statement);
-        header('location:../php/logout.php?error=nosession');
+        header('location:../logout.php?error=nosession');
         die();
     }
 }
@@ -332,7 +332,7 @@ function getSessionTuple($id)
         return $statement->fetch(PDO::FETCH_ASSOC);
     } else {
         //var_dump($statement);
-        header('location:../php/logout.inc.php?error=nosession');
+        header('location:../logout.php?error=nosession');
         die();
     }
 }
