@@ -10,11 +10,11 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="shortcut icon" href="/images/fav.ico" />
+	<link rel="shortcut icon" href="/images/favicon.ico" />
 </head>
 
 <body>
-	<div class="color-white bg-div">
+	<div class="bg-div">
 		<nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color:#97a6c2;">
 			<div class="container-fluid">
 				<a class="navbar-brand" style="color:#3f3f3f" href="index.php">
@@ -29,11 +29,25 @@
 				</div>
 			</div>
 		</nav>
-<div class="container-fluid centered" style="position:absolute; transform: translateY(50%);">
-    <div class="row ">
-        <div class="col">
-            <h2>Ops, questa pagina non esiste!</h2><hr class="centered" style="width:50%;">
-            <a href="index.php">Torna alla homepage</a>
-        </div>
-    </div>
-</div>
+
+	
+		<div class="centered" style="position: absolute;">
+			<div >
+	    <!--<div class="row ">
+	        <div class="col">
+	            <h2>Ops, questa pagina non esiste!</h2><hr class="centered" style="width:50%;">
+	            <a href="index.php">Torna alla homepage</a>
+	        </div>
+	    </div>-->
+				<img class="d-block w-100" src="images/404.jpg">
+				<div class="carousel-caption d-none d-md-block" style="transform:translateY(25);">
+					<h1>Error 404</h1>
+					<h2 style="text-shadow: 1px 1px 1px black;">Ops, questa pagina non esiste!</h2>
+					<a href="index.php"><button type="button" class="btn btn-dark btn-lg">Torna alla homepage</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
