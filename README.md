@@ -2,10 +2,8 @@
 
 ## SITO WEB - PROGETTO D'ELABORATO
 
-   Simulazione del sito web di un azienda un’azienda che si occupa dell’installazione di reti LAN e WLAN, solitamente scuole ed uffici. Il sito web avrà dei link cliccabili che permetteranno il download di documenti in inglese dedicati a proxy e DMZ (lavoro CLIL).
-   Funzionalità di Login e Signup, con interfacciamento ad un DB creato e gestito da MySQL Workbench.
+   Simulazione del sito web di un azienda un’azienda che si occupa dell’installazione di reti LAN e WLAN.
 
----
 
 ### Descrizione
 
