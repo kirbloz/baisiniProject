@@ -80,7 +80,7 @@ o tabelle singole(1 utente/superutente)
         } else if ($_GET['select'] == 'techs') {
             /*
                                 TABELLA TECNICI
-        */
+            */
             if ($utente->getPower() < 2)
                 echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
             else {
@@ -89,7 +89,7 @@ o tabelle singole(1 utente/superutente)
         } else if ($_GET['select'] == 'components') {
             /*
                                 TABELLA COMPONENTI
-        */
+            */
             if ($utente->getPower() < 2) {
                 echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
             } else {
@@ -98,7 +98,7 @@ o tabelle singole(1 utente/superutente)
         } else if ($_GET['select'] == 'works') {
             /*
                                 TABELLA INTERVENTI
-        */
+            */
             if ($utente->getPower() < 1) {
                 echo "<p class='centered alert alert-danger col-4'> Non hai i privilegi per accedere a quest'area. </p>";
             } else {
@@ -147,16 +147,8 @@ o tabelle singole(1 utente/superutente)
                 if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Trova') {
                     //echo "show";
                     fetchTicketsShow($_GET['idUserTicket']); //stampo i ticket di un cliente
-
-                    //non mi serve più l'else if perchè è tutto gestito dalla form in fetchTicketsShow che rimanda a ticketarea.inc.php
-                }/* else if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Modifica') {
-                    fetchTicketsEdit($_GET['idUserTicket']); //stampo il form per l'aggiunta
-                    echo "edit";
-                } else if (isset($_GET['idUserTicket']) && $_GET['submit'] == 'Elimina') {
-                    fetchTicketsEdit($_GET['idUserTicket']); //stampo il form per l'aggiunta
-                    echo "delete";
-
-                }*/
+                    //questa funzione stampa anche il form che si occupa di eliminare/modificare i ticket
+                }
                 echo "</div>";
             }
         } else

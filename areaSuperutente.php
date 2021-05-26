@@ -2,9 +2,6 @@
 @include('php/header.php');
 if (!checkActiveSuper())
     header('location:superlogin.php?error=nosession'); //session
-//l'unico controllo viene fatto sulla sessione. perchè se la sessione è valida
-//vuol dire che è stato effettuato un login nei 59 minuti precedenti, e quindi
-//posso richiedere le informazioni dell'utente senza problemi
 @include('php/function.inc.php');
 $utente = generateSuperuserOBJ(session_id());
 ?>

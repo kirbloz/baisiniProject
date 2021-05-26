@@ -551,7 +551,6 @@ class User
 
         global $connection;
         $statement = $connection->prepare($query);
-        //se query multiple prepara prima e poi fai nel for con i rispetti values
         try {
             $statement->execute($values);
         } catch (PDOException $e) {
@@ -561,8 +560,6 @@ class User
         if ($statement->rowCount() > 0) {
 
             $arrayWork = ($statement->fetchAll(PDO::FETCH_ASSOC));
-            //var_dump($arrayWork);
-            //die();
             if ($arrayWork == false)
                 echo "<p class='centered alert alert-danger col-6'>Errore nell'esecuzione della query</p>";
             else {
@@ -602,7 +599,6 @@ class User
                     );
 
                     $statement = $connection->prepare($query);
-                    //se query multiple prepara prima e poi fai nel for con i rispetti values
                     try {
                         $statement->execute($values);
                     } catch (PDOException $e) {
