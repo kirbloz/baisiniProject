@@ -26,4 +26,5 @@ if (isset($_POST)) {
     header('location:../superuserfetch.php?select=tickets');
 }
 
+header('location:../superuserfetch.php?select=tickets');
 die();
